@@ -11,7 +11,7 @@
 using namespace std;
 
 Mesa::Mesa(int nRows, int nCols)
- : m_rows(nRows), m_cols(nCols), m_player(nullptr), m_nGarks(0)
+ : m_rows(nRows), m_cols(nCols), m_player(nullptr), m_nGarks(0), m_history(nRows, nCols)
 {
     if (nRows <= 0  ||  nCols <= 0  ||  nRows > MAXROWS  ||  nCols > MAXCOLS)
     {
@@ -20,7 +20,6 @@ Mesa::Mesa(int nRows, int nCols)
         exit(1);
     }
     
-    //m_history = History(nRows, nCols);
 }
 
 Mesa::~Mesa()
@@ -192,3 +191,7 @@ bool Mesa::moveGarks()
       // return true if the player is still alive, false otherwise
     return ! m_player->isDead();
 }
+
+History& Mesa::history() {
+    return m_history; //NOT SURE
+};

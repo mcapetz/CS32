@@ -9,21 +9,19 @@
 #define History_hpp
 
 #include <stdio.h>
-#include "Mesa.h"
 #include "globals.h"
 
 class History
     {
       public:
         History(int nRows, int nCols);
-        ~History();
+//        ~History();
         
         bool record(int r, int c);
         void display() const;
         
         
       private:
-        Mesa* m_mesa;
         char m_grid[MAXROWS][MAXCOLS] = {0};
     };
 

@@ -13,9 +13,8 @@
 #include "Player.h"
 #include "Gark.h"
 #include "globals.h"
-//#include "History.h"
+#include "History.h"
 
-//class History;
 
 class Mesa
 {
@@ -39,7 +38,7 @@ class Mesa
     bool   attackGarkAt(int r, int c, int dir);
     bool   moveGarks();
     
-    //History& history();
+    History& history();
     
 
   private:
@@ -49,7 +48,7 @@ class Mesa
     Gark*   m_garks[MAXGARKS];
     int     m_nGarks;
     
-    //History m_history;
+    History m_history;
     
 };
 
