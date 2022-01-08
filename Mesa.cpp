@@ -20,6 +20,8 @@ Mesa::Mesa(int nRows, int nCols)
         exit(1);
     }
     
+    m_history = History(nRows, nCols);
+    
 }
 
 Mesa::~Mesa()
@@ -193,5 +195,5 @@ bool Mesa::moveGarks()
 }
 
 History& Mesa::history() {
-    return m_history; //NOT SURE
+    return m_history; //NOT SURE if this returns a reference
 };

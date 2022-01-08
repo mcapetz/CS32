@@ -69,14 +69,16 @@ Game::~Game()
 
 void Game::play()
 {
+    bool historyAccessed;
     m_mesa->display();
     Player* player = m_mesa->player();
     if (player == nullptr)
         return;
     while ( ! player->isDead()  &&  m_mesa->garkCount() > 0)
     {
+        historyAccessed = false;
         cout << endl;
-        cout << "Move (u/d/l/r/q or nothing): ";
+        cout << "Move (u/d/l/r/h/q or nothing): ";
         string action;
         getline(cin,action);
         if (action.size() == 0)  // player stands
@@ -88,6 +90,13 @@ void Game::play()
               default:   // if bad move, nobody moves
                 cout << '\a' << endl;  // beep
                 continue;
+              case 'h':
+                //Have the Game recognize the new h command, tell its Mesa's history object to display the history grid, and then print the Press enter to continue. prompt and wait for the user to respond. (cin.ignore(10000,'\n'); does that nicely.) Typing the h command does not count as the player's turn.
+                m_mesa->history().display();
+                cout << "Press enter to continue.";
+                cin.ignore(10000,'\n');
+                historyAccessed = true;
+                break;
               case 'q':
                 return;
               case 'u':
@@ -98,7 +107,9 @@ void Game::play()
                 break;
             }
         }
-        m_mesa->moveGarks();
+        if(!historyAccessed) {
+            m_mesa->moveGarks();
+        }
         m_mesa->display();
     }
 }

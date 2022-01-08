@@ -57,6 +57,7 @@ void Player::moveOrAttack(int dir)
         if (m_mesa->numGarksAt(r, c) > 0) {
             m_mesa->attackGarkAt(r, c, dir);
             //SOMEHOW HISTORY RECORD HERE
+            m_mesa->history().record(m_row,m_col);
         }
         else
         {
