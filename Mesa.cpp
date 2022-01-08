@@ -19,6 +19,8 @@ Mesa::Mesa(int nRows, int nCols)
              << nCols << "!" << endl;
         exit(1);
     }
+    
+    //m_history = History(nRows, nCols);
 }
 
 Mesa::~Mesa()
