@@ -5,10 +5,11 @@
 //  Created by Margaret Capetz on 1/7/22.
 //
 
-#ifndef Player_hpp
-#define Player_hpp
+#ifndef Player_h
+#define Player_h
 
 #include <stdio.h>
+//#include "Mesa.h"
 
 class Mesa;
 

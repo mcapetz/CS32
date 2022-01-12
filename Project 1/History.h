@@ -5,12 +5,12 @@
 //  Created by Margaret Capetz on 1/7/22.
 //
 
-#ifndef History_hpp
-#define History_hpp
+#ifndef History_h
+#define History_h
 
 #include <stdio.h>
 #include "globals.h"
-//DO NOT INCLUDE MESA OR U WILL HAVE CIRCULAR PROBLEMS
+//DO NOT INCLUDE MESA.H OR U WILL HAVE CIRCULAR PROBLEMS
 
 class Mesa;
 

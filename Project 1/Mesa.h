@@ -6,15 +6,17 @@
 //  Created by Margaret Capetz on 1/7/22.
 //
 
-#ifndef Mesa_hpp
-#define Mesa_hpp
+#ifndef Mesa_h
+#define Mesa_h
 
 #include <stdio.h>
-#include "Player.h"
-#include "Gark.h"
-#include "globals.h"
+//#include "Player.h"
+//#include "Gark.h"
+//#include "globals.h"
 #include "History.h"
 
+class Player;
+class Gark;
 
 class Mesa
 {

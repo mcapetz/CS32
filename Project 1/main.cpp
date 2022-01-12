@@ -1,18 +1,6 @@
 
-// garks.cpp
-
-#include <iostream>
-#include <string>
-#include <random>
-#include <utility>
-#include <cstdlib>
-
-#include "Gark.h"
-#include "Player.h"
-#include "Mesa.h"
+// main.cpp
 #include "Game.h"
-
-using namespace std;
 
 int main()
 {

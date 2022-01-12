@@ -5,12 +5,15 @@
 //  Created by Margaret Capetz on 1/7/22.
 //
 
-#ifndef Game_hpp
-#define Game_hpp
+#ifndef Game_h
+#define Game_h
 
 #include <stdio.h>
-#include "Mesa.h"
+//#include "Mesa.h"
+//#include "Player.h"
+//#include "globals.h"
 
+class Mesa;
 
 int decodeDirection(char dir);
 

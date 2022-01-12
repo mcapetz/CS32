@@ -7,6 +7,8 @@
 
 #include "Mesa.h"
 #include <iostream>
+#include "Gark.h"
+#include "Player.h"
 
 using namespace std;
 

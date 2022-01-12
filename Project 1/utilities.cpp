@@ -6,7 +6,7 @@
 //
 
 #include <stdio.h>
-#include "globals.h"
+//#include "globals.h"
 
 #include <random>
 

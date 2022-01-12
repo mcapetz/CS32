@@ -5,10 +5,11 @@
 //  Created by Margaret Capetz on 1/7/22.
 //
 
-#ifndef Gark_hpp
-#define Gark_hpp
+#ifndef Gark_h
+#define Gark_h
 
 #include <stdio.h>
+//#include "Mesa.h"
 
 class Mesa;  // This is needed to let the compiler know that Mesa is a
              // type name, since it's mentioned in the Gark declaration.

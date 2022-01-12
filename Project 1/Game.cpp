@@ -6,6 +6,8 @@
 //
 
 #include "Game.h"
+#include "Mesa.h"
+#include "Player.h"
 #include <iostream>
 
 using namespace std;
