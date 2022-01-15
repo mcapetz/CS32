@@ -1,24 +1,45 @@
 //
-//  Map.hpp
+//  Map.h
 //  CS32-HW1
 //
 //  Created by Margaret Capetz on 1/15/22.
 //
 
-#ifndef Map_hpp
-#define Map_hpp
+#ifndef Map_h
+#define Map_h
 
 #include <stdio.h>
+#include <iostream>
 #include <string>
-#include "Object.h"
 
 using KeyType = std::string;
-using ValueType = int;
+using ValueType = double;
 
 const int DEFAULT_MAX_ITEMS = 260;
 
 //the following functions should be const member functions
 //4: empty(), size(), contains(), second get()
+
+class Object {
+public:
+    //Object(KeyType key, ValueType value);
+    //let compiler build a default constructor
+    KeyType getKey() const {
+        return m_key;
+    }
+    ValueType getValue() const {
+        return m_value;
+    }
+    void setKey(KeyType key) {
+        m_key = key;
+    }
+    void setValue(ValueType value) {
+        m_value = value;
+    }
+private:
+    KeyType m_key;
+    ValueType m_value;
+};
 
 
 class Map
@@ -90,6 +111,8 @@ class Map
 
     void swap(Map& other);
       // Exchange the contents of this map with the other one.
+    
+    void dump() const;
 
 
     
@@ -99,4 +122,4 @@ class Map
     
 };
 
-#endif /* Map_hpp */
+#endif /* Map_h */
