@@ -25,6 +25,20 @@ class Map
 {
   public:
     Map();         // Create an empty map (i.e., one with no key/value pairs)
+    
+    ~Map(); //destructor
+    Map(const Map& src); //copy constructor
+    Map& operator=(const Map& src) {
+        //assignment operator
+        if(&src == this) {
+            return *this;
+        }
+        m_size = src.m_size;
+        for(int j = 0; j < m_size; j++) {
+            m_arr[j] = src.m_arr[j];
+        }
+        return *this;
+    }
 
     bool empty() const;  // Return true if the map is empty, otherwise false.
 
@@ -76,6 +90,8 @@ class Map
 
     void swap(Map& other);
       // Exchange the contents of this map with the other one.
+
+
     
  private:
     int m_size;
