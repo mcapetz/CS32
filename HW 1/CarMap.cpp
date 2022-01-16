@@ -42,7 +42,9 @@ bool CarMap::drive(std::string license, double distance) {
     }
     ValueType miles;
     m_map.get(license, miles);
-    distance += miles;
+    miles += distance;
+    m_map.update(license, miles);
+    
     return true;
 }
   // If no car with the given license plate is in the map or if
