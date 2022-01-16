@@ -30,5 +30,6 @@ using namespace std;
             mm.get(2, x, y);
             assert(x == "Little Ricky");  // "Little Ricky" is greater than exactly 2 items in mm
             assert(y == 3.206);  // the value corresponding to the key "Little Ricky"
+        cout << "all tests passed" << endl;
     }
 
