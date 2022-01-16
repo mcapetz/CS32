@@ -138,7 +138,7 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
     }
     
     //create a temp copy of array
-    Object temp[m_size];
+    Object temp[DEFAULT_MAX_ITEMS];
     
     //populate temp array
     for(int m = 0; m < m_size; m++) {

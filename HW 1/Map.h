@@ -20,27 +20,6 @@ const int DEFAULT_MAX_ITEMS = 260;
 //the following functions should be const member functions
 //4: empty(), size(), contains(), second get()
 
-class Object {
-public:
-    //Object(KeyType key, ValueType value);
-    //let compiler build a default constructor
-    KeyType getKey() const {
-        return m_key;
-    }
-    ValueType getValue() const {
-        return m_value;
-    }
-    void setKey(KeyType key) {
-        m_key = key;
-    }
-    void setValue(ValueType value) {
-        m_value = value;
-    }
-private:
-    KeyType m_key;
-    ValueType m_value;
-};
-
 
 class Map
 {
@@ -117,8 +96,31 @@ class Map
 
     
  private:
+    
+    class Object {
+    public:
+        //Object(KeyType key, ValueType value);
+        //let compiler build a default constructor
+        KeyType getKey() const {
+            return m_key;
+        }
+        ValueType getValue() const {
+            return m_value;
+        }
+        void setKey(KeyType key) {
+            m_key = key;
+        }
+        void setValue(ValueType value) {
+            m_value = value;
+        }
+    private:
+        KeyType m_key;
+        ValueType m_value;
+    };
+    
     int m_size;
     Object m_arr[DEFAULT_MAX_ITEMS];
+    
     
 };
 
