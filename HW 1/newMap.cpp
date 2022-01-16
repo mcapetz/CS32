@@ -12,26 +12,29 @@
 
 Map::Map() {
     // Create an empty map (i.e., one with no key/value pairs)
-    m_size = 0;
+    m_nObjects = 0;
+    m_maxSize = DEFAULT_MAX_ITEMS;
+    m_arr = new Object[DEFAULT_MAX_ITEMS];
 }
 
-Map::Map(int size) {
+Map::Map(int maxSize) {
     // Create an empty map (i.e., one with no key/value pairs)
-    m_size = size;
+    m_nObjects = 0;
+    m_maxSize = maxSize;
+    m_arr = new Object[DEFAULT_MAX_ITEMS];
 }
 
 Map::~Map() {
-    for (int k = 0; k < m_size; k++) {
-        delete m_arr[k];
-    }
+    delete [] m_arr;
+//    for(int i = 0; i < m_nObjects; i++) {
+//
+//    }
 }
 
 Map::Map(const Map& src) {
-    m_size = src.m_size;
-    Object* m_arr[DEFAULT_MAX_ITEMS];
-    for(int j = 0; j < m_size; j++) {
-        m_arr[j] = src.m_arr[j];
-    }
+    m_nObjects = src.m_nObjects;
+    m_maxSize = src.m_maxSize;
+    m_arr = new Object[DEFAULT_MAX_ITEMS];
 }
     
 
@@ -39,24 +42,24 @@ Map& Map::operator=(const Map& src) {
     if(&src == this) {
         return *this;
     }
-    for(int i = 0; i < m_size; i++) {
-        delete m_arr[i];
-    }
-    m_size = src.m_size;
-    Object* m_arr[DEFAULT_MAX_ITEMS];
-    for(int j = 0; j < m_size; j++) {
-        m_arr[j] = src.m_arr[j];
+    delete [] m_arr;
+    m_nObjects = src.m_nObjects;
+    m_maxSize = src.m_maxSize;
+    m_arr = new Object[DEFAULT_MAX_ITEMS];
+    for(int j = 0; j < m_nObjects; j++) {
+        m_arr[j].m_key = src.m_arr[j].m_key;
+        m_arr[j].m_value = src.m_arr[j].m_value;
     }
     return *this;
 }
 
 bool Map::empty() const {
     //  // Return true if the map is empty, otherwise false.
-    return (m_size == 0);
+    return (m_nObjects == 0);
 }
 int Map::size() const {
     // Return the number of key/value pairs in the map.
-    return m_size;
+    return m_nObjects;
 }
 
 bool Map::insert(const KeyType& key, const ValueType& value) {
@@ -65,19 +68,14 @@ bool Map::insert(const KeyType& key, const ValueType& value) {
     //  // Otherwise, make no change to the map and return false (indicating
     //  // that either the key is already in the map, or the map has a fixed
     //  // capacity and is full).
-    if(m_size >= DEFAULT_MAX_ITEMS || this->contains(key)) {
+    if(m_nObjects >= m_maxSize || this->contains(key)) {
         return false;
     }
     
-//    for(int i = 0; i < m_size; i++) {
-//        const Object* op = m_arr[i];
-//        if(key == op->getKey()) {
-//            return false;
-//        }
-//    }
+    m_arr[m_nObjects].m_key = key;
+    m_arr[m_nObjects].m_value = value;
     
-    m_arr[m_size] = new Object(key, value);
-    m_size++;
+    m_nObjects++;
     return true;
 }
 
@@ -87,9 +85,9 @@ bool Map::update(const KeyType& key, const ValueType& value) {
     //  // longer map to the value that it currently maps to, but instead map to
     //  // the value of the second parameter; return true in this case.
     //  // Otherwise, make no change to the map and return false.
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i]->getKey()) {
-            m_arr[i]->setValue(value);
+    for(int i = 0; i < m_nObjects; i++) {
+        if(key == m_arr[i].m_key) {
+            m_arr[i].m_value = value;
             return true;
         }
     }
@@ -117,11 +115,14 @@ bool Map::erase(const KeyType& key) {
     //  // If key is equal to a key currently in the map, remove the key/value
     //  // pair with that key from the map and return true.  Otherwise, make
     //  // no change to the map and return false.
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i]->getKey()) {
-            delete m_arr[i];
-            m_arr[i] = m_arr[m_size-1];
-            m_size--;
+    
+    for(int i = 0; i < m_nObjects; i++) {
+        if(key == m_arr[i].m_key) {
+            //move all values over to the left
+            for(int j = i; j < m_nObjects; j++) {
+                m_arr[j] = m_arr[j+1];
+            }
+            m_nObjects--;
             return true;
         }
     }
@@ -134,9 +135,8 @@ bool Map::contains(const KeyType& key) const {
     //  // Return true if key is equal to a key currently in the map, otherwise
     //  // false.
     
-    for(int i = 0; i < m_size; i++) {
-        const Object* op = m_arr[i];
-        if(key == op->getKey()) {
+    for(int i = 0; i < m_nObjects; i++) {
+        if(key == m_arr[i].m_key) {
             return true;
         }
     }
@@ -149,9 +149,9 @@ bool Map::get(const KeyType& key, ValueType& value) const {
     //  // value in the map which that key maps to, and return true.  Otherwise,
     //  // make no change to the value parameter of this function and return
     //  // false.
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i]->getKey()) {
-            value = m_arr[i]->getValue();
+    for(int i = 0; i < m_nObjects; i++) {
+        if(key == m_arr[i].m_key) {
+            value = m_arr[i].m_value;
             return true;
         }
     }
@@ -166,15 +166,15 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
     //  // greater than exactly i keys in the map and return true.  Otherwise,
     //  // leave the key and value parameters unchanged and return false.
     
-    if(i < 0 || i >= m_size) {
+    if(i < 0 || i >= m_nObjects) {
         return false;
     }
     
     //create a temp copy of array
-    Object* temp[DEFAULT_MAX_ITEMS];
+    Object temp[DEFAULT_MAX_ITEMS];
     
     //populate temp array
-    for(int m = 0; m < m_size; m++) {
+    for(int m = 0; m < m_nObjects; m++) {
         temp[m] = m_arr[m];
     }
     
@@ -184,16 +184,16 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
 //    }
     
     //sort temp array
-    for (int step = 0; step < m_size - 1; step++) {
+    for (int step = 0; step < m_nObjects - 1; step++) {
         int min_idx = step;
-        for (int i = step + 1; i < m_size; i++) {
+        for (int i = step + 1; i < m_nObjects; i++) {
           // Select the minimum element in each loop.
-          if (temp[i]->getKey() < temp[min_idx]->getKey())
+          if (temp[i].m_key < temp[min_idx].m_key)
             min_idx = i;
         }
 
         // put min at the correct position by swapping
-        Object* tempObject = temp[min_idx];
+        Object tempObject = temp[min_idx];
         temp[min_idx] = temp[step];
         temp[step] = tempObject;
     }
@@ -205,8 +205,8 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
 //        std::cerr << temp[m].getKey() << ":" << temp[m].getValue() << std::endl;
 //    }
     
-    key = temp[i]->getKey();
-    value = temp[i]->getValue();
+    key = temp[i].m_key;
+    value = temp[i].m_value;
     
     return true;
 }
@@ -215,16 +215,39 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
 void Map::swap(Map& other) {
     //  // Exchange the contents of this map with the other one.
 
+//    for(int i = 0; i < m_nObjects; i++) {
+//        std::cerr << m_arr[i].m_key << ":" << m_arr[i].m_value << std::endl;
+//    }
+//    
+//    std::cerr << "dumped" << std::endl;
+    
     //create a copy of map as a temp var
-    Map* temp = this;
+    Map temp = *this;
+    
+//    std::cerr << "temp array" << std::endl;
+//    for(int i = 0; i < m_nObjects; i++) {
+//        std::cerr << temp.m_arr[i].m_key << ":" << temp.m_arr[i].m_value << std::endl;
+//    }
+    
+    std::cout << "dump the temp" << std::endl;
+    temp.dump();
     
     //swap maps
     *this = other;
-    other = *temp;
+    other = temp;
+    
+    std::cerr << "dump" << std::endl;
+    dump();
+
+    std::cerr << "other" << std::endl;
+
+    for(int i = 0; i < m_nObjects; i++) {
+        std::cerr << other.m_arr[i].m_key << ":" << other.m_arr[i].m_value << std::endl;
+    }
 }
 
 void Map::dump() const {
-    for(int i = 0; i < m_size; i++) {
-        std::cerr << m_arr[i]->getKey() << ":" << m_arr[i]->getValue() << std::endl;
+    for(int i = 0; i < m_nObjects; i++) {
+        std::cerr << m_arr[i].m_key << ":" << m_arr[i].m_value << std::endl;
     }
 }

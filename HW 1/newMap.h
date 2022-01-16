@@ -90,34 +90,14 @@ class Map
     
  private:
     
-    class Object {
-    public:
-        Object() : m_key(NULL), m_value(NULL){
-            
-        }
-        Object(KeyType key, ValueType value) {
-            m_key = key;
-            m_value = value;
-        }
-        KeyType getKey() const {
-            return m_key;
-        }
-        ValueType getValue() const {
-            return m_value;
-        }
-        void setKey(KeyType key) {
-            m_key = key;
-        }
-        void setValue(ValueType value) {
-            m_value = value;
-        }
-    private:
+    struct Object {
         KeyType m_key;
         ValueType m_value;
     };
     
-    int m_size;
-    Object* m_arr[DEFAULT_MAX_ITEMS];
+    int m_nObjects;
+    int m_maxSize;
+    Object* m_arr;
     
     
 };
