@@ -30,6 +30,35 @@ using namespace std;
             mm.get(2, x, y);
             assert(x == "Little Ricky");  // "Little Ricky" is greater than exactly 2 items in mm
             assert(y == 3.206);  // the value corresponding to the key "Little Ricky"
+        
+        Map m1;
+            m1.insert("Fred", 2.956);
+            Map m2;
+            m2.insert("Ethel", 3.538);
+            m2.insert("Lucy", 2.956);
+            m1.swap(m2);
+            assert(m1.size() == 2  &&  m1.contains("Ethel")  &&  m1.contains("Lucy")  &&
+                   m2.size() == 1  &&  m2.contains("Fred"));
+
+        
+        Map gpas;
+            gpas.insert("Fred", 2.956);
+            assert(!gpas.contains(""));
+            gpas.insert("Ethel", 3.538);
+            gpas.insert("", 4.000);
+            gpas.insert("Lucy", 2.956);
+            assert(gpas.contains(""));
+            gpas.erase("Fred");
+            assert(gpas.size() == 3  &&  gpas.contains("Lucy")  &&  gpas.contains("Ethel")  &&
+                        gpas.contains(""));
+            string k;
+            double v;
+            assert(gpas.get(1, k, v)  &&  k == "Ethel");
+            assert(gpas.get(0, k, v)  &&  k == "");
+        
         cout << "all tests passed" << endl;
+        
+        
+        
     }
 
