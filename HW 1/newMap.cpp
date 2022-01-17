@@ -26,9 +26,6 @@ Map::Map(int maxSize) {
 
 Map::~Map() {
     delete [] m_arr;
-//    for(int i = 0; i < m_nObjects; i++) {
-//
-//    }
 }
 
 Map::Map(const Map& src) {
@@ -119,7 +116,6 @@ bool Map::erase(const KeyType& key) {
     //  // If key is equal to a key currently in the map, remove the key/value
     //  // pair with that key from the map and return true.  Otherwise, make
     //  // no change to the map and return false.
-    
     for(int i = 0; i < m_nObjects; i++) {
         if(key == m_arr[i].m_key) {
             //move all values over to the left
@@ -131,14 +127,12 @@ bool Map::erase(const KeyType& key) {
         }
     }
     return false;
-    
 }
 
 
 bool Map::contains(const KeyType& key) const {
     //  // Return true if key is equal to a key currently in the map, otherwise
     //  // false.
-    
     for(int i = 0; i < m_nObjects; i++) {
         if(key == m_arr[i].m_key) {
             return true;
@@ -160,7 +154,6 @@ bool Map::get(const KeyType& key, ValueType& value) const {
         }
     }
     return false;
-    
 }
 
 
@@ -169,7 +162,6 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
     //  // key and value of the key/value pair in the map whose key is strictly
     //  // greater than exactly i keys in the map and return true.  Otherwise,
     //  // leave the key and value parameters unchanged and return false.
-    
     if(i < 0 || i >= m_nObjects) {
         return false;
     }
@@ -181,11 +173,6 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
     for(int m = 0; m < m_nObjects; m++) {
         temp[m] = m_arr[m];
     }
-    
-    //print array
-//    for(int m = 0; m < m_size; m++) {
-//        std::cerr << temp[m].getKey() << ":" << temp[m].getValue() << std::endl;
-//    }
     
     //sort temp array
     for (int step = 0; step < m_nObjects - 1; step++) {
@@ -201,14 +188,7 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
         temp[min_idx] = temp[step];
         temp[step] = tempObject;
     }
-    
-//    std::cerr << "dump" << std::endl;
-//    dump();
-//    std::cerr << "---" << std::endl;
-//    for(int m = 0; m < m_size; m++) {
-//        std::cerr << temp[m].getKey() << ":" << temp[m].getValue() << std::endl;
-//    }
-    
+        
     key = temp[i].m_key;
     value = temp[i].m_value;
     
@@ -219,35 +199,13 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
 void Map::swap(Map& other) {
     //  // Exchange the contents of this map with the other one.
 
-//    for(int i = 0; i < m_nObjects; i++) {
-//        std::cerr << m_arr[i].m_key << ":" << m_arr[i].m_value << std::endl;
-//    }
-//    
-//    std::cerr << "dumped" << std::endl;
-    
     //create a copy of map as a temp var
     Map temp = *this;
-    
-//    std::cerr << "temp array" << std::endl;
-//    for(int i = 0; i < m_nObjects; i++) {
-//        std::cerr << temp.m_arr[i].m_key << ":" << temp.m_arr[i].m_value << std::endl;
-//    }
-    
-    std::cout << "dump the temp" << std::endl;
-    temp.dump();
     
     //swap maps
     *this = other;
     other = temp;
     
-    std::cerr << "dump" << std::endl;
-    dump();
-
-    std::cerr << "other" << std::endl;
-
-    for(int i = 0; i < m_nObjects; i++) {
-        std::cerr << other.m_arr[i].m_key << ":" << other.m_arr[i].m_value << std::endl;
-    }
 }
 
 void Map::dump() const {

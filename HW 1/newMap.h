@@ -19,10 +19,6 @@ using ValueType = double;
 
 const int DEFAULT_MAX_ITEMS = 260;
 
-//the following functions should be const member functions
-//5: empty(), size(), contains(), both get() functions
-
-
 class Map
 {
   public:
@@ -85,8 +81,6 @@ class Map
       // Exchange the contents of this map with the other one.
     
     void dump() const;
-
-
     
  private:
     
