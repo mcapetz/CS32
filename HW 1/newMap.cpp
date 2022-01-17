@@ -34,7 +34,11 @@ Map::~Map() {
 Map::Map(const Map& src) {
     m_nObjects = src.m_nObjects;
     m_maxSize = src.m_maxSize;
-    m_arr = new Object[DEFAULT_MAX_ITEMS];
+    m_arr = new Object[src.m_maxSize];
+    for(int j = 0; j < m_nObjects; j++) {
+        m_arr[j].m_key = src.m_arr[j].m_key;
+        m_arr[j].m_value = src.m_arr[j].m_value;
+    }
 }
     
 
@@ -45,7 +49,7 @@ Map& Map::operator=(const Map& src) {
     delete [] m_arr;
     m_nObjects = src.m_nObjects;
     m_maxSize = src.m_maxSize;
-    m_arr = new Object[DEFAULT_MAX_ITEMS];
+    m_arr = new Object[src.m_maxSize];
     for(int j = 0; j < m_nObjects; j++) {
         m_arr[j].m_key = src.m_arr[j].m_key;
         m_arr[j].m_value = src.m_arr[j].m_value;
