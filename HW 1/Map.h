@@ -18,7 +18,7 @@ using ValueType = double;
 const int DEFAULT_MAX_ITEMS = 260;
 
 //the following functions should be const member functions
-//4: empty(), size(), contains(), second get()
+//5: empty(), size(), contains(), both get() functions
 
 
 class Map
@@ -76,7 +76,7 @@ class Map
       // Return true if key is equal to a key currently in the map, otherwise
       // false.
      
-    bool get(const KeyType& key, ValueType& value);
+    bool get(const KeyType& key, ValueType& value) const;
       // If key is equal to a key currently in the map, set value to the
       // value in the map which that key maps to, and return true.  Otherwise,
       // make no change to the value parameter of this function and return
@@ -99,8 +99,10 @@ class Map
     
     class Object {
     public:
-        //Object(KeyType key, ValueType value);
         //let compiler build a default constructor
+        //getters and setters
+        //a struct would also work here without getters and setters
+        //because class Object is already a private class within Map
         KeyType getKey() const {
             return m_key;
         }

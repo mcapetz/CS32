@@ -111,7 +111,7 @@ bool Map::contains(const KeyType& key) const {
 }
 
 
-bool Map::get(const KeyType& key, ValueType& value) {
+bool Map::get(const KeyType& key, ValueType& value) const {
     //  // If key is equal to a key currently in the map, set value to the
     //  // value in the map which that key maps to, and return true.  Otherwise,
     //  // make no change to the value parameter of this function and return
@@ -145,11 +145,6 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
         temp[m] = m_arr[m];
     }
     
-    //print array
-//    for(int m = 0; m < m_size; m++) {
-//        std::cerr << temp[m].getKey() << ":" << temp[m].getValue() << std::endl;
-//    }
-    
     //sort temp array
     for (int step = 0; step < m_size - 1; step++) {
         int min_idx = step;
@@ -165,54 +160,12 @@ bool Map::get(int i, KeyType& key, ValueType& value) const {
         temp[step] = tempObject;
     }
     
-//    std::cerr << "dump" << std::endl;
-//    dump();
-//    std::cerr << "---" << std::endl;
-//    for(int m = 0; m < m_size; m++) {
-//        std::cerr << temp[m].getKey() << ":" << temp[m].getValue() << std::endl;
-//    }
     
     key = temp[i].getKey();
     value = temp[i].getValue();
     
     return true;
     
-//    if(i >= 0 && i < m_size) {
-//        //RETHINK??
-//        //sort into a temporary array
-//        Object temp[i + 2];
-//
-//        //find the minimum key
-//        Object min = m_arr[0];
-//        for(int j = 0; j < m_size; j++) {
-//            if(m_arr[j].getKey() < min.getKey()) {
-//                min = m_arr[j];
-//            }
-//        }
-//        temp[0] = min;
-//
-//        for(int k = 1; k <= i; k++) {
-//            min = m_arr[0];
-//            for(int j = 0; j < m_size; j++) {
-//                //skip over values already in temp array
-//                for(int n = 0; n < i+2; n++) {
-//                    if(m_arr[j].getKey() == temp[n].getKey()) {
-//                        j++;
-//                    }
-//                }
-//                if(m_arr[j].getKey() < min.getKey()) {
-//                    min = m_arr[j];
-//                }
-//            }
-//            temp[k] = min;
-//        }
-//
-//        key = temp[i].getKey();
-//        value = temp[i].getValue();
-//        return true;
-//
-//    }
-//    return false;
 }
 
 
@@ -228,43 +181,6 @@ void Map::swap(Map& other) {
         m_arr[i] = other.m_arr[i];
         other.m_arr[i] = temp;
     }
-    
-    
-    //check if empty
-//    if(this->empty()) {
-//        for(int i = 0; i < other.size(); i++) {
-//            m_arr[i] = other.m_arr[i];
-//        }
-//        other = Map();
-//    }
-//    if(other.empty()) {
-//        for(int i = 0; i < this->size(); i++) {
-//            other.m_arr[i] = m_arr[i];
-//        }
-//        //reset this
-//        for(int i = 0; i < other.size(); i++) {
-//            m_arr[i] = Object();
-//        }
-//
-//    int map1size = m_size;
-//    int map2size = other.size();
-//
-//    int maxSize;
-//    if(map1size > map2size) {
-//        maxSize = map1size;
-//    }
-//    else {
-//        maxSize = map2size;
-//    }
-//
-//    for(int i = 0; i < maxSize; i++) {
-//        Object object1 = m_arr[i];
-//        Object object2 = other.m_arr[i];
-//
-//        m_arr[i] = object2;
-//        other.m_arr[i] = object1;
-//    }
-//}
 
 }
 

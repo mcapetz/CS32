@@ -11,8 +11,6 @@
 #include <stdio.h>
 #include "Map.h"
 
-//If the compiler-generated destructor, copy constructor, and assignment operator for CarMap don't do the right thing, declare and implement them. Write a program to test your CarMap class. Name your files CarMap.h, CarMap.cpp, and testCarMap.cpp.
-
 
     class CarMap
     {
