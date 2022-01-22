@@ -128,32 +128,15 @@ bool Map::get(int i, KeyType& key, ValueType& value) const
 
 void Map::swap(Map& other)
 {
-//      // Swap elements.  Since the only elements that matter are those up to
-//      // m_size and other.m_size, only they have to be moved.
-//
-//    int minSize = (m_size < other.m_size ? m_size : other.m_size);
-//    for (int k = 0; k < minSize; k++)
-//    {
-//        Pair tempPair = m_data[k];
-//        m_data[k] = other.m_data[k];
-//        other.m_data[k] = tempPair;
-//    }
-//
-//      // If the sizes are different, assign the remaining elements from
-//      // the longer one to the shorter.
-//
-//    if (m_size > minSize)
-//        for (int k = minSize; k < m_size; k++)
-//            other.m_data[k] = m_data[k];
-//    else if (other.m_size > minSize)
-//        for (int k = minSize; k < other.m_size; k++)
-//            m_data[k] = other.m_data[k];
-//
-//      // Swap sizes
-//
-//    int t = m_size;
-//    m_size = other.m_size;
-//    other.m_size = t;
+    //swap the sizes
+    int tempSize = linkedList.m_size;
+    linkedList.m_size = other.linkedList.m_size;
+    other.linkedList.m_size = tempSize;
+    
+    //swap the linked lists
+    linkedList::Node* tempDummy = linkedList.dummy;
+    linkedList.dummy = other.linkedList.dummy;
+    other.linkedList.dummy = tempDummy;
 }
 
 Map::linkedList::Node* Map::findFirstAtLeast(const KeyType& key) const
