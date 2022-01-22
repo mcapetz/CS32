@@ -69,14 +69,51 @@ void test3() {
     assert(m.get(-1, key, val) == false && key == "a" && val == 3); //if i < 0 then false, key/value pair should not be altered
     assert(m.get(4, key, val) == false && key == "a" && val == 3); //if i >= size then false, key/value pair should not be altered
     assert(m.get(1, key, val) == true && key == "b" && val == 4); //the key strictly greater than 1 key is "b" the second key
-    cerr << "test 2 passed" << endl;
+    cerr << "test 3 passed" << endl;
 }
+
+void test4() {
+    cerr << "test 4 start" << endl;
+    Map m;
+    m.insert("x1", 1);
+    m.insert("x2", 1);
+    m.insert("x3", 1);
+    m.insert("x4", 1);
+    m.insert("x5", 1);
+    m.insert("x6", 1);
+    m.insert("x7", 1);
+    Map n;
+    m.swap(n);
+    assert(n.contains("x1") == true); //check that the swap works between an empty map and a filled map
+    cerr << "m" << endl;
+    m.dump();
+    cerr << "n" << endl;
+    n.dump();
+    Map l;
+    l.insert("y1", 2);
+    l.insert("y2", 2);
+    l.insert("y3", 2);
+    n.swap(l);
+    assert(n.contains("y2") == true); //check swap works between non-empty maps
+    assert(l.contains("x5") == true); //check swap works between non-empty maps
+    cerr << "n" << endl;
+    n.dump();
+    cerr << "l" << endl;
+    l.dump();
+    cerr << "test 4 passed" << endl;
+}
+//
+//void test4() {
+//    cerr << "test 4 start" << endl;
+//    cerr << "test 4 passed" << endl;
+//}
 
 int main(int argc, const char * argv[]) {
     
     test1();
     test2();
     test3();
+    test4();
     
     
 }
