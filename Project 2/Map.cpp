@@ -14,7 +14,74 @@ using namespace std;
 
 Map::Map()
 {
+}
+
+Map::~Map() {
+    linkedList::Node* p = linkedList.dummy->next;
+    while(p != linkedList.dummy) {
+        linkedList::Node* n = p->next;
+        delete p;
+        p = n;
+    }
+
+}
+
+Map::Map(const Map &src) {
+    //copy over new size
+    linkedList.m_size = src.linkedList.m_size;
     
+    //copy over nodes of linked list
+    linkedList::Node* q = linkedList.dummy->next;
+    linkedList::Node* p = src.linkedList.dummy->next;
+    while(p != src.linkedList.dummy) {
+        linkedList::Node* n = new linkedList::Node();
+        q->next = n;
+        n->prev = q;
+        n->pair = p->pair;
+        p = p->next;
+        q = n;
+    }
+    
+    //close the loop
+    q->next = linkedList.dummy;
+    linkedList.dummy->prev = q;
+}
+
+Map& Map::operator=(const Map &src) {
+    if(&src == this) { //#1
+        return *this; //do nothing
+    }
+    
+    //#2 free the memory
+    linkedList::Node* m = linkedList.dummy->next;
+    while(m != linkedList.dummy) {
+        linkedList::Node* k = m->next;
+        delete m;
+        m = k;
+    }
+    
+    //#3 assign new size
+    linkedList.m_size = src.linkedList.m_size;
+    
+    //#4 copy
+    //copy over nodes of linked list
+    linkedList::Node* q = linkedList.dummy->next;
+    linkedList::Node* p = src.linkedList.dummy->next;
+    while(p != src.linkedList.dummy) {
+        linkedList::Node* n = new linkedList::Node();
+        q->next = n;
+        n->prev = q;
+        n->pair = p->pair;
+        p = p->next;
+        q = n;
+    }
+    
+    //close the loop
+    q->next = linkedList.dummy;
+    linkedList.dummy->prev = q;
+    
+    //#5 return statement
+    return *this;
 }
 
 bool Map::erase(const KeyType& key)

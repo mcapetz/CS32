@@ -25,6 +25,13 @@ class Map
 {
   public:
     Map();         // Create an empty map (i.e., one with no key/value pairs)
+    
+    ~Map(); //destructor
+    
+    Map(const Map &src); //copy constructor
+    
+    Map &operator=(const Map &src); //assignment operator
+    
 
     bool empty() const;  // Return true if the map is empty, otherwise false.
 
