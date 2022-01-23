@@ -244,6 +244,21 @@ bool merge(const Map& m1, const Map& m2, Map& result) {
 }
 
 void reassign(const Map& m, Map& result) {
+    //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
+    if(&m == &result) { //if both m and result point to the same address
+        Map newResult; //create a newResult map
+        result = newResult; //set the result to the newResult
+    }
+    
+    
+    //reset result to empty
+    for(int i = 0; i < result.size(); i++) {
+        KeyType key;
+        ValueType val;
+        result.get(i, key, val);
+        result.erase(key);
+    }
+    
     //However, if m has only one pair, then result must contain simply a copy of that pair.
     if(m.size() == 0) {
         KeyType key;
@@ -253,9 +268,30 @@ void reassign(const Map& m, Map& result) {
         return;
     }
     
+    
+    if(m.size() % 2 == 0) { //if size is even, switch between groups of 2
+        for(int j = 0; j < m.size() - 2; j += 2) {
+            KeyType key1;
+            ValueType val1;
+            m.get(j, key1, val1);
+            KeyType key2;
+            ValueType val2;
+            m.get(j + 1, key2, val2);
+            result.insert(key1, val2);
+            result.insert(key2, val1);
+        }
+    }
+    else { //if size is odd, iterate down to switch
+        for(int k = 0; k < m.size(); k++) {
+            
+        }
+    }
+    
+    
+    
     //you must not assume result is empty when it is passed in to this function; it may not be.
     //Upon return, result must contain the same number of pairs as m
-    //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
+    
     
 
 }
