@@ -198,3 +198,42 @@ void Map::dump() const {
         p = p->next;
     }
 }
+
+bool merge(const Map& m1, const Map& m2, Map& result) {
+    for(int i = 0; i < m1.size(); i++) {
+        KeyType tempKey;
+        ValueType tempValue;
+        m1.get(i, tempKey, tempValue);
+        if(m1.contains(tempKey) && m2.contains(tempKey)) {
+            //key appears in both m1 and m2
+            ValueType tempVal1;
+            ValueType tempVal2;
+            m1.get(tempKey, tempVal1);
+            m2.get(tempKey, tempVal2);
+            if(tempVal1 == tempVal2) {
+                //same corresponding value in both m1 and m2
+                //result must contain exactly one pair of that key and value
+                result.insert(tempKey, tempValue);
+            }
+            else {
+                //same key, different corresponding values
+                return false;
+            }
+        }
+        else {
+            //key appears in exactly one of m1 and m2
+            //result must contain a pair consisting of that key and its corresponding value
+            result.insert(tempKey, tempValue);
+        }
+    }
+
+    for(int j = 0; j < m2.size(); j++) {
+        KeyType tempKey;
+        ValueType tempValue;
+        m2.get(j, tempKey, tempValue);
+        result.insert(tempKey, tempValue);
+    }
+
+    return true;
+}
+

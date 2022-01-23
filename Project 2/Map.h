@@ -177,4 +177,9 @@ bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
     return doInsertOrUpdate(key, value);
 }
 
+
+//NON MEMBER FUNCTIONS
+
+bool merge(const Map& m1, const Map& m2, Map& result);
+
 #endif // MAP_INCLUDED
