@@ -246,16 +246,17 @@ bool merge(const Map& m1, const Map& m2, Map& result) {
 void reassign(const Map& m, Map& result) {
     //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
     if(&m == &result) { //if both m and result point to the same address
+        cerr << "m and result are the same" << endl;
         Map newResult; //create a newResult map
         result = newResult; //set the result to the newResult
     }
-    
-    
+        
+    //you must not assume result is empty when it is passed in to this function; it may not be.
     //reset result to empty
-    for(int i = 0; i < result.size(); i++) {
+    while(result.empty() == false) {
         KeyType key;
         ValueType val;
-        result.get(i, key, val);
+        result.get(0, key, val);
         result.erase(key);
     }
     
@@ -270,7 +271,9 @@ void reassign(const Map& m, Map& result) {
     
     
     if(m.size() % 2 == 0) { //if size is even, switch between groups of 2
-        for(int j = 0; j < m.size() - 2; j += 2) {
+        for(int j = 0; j <= m.size() - 2; j += 2) {
+//            cerr << "size: " << m.size() << endl;
+//            cerr << "j: " << j << endl;
             KeyType key1;
             ValueType val1;
             m.get(j, key1, val1);
@@ -282,16 +285,24 @@ void reassign(const Map& m, Map& result) {
         }
     }
     else { //if size is odd, iterate down to switch
-        for(int k = 0; k < m.size(); k++) {
-            
+        //hold first
+        ValueType tempVal;
+        KeyType key0;
+        ValueType val0;
+        m.get(0, key0, val0);
+        tempVal = val0;
+        //iterate through linked list
+        for(int k = 1; k < m.size(); k++) {
+            KeyType key;
+            ValueType val;
+            m.get(k, key, val);
+            result.insert(key, tempVal);
+            tempVal = val;
         }
+        //set first
+        result.insert(key0, tempVal);
     }
     
-    
-    
-    //you must not assume result is empty when it is passed in to this function; it may not be.
     //Upon return, result must contain the same number of pairs as m
-    
-    
 
 }
