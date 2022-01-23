@@ -1,15 +1,19 @@
 //
-//  Map.h
-//  CS32-HW1
+//  Map.hpp
+//  CS32-Proj2
 //
-//  Created by Margaret Capetz on 1/15/22.
+//  Created by Margaret Capetz on 1/21/22.
 //
 
-#ifndef Map_h
-#define Map_h
+// Map.h
 
-#include <stdio.h>
-#include <iostream>
+#ifndef MAP_INCLUDED
+#define MAP_INCLUDED
+
+  // Later in the course, we'll see that templates provide a much nicer
+  // way of enabling us to have Maps of different types.  For now, we'll
+  // use type aliases.
+
 #include <string>
 
 using KeyType = std::string;
@@ -17,28 +21,17 @@ using ValueType = double;
 
 const int DEFAULT_MAX_ITEMS = 260;
 
-//the following functions should be const member functions
-//5: empty(), size(), contains(), both get() functions
-
-
 class Map
 {
   public:
     Map();         // Create an empty map (i.e., one with no key/value pairs)
     
     ~Map(); //destructor
-    Map(const Map& src); //copy constructor
-    Map& operator=(const Map& src) {
-        //assignment operator
-        if(&src == this) {
-            return *this;
-        }
-        m_size = src.m_size;
-        for(int j = 0; j < m_size; j++) {
-            m_arr[j] = src.m_arr[j];
-        }
-        return *this;
-    }
+    
+    Map(const Map &src); //copy constructor
+    
+    Map &operator=(const Map &src); //assignment operator
+    
 
     bool empty() const;  // Return true if the map is empty, otherwise false.
 
@@ -49,7 +42,7 @@ class Map
       // key/value pair can be added to the map, then do so and return true.
       // Otherwise, make no change to the map and return false (indicating
       // that either the key is already in the map, or the map has a fixed
-      // capacity and is full).
+      // capacity and is full.
 
     bool update(const KeyType& key, const ValueType& value);
       // If key is equal to a key currently in the map, then make that key no
@@ -61,7 +54,7 @@ class Map
       // If key is equal to a key currently in the map, then make that key no
       // longer map to the value that it currently maps to, but instead map to
       // the value of the second parameter; return true in this case.
-      // If key is not equal to any key currently in the map and if the
+      // If key is not equal to any key currently in the map, and if the
       // key/value pair can be added to the map, then do so and return true.
       // Otherwise, make no change to the map and return false (indicating
       // that the key is not already in the map and the map has a fixed
@@ -78,7 +71,7 @@ class Map
      
     bool get(const KeyType& key, ValueType& value) const;
       // If key is equal to a key currently in the map, set value to the
-      // value in the map which that key maps to, and return true.  Otherwise,
+      // value in the map which that key maps to and return true.  Otherwise,
       // make no change to the value parameter of this function and return
       // false.
      
@@ -93,37 +86,101 @@ class Map
     
     void dump() const;
 
+  private:
 
-    
- private:
-    
-    class Object {
-    public:
-        //let compiler build a default constructor
-        //getters and setters
-        //a struct would also work here without getters and setters
-        //because class Object is already a private class within Map
-        KeyType getKey() const {
-            return m_key;
-        }
-        ValueType getValue() const {
-            return m_value;
-        }
-        void setKey(KeyType key) {
-            m_key = key;
-        }
-        void setValue(ValueType value) {
-            m_value = value;
-        }
-    private:
-        KeyType m_key;
+      // Since this structure is used only by the implementation of the
+      // Map class, we'll make it private to Map.
+
+    struct Pair
+    {
+        KeyType   m_key;
         ValueType m_value;
     };
     
-    int m_size;
-    Object m_arr[DEFAULT_MAX_ITEMS];
+    struct linkedList {
+        struct Node {
+            Pair pair;
+            Node* next;
+            Node* prev;
+            
+            Node() {
+                next = nullptr;
+                prev = nullptr;
+            }
+        };
+        
+        Node* dummy;
+        int m_size;
+        
+        linkedList() {
+            dummy = new Node();
+            dummy->next = dummy; //head
+            dummy->prev = dummy; //tail
+            m_size = 0;
+        }
+    };
     
     
+
+    linkedList linkedList;  // the pairs in the map
+    //int  m_size;                     // number of pairs in the map
+
+      // At any time, the elements of m_data indexed from 0 to m_size-1
+      // are in use and are stored in ascending order of the keys.
+
+    linkedList::Node* findFirstAtLeast(const KeyType& key) const;
+      // Return the index of the pair in m_data whose key is the least one
+      // that is >= key, or m_size if there is no such pair.
+
+    bool doInsertOrUpdate(const KeyType& key, const ValueType& value);
+          
 };
 
-#endif /* Map_h */
+// Inline implementations
+
+inline
+int Map::size() const
+{
+    return linkedList.m_size;
+}
+
+inline
+bool Map::empty() const
+{
+    return linkedList.m_size == 0;
+}
+
+inline
+bool Map::contains(const KeyType& key) const
+{
+    if(findFirstAtLeast(key) == nullptr) return false;
+    return true;
+}
+
+inline
+bool Map::insert(const KeyType& key, const ValueType& value)
+{
+    if(findFirstAtLeast(key) != nullptr) return false; //cannot insert if it is already in the map
+    return doInsertOrUpdate(key, value);
+}
+
+inline
+bool Map::update(const KeyType& key, const ValueType& value)
+{
+    if(findFirstAtLeast(key) == nullptr) return false; //cannot update if not in map
+    return doInsertOrUpdate(key, value);
+}
+
+inline
+bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
+{
+    return doInsertOrUpdate(key, value);
+}
+
+
+//NON MEMBER FUNCTIONS
+
+bool merge(const Map& m1, const Map& m2, Map& result);
+void reassign(const Map& m, Map& result);
+
+#endif // MAP_INCLUDED

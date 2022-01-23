@@ -1,195 +1,308 @@
 //
 //  Map.cpp
-//  CS32-HW1
+//  CS32-Proj2
 //
-//  Created by Margaret Capetz on 1/15/22.
+//  Created by Margaret Capetz on 1/21/22.
 //
+
+// Map.cpp
 
 #include "Map.h"
-#include <algorithm>
+#include <iostream>
 
+using namespace std;
 
-Map::Map() {
-    // Create an empty map (i.e., one with no key/value pairs)
-    m_size = 0;
+Map::Map()
+{
 }
 
 Map::~Map() {
+    linkedList::Node* p = linkedList.dummy->next;
+    while(p != linkedList.dummy) {
+        linkedList::Node* n = p->next;
+        delete p;
+        p = n;
+    }
+
+}
+
+Map::Map(const Map &src) {
+    //copy over new size
+    linkedList.m_size = src.linkedList.m_size;
     
+    //copy over nodes of linked list
+    linkedList::Node* q = linkedList.dummy->next;
+    linkedList::Node* p = src.linkedList.dummy->next;
+    while(p != src.linkedList.dummy) {
+        linkedList::Node* n = new linkedList::Node();
+        q->next = n;
+        n->prev = q;
+        n->pair = p->pair;
+        p = p->next;
+        q = n;
+    }
+    
+    //close the loop
+    q->next = linkedList.dummy;
+    linkedList.dummy->prev = q;
 }
 
-bool Map::empty() const {
-    //  // Return true if the map is empty, otherwise false.
-    return (m_size == 0);
-}
-int Map::size() const {
-    // Return the number of key/value pairs in the map.
-    return m_size;
+Map& Map::operator=(const Map &src) {
+    if(&src == this) { //#1
+        return *this; //do nothing
+    }
+    
+    //#2 free the memory
+    linkedList::Node* m = linkedList.dummy->next;
+    while(m != linkedList.dummy) {
+        linkedList::Node* k = m->next;
+        delete m;
+        m = k;
+    }
+    
+    //#3 assign new size
+    linkedList.m_size = src.linkedList.m_size;
+    
+    //#4 copy
+    //copy over nodes of linked list
+    linkedList::Node* q = linkedList.dummy->next;
+    linkedList::Node* p = src.linkedList.dummy->next;
+    while(p != src.linkedList.dummy) {
+        linkedList::Node* n = new linkedList::Node();
+        q->next = n;
+        n->prev = q;
+        n->pair = p->pair;
+        p = p->next;
+        q = n;
+    }
+    
+    //close the loop
+    q->next = linkedList.dummy;
+    linkedList.dummy->prev = q;
+    
+    //#5 return statement
+    return *this;
 }
 
-bool Map::insert(const KeyType& key, const ValueType& value) {
-    //  // If key is not equal to any key currently in the map, and if the
-    //  // key/value pair can be added to the map, then do so and return true.
-    //  // Otherwise, make no change to the map and return false (indicating
-    //  // that either the key is already in the map, or the map has a fixed
-    //  // capacity and is full).
-    if(m_size >= DEFAULT_MAX_ITEMS) {
+bool Map::erase(const KeyType& key)
+{
+    if(findFirstAtLeast(key) == nullptr) {
+        //not found, cannot erase
         return false;
     }
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i].getKey()) {
-            return false;
-        }
-    }
     
-    m_arr[m_size].setKey(key);
-    m_arr[m_size].setValue(value);
-    m_size++;
+    //found
+    linkedList::Node* killMe = findFirstAtLeast(key);
+    linkedList::Node* prevNode = killMe->prev;
+    linkedList::Node* nextNode = killMe->next;
+    
+    prevNode->next = nextNode;
+    nextNode->prev = prevNode;
+
+    linkedList.m_size--;
     return true;
 }
 
-
-bool Map::update(const KeyType& key, const ValueType& value) {
-    //  // If key is equal to a key currently in the map, then make that key no
-    //  // longer map to the value that it currently maps to, but instead map to
-    //  // the value of the second parameter; return true in this case.
-    //  // Otherwise, make no change to the map and return false.
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i].getKey()) {
-            m_arr[i].setValue(value);
-            return true;
-        }
-    }
-    return false;
-}
-
-
-bool Map::insertOrUpdate(const KeyType& key, const ValueType& value) {
-    //  // If key is equal to a key currently in the map, then make that key no
-    //  // longer map to the value that it currently maps to, but instead map to
-    //  // the value of the second parameter; return true in this case.
-    //  // If key is not equal to any key currently in the map and if the
-    //  // key/value pair can be added to the map, then do so and return true.
-    //  // Otherwise, make no change to the map and return false (indicating
-    //  // that the key is not already in the map and the map has a fixed
-    //  // capacity and is full).
-    if(!update(key, value) && !insert(key, value)) {
-        return false;
-    }
+bool Map::get(const KeyType& key, ValueType& value) const
+{
+    if(findFirstAtLeast(key) == nullptr) return false;
+    linkedList::Node* n = findFirstAtLeast(key);
+    value = n->pair.m_value;
+    
     return true;
 }
 
+bool Map::get(int i, KeyType& key, ValueType& value) const
+{
+    if (i < 0  ||  i >= linkedList.m_size) return false;
+    
+    linkedList::Node* p = linkedList.dummy->next;
+    for(int j = 0; j < i; j++) {
+        p = p->next;
+    }
+    key = p->pair.m_key;
+    value = p->pair.m_value;
+    
+    return true;
+}
 
-bool Map::erase(const KeyType& key) {
-    //  // If key is equal to a key currently in the map, remove the key/value
-    //  // pair with that key from the map and return true.  Otherwise, make
-    //  // no change to the map and return false.
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i].getKey()) {
-            //move all values over to the left
-            for(int j = i; j < m_size; j++) {
-                m_arr[j] = m_arr[j+1];
+void Map::swap(Map& other)
+{
+    //swap the sizes
+    int tempSize = linkedList.m_size;
+    linkedList.m_size = other.linkedList.m_size;
+    other.linkedList.m_size = tempSize;
+    
+    //swap the linked lists
+    linkedList::Node* tempDummy = linkedList.dummy;
+    linkedList.dummy = other.linkedList.dummy;
+    other.linkedList.dummy = tempDummy;
+}
+
+Map::linkedList::Node* Map::findFirstAtLeast(const KeyType& key) const
+{
+    linkedList::Node* p = linkedList.dummy->next;
+    while(p != linkedList.dummy) {
+        if(key == p->pair.m_key) {
+            return p;
+        }
+        p = p->next;
+    }
+
+    return nullptr;
+}
+
+bool Map::doInsertOrUpdate(const KeyType& key, const ValueType& value)
+{
+
+    if(findFirstAtLeast(key) != nullptr) { //found
+        //update
+        linkedList::Node* n = findFirstAtLeast(key);
+        n->pair.m_key = key;
+        n->pair.m_value = value;
+    }
+    
+    else { //not found
+        //insert in SORTED ORDER
+        linkedList::Node* p = linkedList.dummy->next;
+        while(p != linkedList.dummy) {
+            if(p->pair.m_key > key) {
+                //reached the first Node that has a pair greater than p pair
+                //insert here
+                break;
             }
-            m_size--;
-            return true;
+            p = p->next;
         }
+        
+        //insert
+        linkedList::Node* n = new linkedList::Node();
+        n->pair.m_key = key;
+        n->pair.m_value = value;
+        
+        linkedList::Node* prevNode = p->prev; //order should be prevNode -> n -> p
+        prevNode->next = n;
+        n->next = p;
+        p->prev = n;
+        n->prev = prevNode;
+        
+        linkedList.m_size++;
     }
-    return false;
-}
 
-
-bool Map::contains(const KeyType& key) const {
-    //  // Return true if key is equal to a key currently in the map, otherwise
-    //  // false.
-    
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i].getKey()) {
-            return true;
-        }
-    }
-    return false;
-}
-
-
-bool Map::get(const KeyType& key, ValueType& value) const {
-    //  // If key is equal to a key currently in the map, set value to the
-    //  // value in the map which that key maps to, and return true.  Otherwise,
-    //  // make no change to the value parameter of this function and return
-    //  // false.
-    for(int i = 0; i < m_size; i++) {
-        if(key == m_arr[i].getKey()) {
-            value = m_arr[i].getValue();
-            return true;
-        }
-    }
-    return false;
-    
-}
-
-
-bool Map::get(int i, KeyType& key, ValueType& value) const {
-    //  // If 0 <= i < size(), copy into the key and value parameters the
-    //  // key and value of the key/value pair in the map whose key is strictly
-    //  // greater than exactly i keys in the map and return true.  Otherwise,
-    //  // leave the key and value parameters unchanged and return false.
-    
-    if(i < 0 || i >= m_size) {
-        return false;
-    }
-    
-    //create a temp copy of array
-    Object temp[DEFAULT_MAX_ITEMS];
-    
-    //populate temp array
-    for(int m = 0; m < m_size; m++) {
-        temp[m] = m_arr[m];
-    }
-    
-    //sort temp array
-    for (int step = 0; step < m_size - 1; step++) {
-        int min_idx = step;
-        for (int i = step + 1; i < m_size; i++) {
-          // Select the minimum element in each loop.
-          if (temp[i].getKey() < temp[min_idx].getKey())
-            min_idx = i;
-        }
-
-        // put min at the correct position by swapping
-        Object tempObject = temp[min_idx];
-        temp[min_idx] = temp[step];
-        temp[step] = tempObject;
-    }
-    
-    
-    key = temp[i].getKey();
-    value = temp[i].getValue();
-    
     return true;
-    
-}
-
-
-void Map::swap(Map& other) {
-    //  // Exchange the contents of this map with the other one.
-
-    int temp_size = m_size;
-    m_size = other.m_size;
-    other.m_size = temp_size;
-    
-    for(int i = 0; i < DEFAULT_MAX_ITEMS; i++) {
-        Object temp = m_arr[i];
-        m_arr[i] = other.m_arr[i];
-        other.m_arr[i] = temp;
-    }
-
 }
 
 void Map::dump() const {
-    for(int i = 0; i < m_size; i++) {
-        std::cerr << m_arr[i].getKey() << ":" << m_arr[i].getValue() << std::endl;
+    linkedList::Node* p = linkedList.dummy->next;
+    while(p != linkedList.dummy) {
+        cerr << p->pair.m_key  << ": " << p->pair.m_value << endl;
+        p = p->next;
     }
 }
 
+bool merge(const Map& m1, const Map& m2, Map& result) {
+    bool isMerge = true;
+    for(int i = 0; i < m1.size(); i++) {
+        KeyType tempKey;
+        ValueType tempValue;
+        m1.get(i, tempKey, tempValue);
+        if(m1.contains(tempKey) && m2.contains(tempKey)) {
+            //key appears in both m1 and m2
+            ValueType tempVal1;
+            ValueType tempVal2;
+            m1.get(tempKey, tempVal1);
+            m2.get(tempKey, tempVal2);
+            if(tempVal1 == tempVal2) {
+                //same corresponding value in both m1 and m2
+                //result must contain exactly one pair of that key and value
+                result.insert(tempKey, tempValue);
+            }
+            else {
+                //same key, different corresponding values
+                isMerge = false;
+                break;
+            }
+        }
+        else {
+            //key appears in exactly one of m1 and m2
+            //result must contain a pair consisting of that key and its corresponding value
+            result.insert(tempKey, tempValue);
+        }
+    }
 
+    for(int j = 0; j < m2.size(); j++) {
+        KeyType tempKey;
+        ValueType tempValue;
+        m2.get(j, tempKey, tempValue);
+        if(!(m1.contains(tempKey) && m2.contains(tempKey))) {
+            //if they both don't contain, then add to the map
+            m2.get(j, tempKey, tempValue);
+            result.insert(tempKey, tempValue); //insert only works if the key,value pair doesn't exist in the list
+        }
+    }
 
+    return isMerge;
+}
 
+void reassign(const Map& m, Map& result) {
+    //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
+    if(&m == &result) { //if both m and result point to the same address
+        cerr << "m and result are the same" << endl;
+        Map newResult; //create a newResult map
+        result = newResult; //set the result to the newResult
+    }
+        
+    //you must not assume result is empty when it is passed in to this function; it may not be.
+    //reset result to empty
+    while(result.empty() == false) {
+        KeyType key;
+        ValueType val;
+        result.get(0, key, val);
+        result.erase(key);
+    }
+    
+    //However, if m has only one pair, then result must contain simply a copy of that pair.
+    if(m.size() == 0) {
+        KeyType key;
+        ValueType val;
+        m.get(0, key, val);
+        result.insert(key, val);
+        return;
+    }
+    
+    
+    if(m.size() % 2 == 0) { //if size is even, switch between groups of 2
+        for(int j = 0; j <= m.size() - 2; j += 2) {
+//            cerr << "size: " << m.size() << endl;
+//            cerr << "j: " << j << endl;
+            KeyType key1;
+            ValueType val1;
+            m.get(j, key1, val1);
+            KeyType key2;
+            ValueType val2;
+            m.get(j + 1, key2, val2);
+            result.insert(key1, val2);
+            result.insert(key2, val1);
+        }
+    }
+    else { //if size is odd, iterate down to switch
+        //hold first
+        ValueType tempVal;
+        KeyType key0;
+        ValueType val0;
+        m.get(0, key0, val0);
+        tempVal = val0;
+        //iterate through linked list
+        for(int k = 1; k < m.size(); k++) {
+            KeyType key;
+            ValueType val;
+            m.get(k, key, val);
+            result.insert(key, tempVal);
+            tempVal = val;
+        }
+        //set first
+        result.insert(key0, tempVal);
+    }
+    
+    //Upon return, result must contain the same number of pairs as m
+
+}
