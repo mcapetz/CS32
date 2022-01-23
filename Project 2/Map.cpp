@@ -200,6 +200,7 @@ void Map::dump() const {
 }
 
 bool merge(const Map& m1, const Map& m2, Map& result) {
+    bool isMerge = true;
     for(int i = 0; i < m1.size(); i++) {
         KeyType tempKey;
         ValueType tempValue;
@@ -217,7 +218,8 @@ bool merge(const Map& m1, const Map& m2, Map& result) {
             }
             else {
                 //same key, different corresponding values
-                return false;
+                isMerge = false;
+                break;
             }
         }
         else {
@@ -231,9 +233,29 @@ bool merge(const Map& m1, const Map& m2, Map& result) {
         KeyType tempKey;
         ValueType tempValue;
         m2.get(j, tempKey, tempValue);
-        result.insert(tempKey, tempValue);
+        if(!(m1.contains(tempKey) && m2.contains(tempKey))) {
+            //if they both don't contain, then add to the map
+            m2.get(j, tempKey, tempValue);
+            result.insert(tempKey, tempValue); //insert only works if the key,value pair doesn't exist in the list
+        }
     }
 
-    return true;
+    return isMerge;
 }
 
+void reassign(const Map& m, Map& result) {
+    //However, if m has only one pair, then result must contain simply a copy of that pair.
+    if(m.size() == 0) {
+        KeyType key;
+        ValueType val;
+        m.get(0, key, val);
+        result.insert(key, val);
+        return;
+    }
+    
+    //you must not assume result is empty when it is passed in to this function; it may not be.
+    //Upon return, result must contain the same number of pairs as m
+    //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
+    
+
+}

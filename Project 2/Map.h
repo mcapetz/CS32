@@ -181,5 +181,6 @@ bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
 //NON MEMBER FUNCTIONS
 
 bool merge(const Map& m1, const Map& m2, Map& result);
+void reassign(const Map& m, Map& result);
 
 #endif // MAP_INCLUDED
