@@ -263,6 +263,32 @@ void test6() {
     assert(m.get("ethel", val) == true && val != 456);
     assert(m.get("lucy", val) == true && val != 789);
     assert(m.get("ricky", val) == true && val != 321);
+    
+    Map result3;
+    Map k;
+    k.insert("greg", 1); //test size of 1
+    
+    reassign(k, result3);
+    assert(result3.contains("greg") && result3.size() == 1);
+    
+    k.insert("", 78);
+    k.insert("t", 1);
+    k.insert("k", 2);
+    k.insert("l", 3);
+    k.insert("fred", 123);
+    k.insert("ethel", 456);
+    k.insert("lucy", 789);
+    k.insert("ricky", 321); //testing a larger list
+    reassign(k, result3);
+    assert(result3.get("t", val) == true && val != 1);
+    assert(result3.get("k", val) == true && val != 2);
+    assert(result3.get("l", val) == true && val != 3);
+    assert(result3.get("fred", val) == true && val != 123);
+    assert(result3.get("ethel", val) == true && val != 456);
+    assert(result3.get("lucy", val) == true && val != 789);
+    assert(result3.get("ricky", val) == true && val != 321);
+    assert(result3.get("", val) == true && val != 78);
+    
 
     cerr << "test 6 passed" << endl;
 }
