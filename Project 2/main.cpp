@@ -5,6 +5,39 @@
 //  Created by Margaret Capetz on 1/21/22.
 //
 
+//#include "Map.h"
+//        #include <type_traits>
+//
+//        #define CHECKTYPE(f, t) (void(static_cast<t>(f)))
+//
+//        static_assert(std::is_default_constructible<Map>::value,
+//                "Map must be default-constructible.");
+//        static_assert(std::is_copy_constructible<Map>::value,
+//                "Map must be copy-constructible.");
+//        static_assert(std::is_copy_assignable<Map>::value,
+//                "Map must be assignable.");
+//
+//        void thisFunctionWillNeverBeCalled()
+//        {
+//            CHECKTYPE(&Map::operator=,      Map& (Map::*)(const Map&));
+//            CHECKTYPE(&Map::empty,          bool (Map::*)() const);
+//            CHECKTYPE(&Map::size,           int  (Map::*)() const);
+//            CHECKTYPE(&Map::insert,         bool (Map::*)(const KeyType&, const ValueType&));
+//            CHECKTYPE(&Map::update,         bool (Map::*)(const KeyType&, const ValueType&));
+//            CHECKTYPE(&Map::insertOrUpdate, bool (Map::*)(const KeyType&, const ValueType&));
+//            CHECKTYPE(&Map::erase,          bool (Map::*)(const KeyType&));
+//            CHECKTYPE(&Map::contains,       bool (Map::*)(const KeyType&) const);
+//            CHECKTYPE(&Map::get,            bool (Map::*)(const KeyType&, ValueType&) const);
+//            CHECKTYPE(&Map::get,            bool (Map::*)(int, KeyType&, ValueType&) const);
+//            CHECKTYPE(&Map::swap,           void (Map::*)(Map&));
+//
+//            CHECKTYPE(merge,  bool (*)(const Map&, const Map&, Map&));
+//            CHECKTYPE(reassign, void (*)(const Map&, Map&));
+//        }
+//
+//        int main()
+//        {}
+
 #include "Map.h"
 
 using namespace std;
@@ -14,6 +47,14 @@ using namespace std;
 
 void test1() { //basic functions
     cerr << "test 1 start" << endl;
+    
+    // default constructor
+  Map x;
+    // For an empty map:
+  assert(x.size() == 0);      // test size
+  assert(x.empty());          // test empty
+  assert(!x.erase("Ricky"));  // nothing to erase
+    
     Map m;
     assert(m.size() == 0); //assert initial size is zero
     assert(m.empty() == true); //assert the map is empty
@@ -34,7 +75,7 @@ void test1() { //basic functions
     assert(m.size() == 0); //assert size is 0 when there are no more pairs
     assert(m.contains("a") == false); //assert erased pair is not longer in list
     assert(m.update("a", 1) == false); //pair is no longer in map, update should return false
-    
+
     cerr << "test 1 passed" << endl;
 }
 
@@ -62,14 +103,14 @@ void test3() { //2nd get function
     m.insert("g", 5);
     m.insert("b", 4);
     m.dump();
-    
+
     KeyType key;
     ValueType val;
     assert(m.get(0, key, val) == true && key == "a" && val == 3); //the key that is strictly greater than 0 keys is the first key which should be "a"
     assert(m.get(-1, key, val) == false && key == "a" && val == 3); //if i < 0 then false, key/value pair should not be altered
     assert(m.get(4, key, val) == false && key == "a" && val == 3); //if i >= size then false, key/value pair should not be altered
     assert(m.get(1, key, val) == true && key == "b" && val == 4); //the key strictly greater than 1 key is "b" the second key
-    
+
     Map msd;  // KeyType is std::string, ValueType is double
             msd.insert("ccc", 80);
             msd.insert("aaa", 40);
@@ -80,7 +121,7 @@ void test3() { //2nd get function
             assert(!msd.get(4, k, v)  &&  k == "xxx");  // x is unchanged
             assert(msd.get(1, k, v)  &&  k == "bbb");   // "bbb" is greater than
                                                         // exactly 1 item
-    
+
     cerr << "test 3 passed" << endl;
 }
 
@@ -122,23 +163,23 @@ void test5() { //merge function
     m.insert("fred", 123);
     m.insert("ethel", 456);
     m.insert("lucy", 789);
-    
+
     Map n;
     n.insert("lucy", 789);
     n.insert("ricky", 321);
-    
+
     Map o;
     o.insert("lucy", 000);
     o.insert("ricky", 321);
-    
+
     Map p; //empty
-    
+
     Map result;
     assert(merge(m, n, result) == true); //merge returns true because it doesn't run into the case in which a key has two unique vals in both maps
 //    cerr << "result" << endl;
 //    result.dump();
 //    cerr << "result end" << endl;
-    
+
     Map result2;
     assert(merge(m, o, result2) == false); //merge returns false because one key has two vals in both maps
     assert(result2.contains("ethel") == true);
@@ -147,7 +188,7 @@ void test5() { //merge function
 //    cerr << "result 2" << endl;
 //    result2.dump();
 //    cerr << "result 2 end" << endl;
-    
+
     Map result3;
     assert(merge(m, p, result3) == true); //merge returns true because merging a non-empty and empty map should be successful
     assert(result3.contains("fred") == true);
@@ -156,14 +197,74 @@ void test5() { //merge function
 //    cerr << "result 3" << endl;
 //    result3.dump();
 //    cerr << "result 3 end" << endl;
-    
+
     Map x;
     Map y;
     Map result4;
     assert(merge(x, y, result4) == true);
     assert(result4.empty() == true);
-   
+
     cerr << "test 5 passed" << endl;
+}
+
+
+void test6() {
+    cerr << "test 6 start" << endl;
+    //"Fred"  123      "Ethel"  456      "Lucy"  789      "Ricky"  321
+    Map m;
+    m.insert("fred", 123);
+    m.insert("ethel", 456);
+    m.insert("lucy", 789);
+    m.insert("ricky", 321); //testing a map that has an even size
+    Map result;
+    reassign(m, result);
+    cerr << "result" << endl;
+    result.dump();
+    cerr << "result end" << endl;
+    ValueType val;
+    assert(result.get("fred", val) == true && val != 123);
+    assert(result.get("ethel", val) == true && val != 456);
+    assert(result.get("lucy", val) == true && val != 789);
+    assert(result.get("ricky", val) == true && val != 321);
+
+    Map n;
+    n.insert("shiv", 123);
+    n.insert("tom", 456);
+    n.insert("greg", 789);
+    reassign(n, result); //testing when result is nonempty
+    cerr << "result" << endl;
+    result.dump();
+    cerr << "result end" << endl;
+    assert(result.get("shiv", val) == true && val != 123);
+    assert(result.get("tom", val) == true && val != 456);
+    assert(result.get("greg", val) == true && val != 789);
+
+    Map g;
+    g.insert("t", 1);
+    g.insert("k", 2);
+    g.insert("l", 3);
+    Map result2;
+    result2 = g; //assignment operator
+    reassign(g, result2);
+    assert(result2.get("t", val) == true && val != 1);
+    assert(result2.get("k", val) == true && val != 2);
+    assert(result2.get("l", val) == true && val != 3);
+    
+    cerr << "before reassign" << endl;
+    cerr << "m" << endl;
+    m.dump();
+    
+    reassign(m, m);
+    
+    cerr << "after reassign" << endl;
+    cerr << "m" << endl;
+    m.dump();
+    assert(m.get("fred", val) == true && val != 123);
+    assert(m.get("ethel", val) == true && val != 456);
+    assert(m.get("lucy", val) == true && val != 789);
+    assert(m.get("ricky", val) == true && val != 321);
+
+    cerr << "test 6 passed" << endl;
 }
 
 //
@@ -175,12 +276,13 @@ void test5() { //merge function
 
 
 int main(int argc, const char * argv[]) {
-    
+
     test1();
     test2();
     test3();
     test4();
     test5();
-    
-    
+    test6();
+
+
 }
