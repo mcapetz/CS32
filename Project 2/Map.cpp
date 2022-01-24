@@ -23,6 +23,8 @@ Map::~Map() {
         delete p;
         p = n;
     }
+    
+    delete linkedList.dummy;
 
 }
 
@@ -110,6 +112,8 @@ bool Map::erase(const KeyType& key)
     
     prevNode->next = nextNode;
     nextNode->prev = prevNode;
+    
+    delete killMe;
 
     linkedList.m_size--;
     return true;
@@ -271,7 +275,7 @@ void reassign(const Map& m, Map& result) {
 //        newResult.dump();
         
         //However, if m has only one pair, then result must contain simply a copy of that pair.
-        if(m.size() == 0) {
+        if(m.size() == 1) {
             KeyType key;
             ValueType val;
             m.get(0, key, val);
@@ -331,7 +335,7 @@ void reassign(const Map& m, Map& result) {
     }
     
     //However, if m has only one pair, then result must contain simply a copy of that pair.
-    if(m.size() == 0) {
+    if(m.size() == 1) {
         KeyType key;
         ValueType val;
         m.get(0, key, val);
