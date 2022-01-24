@@ -27,6 +27,10 @@ Map::~Map() {
 }
 
 Map::Map(const Map &src) {
+    //reset dummy pointers
+    linkedList.dummy->next = linkedList.dummy;
+    linkedList.dummy->prev = linkedList.dummy;
+    
     //copy over new size
     linkedList.m_size = src.linkedList.m_size;
     
@@ -48,6 +52,7 @@ Map::Map(const Map &src) {
 }
 
 Map& Map::operator=(const Map &src) {
+    
     if(&src == this) { //#1
         return *this; //do nothing
     }
@@ -59,6 +64,13 @@ Map& Map::operator=(const Map &src) {
         delete m;
         m = k;
     }
+    
+    linkedList.dummy->next = linkedList.dummy;
+    linkedList.dummy->prev = linkedList.dummy;
+
+    
+//    cerr << "this dump" << endl; //NOT PROPERLY DUMPED
+//    this->dump();
     
     //#3 assign new size
     linkedList.m_size = src.linkedList.m_size;
@@ -245,10 +257,68 @@ bool merge(const Map& m1, const Map& m2, Map& result) {
 
 void reassign(const Map& m, Map& result) {
     //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
+//    cerr << "before check in reassign func" << endl;
+//    cerr << "m:" << endl;
+//    m.dump();
+//    cerr << "result:" << endl;
+//    result.dump();
+    
     if(&m == &result) { //if both m and result point to the same address
-        cerr << "m and result are the same" << endl;
+        //cerr << "m and result are the same" << endl;
         Map newResult; //create a newResult map
-        result = newResult; //set the result to the newResult
+        
+//        cerr << "newresult:" << endl;
+//        newResult.dump();
+        
+        //However, if m has only one pair, then result must contain simply a copy of that pair.
+        if(m.size() == 0) {
+            KeyType key;
+            ValueType val;
+            m.get(0, key, val);
+            newResult.insert(key, val);
+            return;
+        }
+        
+        if(m.size() % 2 == 0) { //if size is even, switch between groups of 2
+            for(int j = 0; j <= m.size() - 2; j += 2) {
+                KeyType key1;
+                ValueType val1;
+                m.get(j, key1, val1);
+                KeyType key2;
+                ValueType val2;
+                m.get(j + 1, key2, val2);
+                newResult.insert(key1, val2);
+                newResult.insert(key2, val1);
+            }
+        }
+        else { //if size is odd, iterate down to switch
+            //hold first
+            ValueType tempVal;
+            KeyType key0;
+            ValueType val0;
+            m.get(0, key0, val0);
+            tempVal = val0;
+            //iterate through linked list
+            for(int k = 1; k < m.size(); k++) {
+                KeyType key;
+                ValueType val;
+                m.get(k, key, val);
+                newResult.insert(key, tempVal);
+                tempVal = val;
+            }
+            //set first
+            newResult.insert(key0, tempVal);
+        }
+        
+//        cerr << "****Nresult:" << endl;
+//        newResult.dump();
+        
+        result = newResult; //set the result to the newResult //NEED TO FIX ASSIGNMENT OPERATOR
+        
+//        cerr << "****Result:" << endl;
+//        result.dump();
+        
+        return;
     }
         
     //you must not assume result is empty when it is passed in to this function; it may not be.
@@ -272,8 +342,6 @@ void reassign(const Map& m, Map& result) {
     
     if(m.size() % 2 == 0) { //if size is even, switch between groups of 2
         for(int j = 0; j <= m.size() - 2; j += 2) {
-//            cerr << "size: " << m.size() << endl;
-//            cerr << "j: " << j << endl;
             KeyType key1;
             ValueType val1;
             m.get(j, key1, val1);
@@ -304,5 +372,7 @@ void reassign(const Map& m, Map& result) {
     }
     
     //Upon return, result must contain the same number of pairs as m
+    
+    
 
 }
