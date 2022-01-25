@@ -85,6 +85,7 @@ class Map
       // Exchange the contents of this map with the other one.
     
     void dump() const;
+      // writes contents of map to cerr
 
   private:
 

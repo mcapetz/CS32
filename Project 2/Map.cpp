@@ -71,9 +71,6 @@ Map& Map::operator=(const Map &src) {
     linkedList.dummy->prev = linkedList.dummy;
 
     
-//    cerr << "this dump" << endl; //NOT PROPERLY DUMPED
-//    this->dump();
-    
     //#3 assign new size
     linkedList.m_size = src.linkedList.m_size;
     
@@ -217,6 +214,65 @@ void Map::dump() const {
 
 bool merge(const Map& m1, const Map& m2, Map& result) {
     bool isMerge = true;
+    
+    //IN THE FACE OF ALIASING...
+    if(&m1 == &result || &m2 == &result) { //if m1 or m2 points to the same address as result
+        //cerr << "m and result are the same" << endl;
+        Map newResult; //create a newResult map
+
+        for(int i = 0; i < m1.size(); i++) {
+            KeyType tempKey;
+            ValueType tempValue;
+            m1.get(i, tempKey, tempValue);
+            if(m1.contains(tempKey) && m2.contains(tempKey)) {
+                //key appears in both m1 and m2
+                ValueType tempVal1;
+                ValueType tempVal2;
+                m1.get(tempKey, tempVal1);
+                m2.get(tempKey, tempVal2);
+                if(tempVal1 == tempVal2) {
+                    //same corresponding value in both m1 and m2
+                    //result must contain exactly one pair of that key and value
+                    newResult.insert(tempKey, tempValue);
+                }
+                else {
+                    //same key, different corresponding values
+                    isMerge = false;
+                    break;
+                }
+            }
+            else {
+                //key appears in exactly one of m1 and m2
+                //result must contain a pair consisting of that key and its corresponding value
+                newResult.insert(tempKey, tempValue);
+            }
+        }
+
+        for(int j = 0; j < m2.size(); j++) {
+            KeyType tempKey;
+            ValueType tempValue;
+            m2.get(j, tempKey, tempValue);
+            if(!(m1.contains(tempKey) && m2.contains(tempKey))) {
+                //if they both don't contain, then add to the map
+                m2.get(j, tempKey, tempValue);
+                newResult.insert(tempKey, tempValue); //insert only works if the key,value pair doesn't exist in the list
+            }
+        }
+        
+        result = newResult;
+        return isMerge;
+       
+    }
+    
+    
+    //(You must not assume result is empty when it is passed in to this function; it might not be.)
+    while(result.empty() == false) {
+        KeyType key;
+        ValueType val;
+        result.get(0, key, val);
+        result.erase(key);
+    }
+    
     for(int i = 0; i < m1.size(); i++) {
         KeyType tempKey;
         ValueType tempValue;
@@ -261,18 +317,9 @@ bool merge(const Map& m1, const Map& m2, Map& result) {
 
 void reassign(const Map& m, Map& result) {
     //Be sure that in the face of aliasing, these functions behave as this spec requires: Does your implementation work correctly if m1 and result refer to the same Map, for example?
-//    cerr << "before check in reassign func" << endl;
-//    cerr << "m:" << endl;
-//    m.dump();
-//    cerr << "result:" << endl;
-//    result.dump();
     
     if(&m == &result) { //if both m and result point to the same address
-        //cerr << "m and result are the same" << endl;
         Map newResult; //create a newResult map
-        
-//        cerr << "newresult:" << endl;
-//        newResult.dump();
         
         //However, if m has only one pair, then result must contain simply a copy of that pair.
         if(m.size() == 1) {
@@ -314,14 +361,7 @@ void reassign(const Map& m, Map& result) {
             newResult.insert(key0, tempVal);
         }
         
-//        cerr << "****Nresult:" << endl;
-//        newResult.dump();
-        
-        result = newResult; //set the result to the newResult //NEED TO FIX ASSIGNMENT OPERATOR
-        
-//        cerr << "****Result:" << endl;
-//        result.dump();
-        
+        result = newResult; //set the result to the newResult
         return;
     }
         
@@ -377,6 +417,4 @@ void reassign(const Map& m, Map& result) {
     
     //Upon return, result must contain the same number of pairs as m
     
-    
-
 }
