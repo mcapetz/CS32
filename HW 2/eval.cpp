@@ -23,16 +23,15 @@ void clean(string& infix); //removes blanks
 bool isInfixValid(string infix); //returns true if string is valid infix notation
 bool infixContainsUnknownValue(string infix, const Map& values); //returns true if infix contains a value unknown to the map
 void inToPostConversion(string infix, string& postfix);
-void postEval(const string& postfix, Map& values, int& result, bool& dividesZero);
+int operatorPrecedence(const char ch);
+bool postEval(const string& postfix, const Map& values, int& result);
 
 int evaluate(string infix, const Map& values, string& postfix, int& result) {
     if(!isInfixValid(infix)) return 1;
     inToPostConversion(infix, postfix);
     if(infixContainsUnknownValue(infix, values)) return 2;
     
-    bool dividesZero = false;
-    void postEval(const string& postfix, Map& values, int& result, bool& dividesZero);
-    if(dividesZero) return 3;
+    if(postEval(postfix, values, result)) return 3;
     return 0;
 }
           // Evaluates an integer arithmetic expression
@@ -90,7 +89,8 @@ bool isInfixValid(string infix) {
     //+, -, *, and /, parentheses or blanks ' '
     
     clean(infix);
-    if(infix.size() < 3) return false; //must have at least 3 chars
+    if(infix.size() == 1 && isalpha(infix.at(0))) return true;
+    if(infix.size() < 3) return false; //otherwise infix must have at least 3 chars
     
     int numOfParens = 0;
     int numOfAlpha = 0;
@@ -144,6 +144,7 @@ bool isInfixValid(string infix) {
     }
     
     if(numOfParens != 0) return false; //must have balanced number of parens
+    if(numOfAlpha == 1 && numOfOper == 0) return true;
     if(numOfAlpha < 2 || numOfOper < 1) return false; //must have at least 2 alphas and 1 operator
     return true;
 }
@@ -184,7 +185,7 @@ void inToPostConversion(string infix, string& postfix) {
             case '-':
             case '*':
             case '/':
-                while(!myStack.empty() && myStack.top() != '(' && ch <= myStack.top()) { //this has problems most likely
+                while(!myStack.empty() && myStack.top() != '(' && operatorPrecedence(ch) <= operatorPrecedence(myStack.top())) { //this has problems most likely
                     postfix += myStack.top();
                     myStack.pop();
                 }
@@ -202,8 +203,24 @@ void inToPostConversion(string infix, string& postfix) {
     }
 }
 
+int operatorPrecedence(const char ch) {
+    switch(ch) {
+        case '+':
+        case '-':
+            return 1;
+            break;
+        case '*':
+        case '/':
+            return 2;
+            break;
+    }
+    return 0;
+}
 
-void postEval(const string& postfix, Map& values, int& result, bool& dividesZero) {
+
+bool postEval(const string& postfix, const Map& values, int& result) {
+    int originalResult = result;
+    
     stack<int> myStack;
     for(int i = 0; i < postfix.size(); i++) {
         char ch = postfix.at(i);
@@ -233,8 +250,8 @@ void postEval(const string& postfix, Map& values, int& result, bool& dividesZero
                 case '/':
                     if(operand2 == 0) {
                         //trying to divide by zero
-                        dividesZero = true;
-                        return;
+                        result = originalResult;
+                        return true;
                     }
                     res = operand1 / operand2;
                     break;
@@ -243,7 +260,10 @@ void postEval(const string& postfix, Map& values, int& result, bool& dividesZero
         }
         result = myStack.top();
     }
+    return false;
 }
+
+
 
 int main(int argc, const char * argv[]) {
     char vars[] = { 'a', 'e', 'i', 'o', 'u', 'y', '#' };
@@ -294,8 +314,8 @@ int main(int argc, const char * argv[]) {
                                         pf == "a"  &&  answer == 3);
                 assert(evaluate("((a))", m, pf, answer) == 0  &&
                                         pf == "a"  &&  answer == 3);
-                cout << "Passed all tests" << endl;
-
+                assert(evaluate("(a)", m, pf, answer) == 0  &&
+                                        pf == "a"  &&  answer == 3);
     
     //testing clean function
 //    clean("   ");
