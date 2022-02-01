@@ -22,9 +22,9 @@ using namespace std;
 void clean(string& infix); //removes blanks
 bool isInfixValid(string infix); //returns true if string is valid infix notation
 bool infixContainsUnknownValue(string infix, const Map& values); //returns true if infix contains a value unknown to the map
-void inToPostConversion(string infix, string& postfix);
-int operatorPrecedence(const char ch);
-bool postEval(const string& postfix, const Map& values, int& result);
+void inToPostConversion(string infix, string& postfix); //converts infix to postfix
+int operatorPrecedence(const char ch); //returns 1 if + or -, 2 if * or / to indicate operator precedence
+bool postEval(const string& postfix, const Map& values, int& result); //returns true if during evaluation if attempt to divide by 0, false otherwise indicating successful evaluation
 
 int evaluate(string infix, const Map& values, string& postfix, int& result) {
     if(!isInfixValid(infix)) return 1;
@@ -136,6 +136,9 @@ bool isInfixValid(string infix) {
             }
             
             else { //c is not a parantheses
+                if(c != '+' && c != '-' && c != '*' && c != '/' && c != ')') { //c is invalid operator/char
+                    return false;
+                }
                 if(i == 0 || i == infix.size()-1) return false; //cannot begin or end with operator
                 if(i != infix.size()-1 && infix.at(i+1) != '(' && !isalpha(infix.at(i+1))) return false; //must be followed by a ( or alpha
                 numOfOper++;
@@ -277,36 +280,37 @@ int main(int argc, const char * argv[]) {
     answer = 999;
     
                 //testing isValidInfix()
-//                assert(evaluate("", m, pf, answer) == 1  &&  answer == 999); //empty string
-//                assert(evaluate("a+", m, pf, answer) == 1  &&  answer == 999); //operator at end
-//                assert(evaluate("a i", m, pf, answer) == 1  &&  answer == 999); //alpha following alpha
-//                assert(evaluate("ai", m, pf, answer) == 1  &&  answer == 999); //alpha following alpha
-//                assert(evaluate("()", m, pf, answer) == 1  &&  answer == 999); //only 2 chars
-//                assert(evaluate("()o", m, pf, answer) == 1  &&  answer == 999); //incorrect multiplication
-//                assert(evaluate("y(o+u)", m, pf, answer) == 1  &&  answer == 999); //incorrect multiplication
-//                assert(evaluate("y(*o)", m, pf, answer) == 1  &&  answer == 999); //incorrect multiplication
-//                assert(evaluate("a+E", m, pf, answer) == 1  &&  answer == 999); //upper case not allowed
-//                assert(evaluate("(a+(i-o)", m, pf, answer) == 1  &&  answer == 999); //unbalanced parentheses
-//                assert(evaluate("(a+(i-o))", m, pf, answer) == -1  &&  answer == 999); //correct
-//                assert(evaluate("a+(i-o))", m, pf, answer) == 1  &&  answer == 999); //unbalanced parenethese
-//                assert(evaluate("(a)/(i+u*z-o)", m, pf, answer) == -1  &&  answer == 999); //correct
-//                assert(evaluate("-a", m, pf, answer) == 1  &&  answer == 999); //unary opeators not allowed
-//                assert(evaluate("b*-a", m, pf, answer) == 1  &&  answer == 999); //two operators next to each other
-//                assert(evaluate("b*)-a", m, pf, answer) == 1  &&  answer == 999); //operator before )
-//                assert(evaluate("((()))", m, pf, answer) == 1  &&  answer == 999); //no alpha or operators
-//                assert(evaluate(")(a+b", m, pf, answer) == 1  &&  answer == 999); //cannot begin with )
-//                assert(evaluate("y*(*o)", m, pf, answer) == 1  &&  answer == 999); //operator cannot follow (
-//                assert(evaluate("((((a+b", m, pf, answer) == 1  &&  answer == 999); //unbalanced parantheses
+                assert(evaluate("", m, pf, answer) == 1  &&  answer == 999); //empty string
+                assert(evaluate("a+", m, pf, answer) == 1  &&  answer == 999); //operator at end
+                assert(evaluate("a i", m, pf, answer) == 1  &&  answer == 999); //alpha following alpha
+                assert(evaluate("ai", m, pf, answer) == 1  &&  answer == 999); //alpha following alpha
+                assert(evaluate("()", m, pf, answer) == 1  &&  answer == 999); //only 2 chars
+                assert(evaluate("()o", m, pf, answer) == 1  &&  answer == 999); //incorrect multiplication
+                assert(evaluate("y(o+u)", m, pf, answer) == 1  &&  answer == 999); //incorrect multiplication
+                assert(evaluate("y(*o)", m, pf, answer) == 1  &&  answer == 999); //incorrect multiplication
+                assert(evaluate("a+E", m, pf, answer) == 1  &&  answer == 999); //upper case not allowed
+                assert(evaluate("(a+(i-o)", m, pf, answer) == 1  &&  answer == 999); //unbalanced parentheses
+                assert(evaluate("(a+(i-o))", m, pf, answer) == 0  &&  answer == 7); //correct
+                answer = 999;
+                assert(evaluate("a+(i-o))", m, pf, answer) == 1  &&  answer == 999); //unbalanced parenethese
+                assert(evaluate("(a)/(i+u*z-o)", m, pf, answer) == 2  &&  answer == 999); //valid infix but 'z' does not appear in the map
+                answer = 999;
+                assert(evaluate("-a", m, pf, answer) == 1  &&  answer == 999); //unary opeators not allowed
+                assert(evaluate("b*-a", m, pf, answer) == 1  &&  answer == 999); //two operators next to each other
+                assert(evaluate("b*)-a", m, pf, answer) == 1  &&  answer == 999); //operator before )
+                assert(evaluate("((()))", m, pf, answer) == 1  &&  answer == 999); //no alpha or operators
+                assert(evaluate(")(a+b", m, pf, answer) == 1  &&  answer == 999); //cannot begin with )
+                assert(evaluate("y*(*o)", m, pf, answer) == 1  &&  answer == 999); //operator cannot follow (
+                assert(evaluate("((((a+b", m, pf, answer) == 1  &&  answer == 999); //unbalanced parantheses
     
     
-                //testing infixToPostfix
+                //testing infixToPostfix conversion and postfix evaluation
                 assert(evaluate("a*b", m, pf, answer) == 2  && pf == "ab*"  &&  answer == 999);
-    
-    assert(evaluate("a*b", m, pf, answer) == 2  &&
-                                        pf == "ab*"  &&  answer == 999);
-    assert(evaluate("y +o *(   a-u)  ", m, pf, answer) == 0);
-    assert(pf == "yoau-*+");
-    assert(answer == -1);
+                assert(evaluate("a*b", m, pf, answer) == 2  &&
+                                                    pf == "ab*"  &&  answer == 999);
+                assert(evaluate("y +o *(   a-u)  ", m, pf, answer) == 0);
+                assert(pf == "yoau-*+");
+                assert(answer == -1);
                 answer = 999;
                 assert(evaluate("o/(y-y)", m, pf, answer) == 3  &&
                                         pf == "oyy-/"  &&  answer == 999);
@@ -316,11 +320,46 @@ int main(int argc, const char * argv[]) {
                                         pf == "a"  &&  answer == 3);
                 assert(evaluate("(a)", m, pf, answer) == 0  &&
                                         pf == "a"  &&  answer == 3);
-    
-    //testing clean function
-//    clean("   ");
-//    clean("a *   3 sd f ");
-//    clean("      a * ");
+                answer = 999;
+                assert(evaluate("(ab)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999);
+                
+                //additional testing for invalid infix
+                assert(evaluate("(a+-b)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //operators cannot be next to each other
+                assert(evaluate("(a@b)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid char
+                assert(evaluate("(a/b/)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid division
+                assert(evaluate("(----ab+)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid use of -
+                assert(evaluate("(a    + / b)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid use of operators
+                assert(evaluate("( < ab)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid char
+                assert(evaluate("(acdeb)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //operands cannot be next to each other
+                assert(evaluate("(a))b)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //unbalanced parentheses
+                assert(evaluate("(ab--0)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid use of - and invalid char
+                assert(evaluate("(ab&", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid multiplication and invalid char
+                assert(evaluate("(ab     * 9", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid multiplication and invalid char
+                assert(evaluate("(/ab)", m, pf, answer) == 1  &&
+                                        pf == "a"  &&  answer == 999); //invalid division
+                
+                //test division by zero
+                assert(evaluate("a/(o-y-y)", m, pf, answer) == 3  &&
+                             answer == 999);
+                assert(evaluate("(o-y-y)/(o-y-y)", m, pf, answer) == 3  &&
+                 answer == 999);
+                    
+                //testing clean function
+                //    clean("   ");
+                //    clean("a *   3 sd f ");
+                //    clean("      a * ");
     
     
     cerr << "all tests passed" << endl;
