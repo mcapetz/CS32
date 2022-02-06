@@ -85,8 +85,10 @@ bool somePredicate(double x)
 
   bool contains(const double a1[], int n1, const double a2[], int n2)
   {
-      
-      return false;  // This is not always correct.
+      if(n1 == 0 && n2 != 0) return false;
+      if(n2 == 0) return true;
+      if(a1[0] == a2[0]) return contains(a1+1, n1-1, a2+1, n2-1);
+      else return contains(a1+1, n1-1, a2, n2);
   }
 
 
@@ -95,6 +97,13 @@ int main(int argc, const char * argv[]) {
     double arr1[0] = {}; //empty
     double arr2[1] = {1}; //single element
     double arr3[6] = {-1, -2, 3, 5, 6, -7};
+    double arr5[5] = {3, 3, 1, 1, 1};
+    double arr6[7] = {10, 50, 40, 20, 50, 40, 30};
+    double arr7[0] = {};
+    double arr8[3] = {50, 20, 30};
+    double arr9[3] = {50, 40, 40};
+    double arr10[3] = {50, 30, 20};
+    double arr11[3] = {10, 20, 20};
     
     assert(anyFalse(arr, 5) == true);
     assert(anyFalse(arr1, 0) == false);
@@ -114,6 +123,13 @@ int main(int argc, const char * argv[]) {
     assert(locateMax(arr1, 0) == -1);
     assert(locateMax(arr2, 1) == 0);
     assert(locateMax(arr3, 6) == 4);
+    assert(locateMax(arr5, 5) == 0);
+    
+    assert(contains(arr6, 7, arr7, 0) == true);
+    assert(contains(arr6, 7, arr8, 3) == true);
+    assert(contains(arr6, 7, arr9, 3) == true);
+    assert(contains(arr6, 7, arr10, 3) == false);
+    assert(contains(arr6, 7, arr11, 3) == false);
     
     cout << "passed all tests" << endl;
 }
