@@ -99,27 +99,48 @@ using namespace std;
       // If n <= 1, do nothing.
     void order(double a[], int n)
     {
-        //write with fewer than 8 lines with separate()
-        return;  // This is not always correct.
+        if(n == 0) return;
+        int firstNotGreater = 0;
+        int firstLess = n;
+        separate(a, n, a[0], firstNotGreater, firstLess);
+        order(a,firstNotGreater);
+        order(a+firstLess, n-firstLess);
     }
 
 
-int main(int argc, const char * argv[]) {
-    double arr[7] = {10, 50, 40, 20, 50, 40, 30};
-    double arr0[0] = {};
-    double arr1[3] = {10, 20, 40};
-    double arr2[3] = {10, 40, 30};
-    double arr3[3] = {20, 10, 40};
-    double arr5[3] = {50, 40, 30};
-    
-    assert(countContains(arr, 7, arr0, 0) == 1);
-    assert(countContains(arr, 7, arr1, 3) == 1);
-    assert(countContains(arr, 7, arr2, 3) == 2);
-    assert(countContains(arr, 7, arr3, 3) == 0);
-    assert(countContains(arr, 7, arr5, 3) == 3);
-    
-    
-    
-    cout << "passed all tests" << endl;
-    
-}
+//int main(int argc, const char * argv[]) {
+//    double arr[7] = {10, 50, 40, 20, 50, 40, 30};
+//    double arr0[0] = {};
+//    double arr1[3] = {10, 20, 40};
+//    double arr2[3] = {10, 40, 30};
+//    double arr3[3] = {20, 10, 40};
+//    double arr5[3] = {50, 40, 30};
+//
+//    assert(countContains(arr, 7, arr0, 0) == 1);
+//    assert(countContains(arr, 7, arr1, 3) == 1);
+//    assert(countContains(arr, 7, arr2, 3) == 2);
+//    assert(countContains(arr, 7, arr3, 3) == 0);
+//    assert(countContains(arr, 7, arr5, 3) == 3);
+//
+//    order(arr, 7);
+//    for(int i = 0; i < 7; i++) {
+//        cout << arr[i] << ",";
+//    }
+//    cout << endl;
+//
+//    order(arr0, 0);
+//    cout << "order arr1" << endl;
+//
+//
+//    order(arr1, 2);
+//    for(int i = 0; i < 2; i++) {
+//        cout << arr1[i] << ",";
+//    }
+//    cout << endl;
+//
+//
+//
+//
+//    cout << "passed all tests" << endl;
+//
+//}
