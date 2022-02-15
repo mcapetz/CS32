@@ -5,7 +5,7 @@ using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
 {
-	return new StudentWorld(assetPath);
+    return new StudentWorld(assetPath);
 }
 
 // Students:  Add code to this file, StudentWorld.h, Actor.h, and Actor.cpp
@@ -37,7 +37,7 @@ int StudentWorld::init()
                          cerr << "Location " << i << "," << j << "is empty" << endl;
                          break;
                      case Level::peach:
-                         m_player = new Peach(i, j);
+                         m_player = new Peach(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT);
                          break;
                      case Level::koopa:
                          //
@@ -49,7 +49,7 @@ int StudentWorld::init()
                          //
                          break;
                      case Level::block:
-                         m_actors.push_back(new Block(i,j));
+                         m_actors.push_back(new Block(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                      case Level::star_goodie_block:
                          //
                          break;
@@ -78,10 +78,33 @@ int StudentWorld::init()
 
 int StudentWorld::move()
 {
+    m_player->doSomething();
+    for(int i = 0; i < m_actors.size(); i++) {
+        m_actors[i]->doSomething();
+    }
+    
+    if(!m_player->isAlive()) {
+        playSound(SOUND_PLAYER_DIE);
+        decLives();
+        return GWSTATUS_PLAYER_DIED;
+    }
+    
+    //if peach reaches flag
+    //if peach reaches mario
+    //delete dead actors
+    for(int i = 0; i < m_actors.size(); i++) {
+        if(!m_actors[i]->isAlive()) {
+            delete m_actors[i];
+        }
+    }
+    //update status text at top of screen
+    
+    return GWSTATUS_CONTINUE_GAME;
+    
     // This code is here merely to allow the game to build, run, and terminate after you hit enter.
     // Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
-    decLives();
-    return GWSTATUS_PLAYER_DIED;
+//    decLives();
+//    return GWSTATUS_PLAYER_DIED;
 }
 
 void StudentWorld::cleanUp()
