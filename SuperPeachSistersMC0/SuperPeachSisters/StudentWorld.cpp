@@ -15,6 +15,13 @@ StudentWorld::StudentWorld(string assetPath)
 {
 }
 
+StudentWorld::~StudentWorld() {
+    delete m_player;
+    for(int i = 0; i < m_actors.size(); i++) {
+        delete m_actors[i];
+    }
+}
+
 int StudentWorld::init()
 {
      Level lev(assetPath());
@@ -109,12 +116,15 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
+    StudentWorld::~StudentWorld();
 }
 
 bool StudentWorld::isBlockingObjectAt(int x, int y) {
     if(m_player->getX() == x && m_player->getY() == y) return true;
     for(int i = 0; i < m_actors.size(); i++) {
-        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
+//        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
+        if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return true;
     }
     return false;
 }
+

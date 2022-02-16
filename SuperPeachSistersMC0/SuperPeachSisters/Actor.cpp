@@ -67,6 +67,26 @@ void Peach::doSomething() {
                     moveTo(targetX, targetY);
                 }
                 break;
+//            case KEY_PRESS_UP:
+//                setDirection(right);
+//                targetY += 4;
+//                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
+//                    //bonk
+//                }
+//                else {
+//                    moveTo(targetX, targetY);
+//                }
+//                break;
+//            case KEY_PRESS_DOWN:
+//                setDirection(right);
+//                targetY -= 4;
+//                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
+//                    //bonk
+//                }
+//                else {
+//                    moveTo(targetX, targetY);
+//                }
+//                break;
         }
     }
 }
