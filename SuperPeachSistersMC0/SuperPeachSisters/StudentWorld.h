@@ -24,7 +24,6 @@ public:
 private:
     Peach* m_player;
     std::vector<Actor*> m_actors;
-    bool isReady;
 };
 
 #endif // STUDENTWORLD_H_

@@ -13,7 +13,6 @@ GameWorld* createStudentWorld(string assetPath)
 StudentWorld::StudentWorld(string assetPath)
 : GameWorld(assetPath)
 {
-    isReady = false;
 }
 
 StudentWorld::~StudentWorld() {
@@ -46,7 +45,6 @@ int StudentWorld::init()
                          break;
                      case Level::peach:
                          m_player = new Peach(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT);
-                         isReady = true;
                          break;
                      case Level::koopa:
                          m_actors.push_back(new Koopa(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
@@ -87,7 +85,6 @@ int StudentWorld::init()
 
 int StudentWorld::move()
 {
-    if(!isReady) return GWSTATUS_CONTINUE_GAME;
     m_player->doSomething();
     for(int i = 0; i < m_actors.size(); i++) {
         m_actors[i]->doSomething();
