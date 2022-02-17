@@ -14,6 +14,7 @@ public:
     bool isBlockingObjectAt(int x, int y);
     bool isAlive();
     StudentWorld* getWorld();
+    virtual bool isStatic();
 private:
     bool m_isAlive;
     StudentWorld* m_world;
@@ -24,6 +25,7 @@ private:
 class Block: public Actor {
 public:
     Block(StudentWorld* mg, int startX, int startY);
+    virtual bool isStatic();
 private:
 };
 
@@ -44,6 +46,7 @@ private:
 class Pipe: public Actor {
 public:
     Pipe(StudentWorld* mg, int startX, int startY);
+    virtual bool isStatic();
 };
 
 //FLAG

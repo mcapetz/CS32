@@ -119,12 +119,13 @@ void StudentWorld::cleanUp()
     StudentWorld::~StudentWorld();
 }
 
-bool StudentWorld::isBlockingObjectAt(Actor* a, int x, int y) {
+bool StudentWorld::isBlockingObjectAt(int x, int y) {
 //    if(m_player->getX() == x && m_player->getY() == y) return true;
     for(int i = 0; i < m_actors.size(); i++) {
 //        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
-        if(m_actors[i] == a) continue;
-        if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return true;
+        if(m_actors[i]->isStatic()) {
+            if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return true;
+        }
     }
     return false;
 }

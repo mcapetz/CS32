@@ -20,13 +20,16 @@ StudentWorld* Actor::getWorld() {
     return m_world;
 }
 
+bool Actor::isStatic() {return false;}
 
 //BLOCK
 Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1) {}
+bool Block::isStatic() {return true;}
 
 //PIPE
 Pipe::Pipe(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PIPE, startX, startY, 0, 2, 1) {
 }
+bool Pipe::isStatic() {return true;}
 
 //FLAG
 Flag::Flag(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_FLAG, startX, startY, 0, 1, 1) {}
@@ -55,41 +58,41 @@ void Enemy::doSomething() {
     int y = getY();
     
     //check if falling off edge
-    if(!getWorld()->isBlockingObjectAt(this, x, y-1)) {
-        if(getDirection() == left) setDirection(right);
-        else setDirection(left);
-    }
+//    if(!getWorld()->isBlockingObjectAt(this, x, y-1)) {
+//        if(getDirection() == left) setDirection(right);
+//        else setDirection(left);
+//    }
     
     if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(this, x-1, y)) {
+        if(getWorld()->isBlockingObjectAt(x-1, y)) {
             setDirection(right);
-            if(getWorld()->isBlockingObjectAt(this, x+1, y)) {
+            if(getWorld()->isBlockingObjectAt(x+1, y)) {
                 return;
             }
             else {
-                if(getWorld()->isBlockingObjectAt(this, x, y-1)) moveTo(x+1, y);
+                if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x+1, y);
                 return;
             }
         }
         else {
-            if(getWorld()->isBlockingObjectAt(this, x-1-SPRITE_WIDTH, y-1)) moveTo(x-1,y);
+            if(getWorld()->isBlockingObjectAt(x-1-SPRITE_WIDTH, y-1)) moveTo(x-1,y);
             else setDirection(right);
             return;
         }
     }
     else if(getDirection() == right) {
-        if(getWorld()->isBlockingObjectAt(this, x+1, y)) {
+        if(getWorld()->isBlockingObjectAt(x+1, y)) {
             setDirection(left);
-            if(getWorld()->isBlockingObjectAt(this, x-1, y)) {
+            if(getWorld()->isBlockingObjectAt(x-1, y)) {
                 return;
             }
             else {
-                if(getWorld()->isBlockingObjectAt(this, x, y-1)) moveTo(x-1,y);
+                if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x-1,y);
                 return;
             }
         }
         else {
-            if(getWorld()->isBlockingObjectAt(this, x+1+SPRITE_WIDTH, y-1)) moveTo(x+1,y);
+            if(getWorld()->isBlockingObjectAt(x+1+SPRITE_WIDTH, y-1)) moveTo(x+1,y);
             else setDirection(left);
             return;
         }
@@ -127,7 +130,7 @@ void Peach::doSomething() {
             case KEY_PRESS_LEFT:
                 setDirection(left);
                 targetX -= 4;
-                if(getWorld()->isBlockingObjectAt(this, targetX, targetY)) {
+                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
                     //bonk
                     //cause a bonk() method in the target object to be called
                 }
@@ -138,7 +141,7 @@ void Peach::doSomething() {
             case KEY_PRESS_RIGHT:
                 setDirection(right);
                 targetX += 4;
-                if(getWorld()->isBlockingObjectAt(this, targetX, targetY)) {
+                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
                     //bonk
                 }
                 else {

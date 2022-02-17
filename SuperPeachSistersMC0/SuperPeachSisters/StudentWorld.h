@@ -17,7 +17,7 @@ public:
   virtual int init();
   virtual int move();
   virtual void cleanUp();
-  bool isBlockingObjectAt(Actor* a, int x, int y);
+  bool isBlockingObjectAt(int x, int y);
 
 private:
     Peach* m_player;
