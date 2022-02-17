@@ -51,10 +51,14 @@ void Enemy::doSomething() {
     //check if overlapping with peach
     //if so bonk peach and return
     
-    //check if falling off edge
-    
     int x = getX();
     int y = getY();
+    
+    //check if falling off edge
+    if(!getWorld()->isBlockingObjectAt(this, x, y-1)) {
+        if(getDirection() == left) setDirection(right);
+        else setDirection(left);
+    }
     
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(this, x-1, y)) {
@@ -63,12 +67,13 @@ void Enemy::doSomething() {
                 return;
             }
             else {
-                moveTo(x+1, y);
+                if(getWorld()->isBlockingObjectAt(this, x, y-1)) moveTo(x+1, y);
                 return;
             }
         }
         else {
-            moveTo(x-1,y);
+            if(getWorld()->isBlockingObjectAt(this, x-1-SPRITE_WIDTH, y-1)) moveTo(x-1,y);
+            else setDirection(right);
             return;
         }
     }
@@ -79,19 +84,24 @@ void Enemy::doSomething() {
                 return;
             }
             else {
-                moveTo(x-1,y);
+                if(getWorld()->isBlockingObjectAt(this, x, y-1)) moveTo(x-1,y);
                 return;
             }
         }
         else {
-            moveTo(x+1,y);
+            if(getWorld()->isBlockingObjectAt(this, x+1+SPRITE_WIDTH, y-1)) moveTo(x+1,y);
+            else setDirection(left);
             return;
         }
     }
+    
 }
 
 //GOOMBA
 Goomba::Goomba(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_GOOMBA, startX, startY){};
+
+//KOOPA
+Koopa::Koopa(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_KOOPA, startX, startY){};
 
 
 //PEACH

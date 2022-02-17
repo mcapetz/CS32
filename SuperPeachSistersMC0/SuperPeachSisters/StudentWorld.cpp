@@ -47,7 +47,7 @@ int StudentWorld::init()
                          m_player = new Peach(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT);
                          break;
                      case Level::koopa:
-                         //
+                         m_actors.push_back(new Koopa(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::goomba:
                          m_actors.push_back(new Goomba(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));

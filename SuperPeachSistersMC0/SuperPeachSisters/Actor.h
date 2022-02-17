@@ -68,4 +68,11 @@ public:
 private:
 };
 
+//KOOPA
+class Koopa: public Enemy {
+public:
+    Koopa(StudentWorld* mg, int startX, int startY);
+private:
+};
+
 #endif // ACTOR_H_
