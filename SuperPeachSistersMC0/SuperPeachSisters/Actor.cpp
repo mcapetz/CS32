@@ -48,20 +48,46 @@ Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, 
 void Enemy::doSomething() {
     if(!isAlive()) return;
     
-    if(getDirection() == left && getWorld()->isBlockingObjectAt(getX()-1, getY())) {
-        moveTo(getX()-1, getY());
-    }
-    else if(getDirection() == right && getWorld()->isBlockingObjectAt(getX()+1, getY())) {
-        moveTo(getX()+1, getY());
-    }
-    else {
-//        if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-//        }
-//        else {
-//            moveTo(targetX, targetY);
-//        }
-    }
+    //check if overlapping with peach
+    //if so bonk peach and return
     
+    //check if falling off edge
+    
+    int x = getX();
+    int y = getY();
+    
+    if(getDirection() == left) {
+        if(getWorld()->isBlockingObjectAt(this, x-1, y)) {
+            setDirection(right);
+            if(getWorld()->isBlockingObjectAt(this, x+1, y)) {
+                return;
+            }
+            else {
+                moveTo(x+1, y);
+                return;
+            }
+        }
+        else {
+            moveTo(x-1,y);
+            return;
+        }
+    }
+    else if(getDirection() == right) {
+        if(getWorld()->isBlockingObjectAt(this, x+1, y)) {
+            setDirection(left);
+            if(getWorld()->isBlockingObjectAt(this, x-1, y)) {
+                return;
+            }
+            else {
+                moveTo(x-1,y);
+                return;
+            }
+        }
+        else {
+            moveTo(x+1,y);
+            return;
+        }
+    }
 }
 
 //GOOMBA
@@ -91,7 +117,7 @@ void Peach::doSomething() {
             case KEY_PRESS_LEFT:
                 setDirection(left);
                 targetX -= 4;
-                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
+                if(getWorld()->isBlockingObjectAt(this, targetX, targetY)) {
                     //bonk
                     //cause a bonk() method in the target object to be called
                 }
@@ -102,7 +128,7 @@ void Peach::doSomething() {
             case KEY_PRESS_RIGHT:
                 setDirection(right);
                 targetX += 4;
-                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
+                if(getWorld()->isBlockingObjectAt(this, targetX, targetY)) {
                     //bonk
                 }
                 else {
