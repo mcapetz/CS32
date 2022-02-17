@@ -59,9 +59,11 @@ public:
 //ENEMY
 class Enemy: public Actor {
 public:
-    Enemy(StudentWorld* mg, int imageID, int startX, int startY);
+    Enemy(StudentWorld* mg, Peach* mp, int imageID, int startX, int startY);
+    Peach* getPlayer();
     virtual void doSomething();
 private:
+    Peach* m_player;
 };
 
 //GOOMBA
@@ -77,5 +79,20 @@ public:
     Koopa(StudentWorld* mg, int startX, int startY);
 private:
 };
+
+//PIRANHA
+class Piranha: public Enemy {
+public:
+    Piranha(StudentWorld* mg, int startX, int startY);
+    virtual void doSomething();
+private:
+    int m_firingDelay;
+};
+
+//PROJECTILE
+//class Projectile: public Actor {
+//public:
+//    Projectile
+//}
 
 #endif // ACTOR_H_

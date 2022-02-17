@@ -53,7 +53,7 @@ int StudentWorld::init()
                          m_actors.push_back(new Goomba(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::piranha:
-                         //
+                         m_actors.push_back(new Piranha(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::block:
                          m_actors.push_back(new Block(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
@@ -130,3 +130,8 @@ bool StudentWorld::isBlockingObjectAt(int x, int y) {
     return false;
 }
 
+Peach* StudentWorld::getPlayer() {return m_player;}
+
+void StudentWorld::addActor(Actor* a) {
+    m_actors.push_back(a);
+}
