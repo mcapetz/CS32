@@ -22,9 +22,51 @@ StudentWorld* Actor::getWorld() {
 
 
 //BLOCK
-Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1) {
+Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1) {}
+
+//PIPE
+Pipe::Pipe(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PIPE, startX, startY, 0, 2, 1) {
+}
+
+//FLAG
+Flag::Flag(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_FLAG, startX, startY, 0, 1, 1) {}
+
+void Flag::doSomething() {
+    if(!isAlive()) return;
+    
+    //check if overlaps with peach
+        //if so, increase score by 1000
+        //set state to not alive
+        //inform student world that level is complete
+    
+    //do not block other players from moving on it
+}
+
+//ENEMY
+Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 1, 1) {};
+
+void Enemy::doSomething() {
+    if(!isAlive()) return;
+    
+    if(getDirection() == left && getWorld()->isBlockingObjectAt(getX()-1, getY())) {
+        moveTo(getX()-1, getY());
+    }
+    else if(getDirection() == right && getWorld()->isBlockingObjectAt(getX()+1, getY())) {
+        moveTo(getX()+1, getY());
+    }
+    else {
+//        if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
+//        }
+//        else {
+//            moveTo(targetX, targetY);
+//        }
+    }
     
 }
+
+//GOOMBA
+Goomba::Goomba(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_GOOMBA, startX, startY){};
+
 
 //PEACH
 Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, startX, startY, 0, 0, 1) {

@@ -40,4 +40,32 @@ private:
     bool jumpPower;
 };
 
+//PIPE
+class Pipe: public Actor {
+public:
+    Pipe(StudentWorld* mg, int startX, int startY);
+};
+
+//FLAG
+class Flag: public Actor {
+public:
+    Flag(StudentWorld* mg, int startX, int startY);
+    virtual void doSomething();
+};
+
+//ENEMY
+class Enemy: public Actor {
+public:
+    Enemy(StudentWorld* mg, int imageID, int startX, int startY);
+    virtual void doSomething();
+private:
+};
+
+//GOOMBA
+class Goomba: public Enemy {
+public:
+    Goomba(StudentWorld* mg, int startX, int startY);
+private:
+};
+
 #endif // ACTOR_H_

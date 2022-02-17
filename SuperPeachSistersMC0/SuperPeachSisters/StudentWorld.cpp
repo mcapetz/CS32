@@ -41,7 +41,7 @@ int StudentWorld::init()
                  
                  switch(ge) {
                      case Level::empty:
-                         cerr << "Location " << i << "," << j << "is empty" << endl;
+                         //cerr << "Location " << i << "," << j << "is empty" << endl;
                          break;
                      case Level::peach:
                          m_player = new Peach(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT);
@@ -50,7 +50,7 @@ int StudentWorld::init()
                          //
                          break;
                      case Level::goomba:
-                         //
+                         m_actors.push_back(new Goomba(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::piranha:
                          //
@@ -67,10 +67,10 @@ int StudentWorld::init()
                          //
                          break;
                      case Level::pipe:
-                         //
+                         m_actors.push_back(new Pipe(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::flag:
-                         //
+                         m_actors.push_back(new Flag(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::mario:
                          //
