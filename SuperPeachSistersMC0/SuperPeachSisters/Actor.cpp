@@ -35,6 +35,7 @@ bool Pipe::isStatic() {return true;}
 Flag::Flag(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_FLAG, startX, startY, 0, 1, 1) {}
 
 void Flag::doSomething() {
+    if(!isAlive()) return;
     //check if overlaps with peach
         //if so, increase score by 1000
         //set state to not alive
@@ -44,24 +45,19 @@ void Flag::doSomething() {
 }
 
 //ENEMY
-Enemy::Enemy(StudentWorld* mg, Peach* mp, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 1, 1) , m_player(mp) {};
+Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, randInt(0, 1)*180, 1, 1) {};
 
-Peach* Enemy::getPlayer() { return m_player; }
+Peach* Enemy::getPlayer() { return getWorld()->getPlayer(); }
 
 void Enemy::doSomething() {
+    if(!isAlive()) return;
     
     //check if overlapping with peach
     //if so bonk peach and return
     
     int x = getX();
     int y = getY();
-    
-    //check if falling off edge
-//    if(!getWorld()->isBlockingObjectAt(this, x, y-1)) {
-//        if(getDirection() == left) setDirection(right);
-//        else setDirection(left);
-//    }
-    
+        
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(x-1, y)) {
             setDirection(right);
@@ -100,19 +96,21 @@ void Enemy::doSomething() {
 }
 
 //GOOMBA
-Goomba::Goomba(StudentWorld* mg, int startX, int startY) : Enemy(mg, mg->getPlayer(), IID_GOOMBA, startX, startY){};
+Goomba::Goomba(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_GOOMBA, startX, startY){};
 
 //KOOPA
-Koopa::Koopa(StudentWorld* mg, int startX, int startY) : Enemy(mg, mg->getPlayer(), IID_KOOPA, startX, startY){};
+Koopa::Koopa(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_KOOPA, startX, startY){};
 
 //PIRANHA
-Piranha::Piranha(StudentWorld* mg, int startX, int startY) : Enemy(mg, mg->getPlayer(), IID_PIRANHA, startX, startY), m_firingDelay(0) {}
+Piranha::Piranha(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_PIRANHA, startX, startY), m_firingDelay(0) {}
 
 void Piranha::doSomething() {
+    if(!isAlive()) return;
     increaseAnimationNumber();
-    int pY = getPlayer()->getY();
-    int pX = getPlayer()->getX();
+    int pY = getWorld()->getPlayer()->getY();
+    int pX = getWorld()->getPlayer()->getX();
     if(pY >= getY() - 1.5 * SPRITE_HEIGHT && pY <= getY() + 1.5 * SPRITE_HEIGHT) {
+        //std::cerr << "i am here: " << getX() << " peach is on same level" << std::endl;
         if(pX < getX()) {
             //peach is on the left
             setDirection(left);
@@ -125,10 +123,10 @@ void Piranha::doSomething() {
         else {
             //no firing delay
             if(abs(pX - getX()) < 8*SPRITE_WIDTH) {
-                std::cerr << "peach is near" << std::endl;
                 //getWorld()->addActor(new pirFireball());
                 getWorld()->playSound(SOUND_PIRANHA_FIRE);
                 m_firingDelay = 40;
+                return;
             }
         }
     }
@@ -145,6 +143,7 @@ Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, st
 }
 
 void Peach::doSomething() {
+    if(!isAlive()) return;
     //check temp invincibility
     //check recharge
     //check overlap

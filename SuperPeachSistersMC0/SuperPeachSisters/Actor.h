@@ -59,7 +59,7 @@ public:
 //ENEMY
 class Enemy: public Actor {
 public:
-    Enemy(StudentWorld* mg, Peach* mp, int imageID, int startX, int startY);
+    Enemy(StudentWorld* mg, int imageID, int startX, int startY);
     Peach* getPlayer();
     virtual void doSomething();
 private:
