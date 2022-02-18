@@ -8,6 +8,10 @@ Actor::Actor(StudentWorld* mg, int imageID, int startX, int startY, int dir, int
     m_world = mg;
 }
 
+void Actor::bonk() {
+    
+}
+
 void Actor::doSomething() {
     if(!isAlive()) return;
 }
@@ -52,11 +56,14 @@ Peach* Enemy::getPlayer() { return getWorld()->getPlayer(); }
 void Enemy::doEnemy() {
     if(!isAlive()) return;
     
-    //check if overlapping with peach
-    //if so bonk peach and return
-    
     int x = getX();
     int y = getY();
+    
+    //check if overlapping with peach
+    if(x + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getX() && x - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getX() && y + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getY() && y - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getY()) {
+        //if so bonk peach and return
+        getPlayer()->bonk();
+    }
         
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(x-1, y)) {
@@ -125,7 +132,7 @@ void Piranha::doSomething() {
         else {
             //no firing delay
             if(abs(pX - getX()) < 8*SPRITE_WIDTH) {
-                //getWorld()->addActor(new pirFireball());
+                getWorld()->addActor(new PiranhaFireball(getWorld(), getX(), getY(), getDirection()));
                 getWorld()->playSound(SOUND_PIRANHA_FIRE);
                 m_firingDelay = 40;
                 return;
@@ -137,9 +144,32 @@ void Piranha::doSomething() {
 }
 
 Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir) : Actor(mg, imageID, startX, startY, dir, 1, 1) {};
-
 void Projectile::doProjectile() {
+    if(!isAlive()) return;
     
+    //check if overlapping with peach
+    //if so bonk peach and return
+    int x = getX();
+    int y = getY();
+        
+    if(getDirection() == left) {
+        if(getWorld()->isBlockingObjectAt(x+1, y)) {
+            return;
+        }
+        else {
+            if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x+1, y);
+            return;
+        }
+    }
+    else if(getDirection() == right) {
+        if(getWorld()->isBlockingObjectAt(x-1, y)) {
+            return;
+        }
+        else {
+            if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x-1,y);
+            return;
+        }
+    }
 }
 
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
@@ -159,18 +189,28 @@ Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, st
     starPower = false;
     shootPower = false;
     jumpPower = false;
+    remaining_jump_distance = 0;
 }
 
 void Peach::doSomething() {
     if(!isAlive()) return;
+    
+    int targetX = getX();
+    int targetY = getY();
+    
     //check temp invincibility
     //check recharge
     //check overlap
+    if(isBlockingObjectAt(getX(), getY())) {
+        getWorld()->ActorIsBlockingObjectAt(getX(), getY())->bonk();
+    }
     //check jump
+    if(remaining_jump_distance > 0) {
+        targetY += 4;
+        
+    }
     //check falling
     int key = 0;
-    int targetX = getX();
-    int targetY = getY();
     if(getWorld()->getKey(key)) {
         switch(key) {
             case KEY_PRESS_LEFT:
@@ -194,16 +234,9 @@ void Peach::doSomething() {
                     moveTo(targetX, targetY);
                 }
                 break;
-//            case KEY_PRESS_UP:
-//                setDirection(right);
-//                targetY += 4;
-//                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-//                    //bonk
-//                }
-//                else {
-//                    moveTo(targetX, targetY);
-//                }
-//                break;
+            case KEY_PRESS_UP:
+                
+                break;
 //            case KEY_PRESS_DOWN:
 //                setDirection(right);
 //                targetY -= 4;

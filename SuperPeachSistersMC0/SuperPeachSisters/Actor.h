@@ -11,6 +11,7 @@ class Actor: public GraphObject {
 public:
     Actor(StudentWorld* mg, int imageID, int startX, int startY, int dir = 0, int depth = 0, double size = 1.0);
     virtual void doSomething();
+    virtual void bonk();
     bool isBlockingObjectAt(int x, int y);
     bool isAlive();
     StudentWorld* getWorld();
@@ -40,6 +41,7 @@ private:
     bool starPower;
     bool shootPower;
     bool jumpPower;
+    int remaining_jump_distance;
 };
 
 //PIPE
