@@ -49,7 +49,7 @@ Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, 
 
 Peach* Enemy::getPlayer() { return getWorld()->getPlayer(); }
 
-void Enemy::doSomething() {
+void Enemy::doEnemy() {
     if(!isAlive()) return;
     
     //check if overlapping with peach
@@ -97,9 +97,11 @@ void Enemy::doSomething() {
 
 //GOOMBA
 Goomba::Goomba(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_GOOMBA, startX, startY){};
+void Goomba::doSomething() { doEnemy(); }
 
 //KOOPA
 Koopa::Koopa(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_KOOPA, startX, startY){};
+void Koopa::doSomething() { doEnemy(); }
 
 //PIRANHA
 Piranha::Piranha(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_PIRANHA, startX, startY), m_firingDelay(0) {}
@@ -133,6 +135,23 @@ void Piranha::doSomething() {
     else return;
     
 }
+
+Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir) : Actor(mg, imageID, startX, startY, dir, 1, 1) {};
+
+void Projectile::doProjectile() {
+    
+}
+
+Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
+void Shell::doSomething() { doProjectile(); }
+
+PeachFireball::PeachFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
+void PeachFireball::doSomething() { doProjectile(); }
+
+PiranhaFireball::PiranhaFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
+void PiranhaFireball::doSomething() { }
+
+
 
 //PEACH
 Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, startX, startY, 0, 0, 1) {

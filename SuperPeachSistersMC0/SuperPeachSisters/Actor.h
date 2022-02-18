@@ -61,7 +61,8 @@ class Enemy: public Actor {
 public:
     Enemy(StudentWorld* mg, int imageID, int startX, int startY);
     Peach* getPlayer();
-    virtual void doSomething();
+    virtual void doEnemy();
+    //virtual void doSomething();
 private:
     Peach* m_player;
 };
@@ -70,6 +71,7 @@ private:
 class Goomba: public Enemy {
 public:
     Goomba(StudentWorld* mg, int startX, int startY);
+    virtual void doSomething();
 private:
 };
 
@@ -77,6 +79,7 @@ private:
 class Koopa: public Enemy {
 public:
     Koopa(StudentWorld* mg, int startX, int startY);
+    virtual void doSomething();
 private:
 };
 
@@ -90,9 +93,28 @@ private:
 };
 
 //PROJECTILE
-//class Projectile: public Actor {
-//public:
-//    Projectile
-//}
+class Projectile: public Actor {
+public:
+    Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir);
+    void doProjectile();
+};
+
+class Shell: public Projectile {
+public:
+    Shell(StudentWorld* mg, int startX, int startY, int dir);
+    virtual void doSomething();
+};
+
+class PeachFireball: public Projectile {
+public:
+    PeachFireball(StudentWorld* mg, int startX, int startY, int dir);
+    virtual void doSomething();
+};
+
+class PiranhaFireball: public Projectile {
+public:
+    PiranhaFireball(StudentWorld* mg, int startX, int startY, int dir);
+    virtual void doSomething();
+};
 
 #endif // ACTOR_H_
