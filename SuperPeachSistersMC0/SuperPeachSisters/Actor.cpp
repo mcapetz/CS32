@@ -201,8 +201,8 @@ void Peach::doSomething() {
     //check temp invincibility
     //check recharge
     //check overlap
-    if(isBlockingObjectAt(getX(), getY())) {
-        getWorld()->ActorIsBlockingObjectAt(getX(), getY())->bonk();
+    if(getWorld()->isBlockingObjectAt(getX(), getY())) {
+        //getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
     }
     //check jump
     if(remaining_jump_distance > 0) {

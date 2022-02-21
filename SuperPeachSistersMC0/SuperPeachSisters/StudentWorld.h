@@ -18,7 +18,7 @@ public:
   virtual int move();
   virtual void cleanUp();
   bool isBlockingObjectAt(int x, int y);
-  Actor* ActorIsBlockingObjectAt(int x, int y);
+  //Actor* ActorBlockingObjectAt(int x, int y);
   Peach* getPlayer();
   void addActor(Actor* a);
 

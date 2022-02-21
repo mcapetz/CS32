@@ -1,6 +1,7 @@
 #include "StudentWorld.h"
 #include "GameConstants.h"
 #include <string>
+#include <sstream>
 using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
@@ -16,6 +17,7 @@ StudentWorld::StudentWorld(string assetPath)
 }
 
 StudentWorld::~StudentWorld() {
+    if(GWSTATUS_LEVEL_ERROR) return;
     delete m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         delete m_actors[i];
@@ -25,12 +27,20 @@ StudentWorld::~StudentWorld() {
 int StudentWorld::init()
 {
      Level lev(assetPath());
-     string level_file = "level01.txt";
+     //m_level
+     ostringstream oss;
+     oss.fill('0');
+     oss << "level" << setw(2) << getLevel() << ".txt";
+     string level_file = oss.str();
      Level::LoadResult result = lev.loadLevel(level_file);
-     if (result == Level::load_fail_file_not_found)
-     cerr << "Could not find level01.txt data file" << endl;
-     else if (result == Level::load_fail_bad_format)
-     cerr << "level01.txt is improperly formatted" << endl;
+    if (result == Level::load_fail_file_not_found) {
+       cerr << "Could not find level01.txt data file" << endl;
+       return GWSTATUS_LEVEL_ERROR;
+    }
+     else if (result == Level::load_fail_bad_format) {
+         cerr << "level01.txt is improperly formatted" << endl;
+         return GWSTATUS_LEVEL_ERROR;
+     }
      else if (result == Level::load_success)
      {
      cerr << "Successfully loaded level" << endl;
@@ -130,14 +140,14 @@ bool StudentWorld::isBlockingObjectAt(int x, int y) {
     return false;
 }
 
-Actor* StudentWorld::ActorIsBlockingObjectAt(int x, int y) {
-//    if(m_player->getX() == x && m_player->getY() == y) return true;
-    for(int i = 0; i < m_actors.size(); i++) {
-//        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
-        if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return m_actors[i];
-    }
-    return nullptr;
-}
+//Actor* StudentWorld::ActorBlockingObjectAt(int x, int y) {
+////    if(m_player->getX() == x && m_player->getY() == y) return true;
+//    for(int i = 0; i < m_actors.size(); i++) {
+////        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
+//        if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return m_actors[i];
+//    }
+//    return nullptr;
+//}
 
 Peach* StudentWorld::getPlayer() {return m_player;}
 
