@@ -12,8 +12,8 @@ public:
     Actor(StudentWorld* mg, int imageID, int startX, int startY, int dir = 0, int depth = 0, double size = 1.0);
     virtual void doSomething();
     virtual void bonk();
-    //bool isBlockingObjectAt(int x, int y);
     bool isAlive();
+    void setDead();
     StudentWorld* getWorld();
     virtual bool isStatic();
 private:
@@ -27,6 +27,7 @@ class Block: public Actor {
 public:
     Block(StudentWorld* mg, int startX, int startY);
     virtual bool isStatic();
+    virtual void bonk();
 private:
 };
 
@@ -98,7 +99,8 @@ private:
 class Projectile: public Actor {
 public:
     Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir);
-    void doProjectile();
+    void moveWithoutFalling();
+    void moveWithFalling();
 };
 
 class Shell: public Projectile {

@@ -20,15 +20,25 @@ bool Actor::isAlive() {
     return m_isAlive;
 }
 
+void Actor::setDead() {
+    m_isAlive = false;
+}
+
 StudentWorld* Actor::getWorld() {
     return m_world;
 }
 
-bool Actor::isStatic() {return false;}
+bool Actor::isStatic() {
+    return false;
+}
 
 //BLOCK
 Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1) {}
 bool Block::isStatic() {return true;}
+
+void Block::bonk() {
+    std::cout << "block cannot be damanged by bonk" << std::endl;
+}
 
 //PIPE
 Pipe::Pipe(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PIPE, startX, startY, 0, 2, 1) {
@@ -144,11 +154,15 @@ void Piranha::doSomething() {
 }
 
 Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir) : Actor(mg, imageID, startX, startY, dir, 1, 1) {};
-void Projectile::doProjectile() {
+void Projectile::moveWithoutFalling() {
     if(!isAlive()) return;
     
     //check if overlapping with peach
-    //if so bonk peach and return
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) == getWorld()->getPlayer()) {
+        getWorld()->getPlayer()->bonk();
+        return;
+    }
+
     int x = getX();
     int y = getY();
         
@@ -172,14 +186,71 @@ void Projectile::doProjectile() {
     }
 }
 
+void Projectile::moveWithFalling() {
+    if(!isAlive()) return;
+    
+    //check if overlapping with peach
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) == getWorld()->getPlayer()) {
+        getWorld()->getPlayer()->bonk();
+        std::cout << "princess is ded" << std::endl;
+        return;
+    }
+
+    int x = getX();
+    int y = getY();
+        
+    if(getDirection() == left) {
+        if(getWorld()->isBlockingObjectAt(x-2, y)) {
+            if(getWorld()->ActorBlockingObjectAt(x-2,y)->isStatic()) {
+                if(getWorld()->isBlockingObjectAt(x-2, y-2)) setDead();
+                //std::cout << "fireball cannot move" << std::endl;
+                return;
+            }
+        }
+        else {
+            //left is not blocked
+            if(getWorld()->isBlockingObjectAt(x-2, y-2)) {
+                //there is something beneath
+                moveTo(x-2, y);
+            }
+            else {
+                //there is nothing beneath
+                moveTo(x-2, y-1);
+            }
+            return;
+        }
+    }
+    else if(getDirection() == right) {
+        if(getWorld()->isBlockingObjectAt(x+2, y)) {
+            if(getWorld()->ActorBlockingObjectAt(x+2,y)->isStatic()) {
+                if(getWorld()->isBlockingObjectAt(x+2, y-2)) setDead();
+                return;
+            }
+        }
+        else {
+            //right is not blocked
+            if(getWorld()->isBlockingObjectAt(x+2, y-2)) {
+                //there is something beneath
+                moveTo(x+2, y);
+            }
+            else {
+                //there is nothing beneath
+                moveTo(x+2, y-2);
+            }
+            return;
+        }
+    }
+    
+}
+
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
-void Shell::doSomething() { doProjectile(); }
+void Shell::doSomething() { moveWithoutFalling(); }
 
 PeachFireball::PeachFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
-void PeachFireball::doSomething() { doProjectile(); }
+void PeachFireball::doSomething() { moveWithFalling(); }
 
-PiranhaFireball::PiranhaFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
-void PiranhaFireball::doSomething() { }
+PiranhaFireball::PiranhaFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PIRANHA_FIRE, startX, startY, dir) {};
+void PiranhaFireball::doSomething() { moveWithFalling(); }
 
 
 
@@ -227,8 +298,7 @@ void Peach::doSomething() {
                 setDirection(left);
                 targetX -= 4;
                 if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-                    //bonk
-                    //cause a bonk() method in the target object to be called
+                    getWorld()->ActorBlockingObjectAt(targetX, targetY)->bonk();
                 }
                 else {
                     moveTo(targetX, targetY);
@@ -238,7 +308,7 @@ void Peach::doSomething() {
                 setDirection(right);
                 targetX += 4;
                 if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-                    //bonk
+                    getWorld()->ActorBlockingObjectAt(targetX, targetY)->bonk();
                 }
                 else {
                     moveTo(targetX, targetY);
@@ -247,8 +317,8 @@ void Peach::doSomething() {
             case KEY_PRESS_UP:
                 if(getWorld()->isBlockingObjectAt(getX(), getY()-1)) {
                     //there is an object below to support her jump
-                    //if jump power, 12
-                    remaining_jump_distance = 8;
+                    if(jumpPower) remaining_jump_distance = 12;
+                    else remaining_jump_distance = 8;
                     getWorld()->playSound(SOUND_PLAYER_JUMP);
                     
                 }
