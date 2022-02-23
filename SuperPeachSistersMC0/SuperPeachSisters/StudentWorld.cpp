@@ -140,14 +140,14 @@ bool StudentWorld::isBlockingObjectAt(int x, int y) {
     return false;
 }
 
-//Actor* StudentWorld::ActorBlockingObjectAt(int x, int y) {
-////    if(m_player->getX() == x && m_player->getY() == y) return true;
-//    for(int i = 0; i < m_actors.size(); i++) {
-////        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
-//        if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return m_actors[i];
-//    }
-//    return nullptr;
-//}
+Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) {
+//    if(m_player->getX() == x && m_player->getY() == y) return true;
+    for(int i = 0; i < m_actors.size(); i++) {
+//        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
+        if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return m_actors[i];
+    }
+    return nullptr;
+}
 
 Peach* StudentWorld::getPlayer() {return m_player;}
 

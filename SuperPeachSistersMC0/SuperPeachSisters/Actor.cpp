@@ -9,7 +9,7 @@ Actor::Actor(StudentWorld* mg, int imageID, int startX, int startY, int dir, int
 }
 
 void Actor::bonk() {
-    
+    std::cout << "bonk did nothing" << std::endl;
 }
 
 void Actor::doSomething() {
@@ -202,14 +202,24 @@ void Peach::doSomething() {
     //check recharge
     //check overlap
     if(getWorld()->isBlockingObjectAt(getX(), getY())) {
-        //getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
+        getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
     }
     //check jump
     if(remaining_jump_distance > 0) {
         targetY += 4;
-        
+        if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
+            getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
+            remaining_jump_distance = 0;
+        }
+        else {
+            moveTo(targetX, targetY);
+            remaining_jump_distance--;
+        }
     }
     //check falling
+    else if(!(getWorld()->isBlockingObjectAt(targetX, targetY - 1) || getWorld()->isBlockingObjectAt(targetX, targetY - 2) || getWorld()->isBlockingObjectAt(targetX, targetY - 3))) {
+        moveTo(targetX, targetY - 4);
+    }
     int key = 0;
     if(getWorld()->getKey(key)) {
         switch(key) {
@@ -235,7 +245,13 @@ void Peach::doSomething() {
                 }
                 break;
             case KEY_PRESS_UP:
-                
+                if(getWorld()->isBlockingObjectAt(getX(), getY()-1)) {
+                    //there is an object below to support her jump
+                    //if jump power, 12
+                    remaining_jump_distance = 8;
+                    getWorld()->playSound(SOUND_PLAYER_JUMP);
+                    
+                }
                 break;
 //            case KEY_PRESS_DOWN:
 //                setDirection(right);
