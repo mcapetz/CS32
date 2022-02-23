@@ -37,6 +37,7 @@ class Peach: public Actor {
 public:
     Peach(StudentWorld* mg, int startX, int startY);
     virtual void doSomething();
+    bool isStarPower();
     
 private:
     int m_health;
@@ -68,6 +69,7 @@ public:
     Peach* getPlayer();
     virtual void doEnemy();
     virtual bool isEnemy();
+    virtual void enemyBonk();
 private:
     Peach* m_player;
 };
@@ -77,6 +79,7 @@ class Goomba: public Enemy {
 public:
     Goomba(StudentWorld* mg, int startX, int startY);
     virtual void doSomething();
+    virtual void bonk();
 private:
 };
 
@@ -85,6 +88,7 @@ class Koopa: public Enemy {
 public:
     Koopa(StudentWorld* mg, int startX, int startY);
     virtual void doSomething();
+    virtual void bonk();
 private:
 };
 
@@ -93,6 +97,7 @@ class Piranha: public Enemy {
 public:
     Piranha(StudentWorld* mg, int startX, int startY);
     virtual void doSomething();
+    virtual void bonk();
 private:
     int m_firingDelay;
 };

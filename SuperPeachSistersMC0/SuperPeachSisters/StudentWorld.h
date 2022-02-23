@@ -22,10 +22,13 @@ public:
   Actor* ActorBlockingObjectAtAND(double x, double y);
   Peach* getPlayer();
   void addActor(Actor* a);
+  void incScore(int x);
+  void decScore(int x);
 
 private:
     Peach* m_player;
     std::vector<Actor*> m_actors;
+    int m_score;
 };
 
 #endif // STUDENTWORLD_H_

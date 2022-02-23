@@ -14,6 +14,7 @@ GameWorld* createStudentWorld(string assetPath)
 StudentWorld::StudentWorld(string assetPath)
 : GameWorld(assetPath)
 {
+    m_score = 0;
 }
 
 StudentWorld::~StudentWorld() {
@@ -22,6 +23,13 @@ StudentWorld::~StudentWorld() {
     for(int i = 0; i < m_actors.size(); i++) {
         delete m_actors[i];
     }
+}
+
+void StudentWorld::incScore(int x) {
+    m_score += x;
+}
+void StudentWorld::decScore(int x) {
+    m_score -= x;
 }
 
 int StudentWorld::init()
