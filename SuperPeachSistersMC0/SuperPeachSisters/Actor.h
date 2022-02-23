@@ -16,6 +16,7 @@ public:
     void setDead();
     StudentWorld* getWorld();
     virtual bool isStatic();
+    virtual bool isEnemy();
 private:
     bool m_isAlive;
     StudentWorld* m_world;
@@ -43,6 +44,7 @@ private:
     bool shootPower;
     bool jumpPower;
     int remaining_jump_distance;
+    int time_to_recharge_before_next_fire;
 };
 
 //PIPE
@@ -65,7 +67,7 @@ public:
     Enemy(StudentWorld* mg, int imageID, int startX, int startY);
     Peach* getPlayer();
     virtual void doEnemy();
-    //virtual void doSomething();
+    virtual bool isEnemy();
 private:
     Peach* m_player;
 };

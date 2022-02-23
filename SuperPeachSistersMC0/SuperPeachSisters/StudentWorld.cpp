@@ -153,6 +153,14 @@ Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) {
     return nullptr;
 }
 
+Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) {
+    for(int i = 0; i < m_actors.size(); i++) {
+        if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) && (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
+    }
+    cout << "returning null" << endl;
+    return nullptr;
+}
+
 Peach* StudentWorld::getPlayer() {return m_player;}
 
 void StudentWorld::addActor(Actor* a) {

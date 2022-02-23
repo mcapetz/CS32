@@ -32,6 +32,10 @@ bool Actor::isStatic() {
     return false;
 }
 
+bool Actor::isEnemy() {
+    return false;
+}
+
 //BLOCK
 Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1) {}
 bool Block::isStatic() {return true;}
@@ -60,6 +64,10 @@ void Flag::doSomething() {
 
 //ENEMY
 Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, randInt(0, 1)*180, 1, 1) {};
+
+bool Enemy::isEnemy() {
+    return true;
+}
 
 Peach* Enemy::getPlayer() { return getWorld()->getPlayer(); }
 
@@ -159,6 +167,7 @@ void Projectile::moveWithoutFalling() {
     
     //check if overlapping with peach
     if(getWorld()->ActorBlockingObjectAt(getX(), getY()) == getWorld()->getPlayer()) {
+        std::cout << "princess is ded" << std::endl;
         getWorld()->getPlayer()->bonk();
         return;
     }
@@ -244,10 +253,28 @@ void Projectile::moveWithFalling() {
 }
 
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
-void Shell::doSomething() { moveWithoutFalling(); }
+void Shell::doSomething() {
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY())->isEnemy()) {
+        getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
+        std::cout << "bonked enemy" << std::endl;
+        return;
+    }
+    moveWithoutFalling();
+}
 
 PeachFireball::PeachFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
-void PeachFireball::doSomething() { moveWithFalling(); }
+void PeachFireball::doSomething() {
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY())) std::cout << "BONK" << std::endl;
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isEnemy()) {
+        std::cout << "bonked enemy" << std::endl;
+        getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
+        setDead();
+        return;
+    }
+    
+    moveWithFalling();
+    
+}
 
 PiranhaFireball::PiranhaFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PIRANHA_FIRE, startX, startY, dir) {};
 void PiranhaFireball::doSomething() { moveWithFalling(); }
@@ -258,9 +285,10 @@ void PiranhaFireball::doSomething() { moveWithFalling(); }
 Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, startX, startY, 0, 0, 1) {
     m_health = 1;
     starPower = false;
-    shootPower = false;
+    shootPower = true;
     jumpPower = false;
     remaining_jump_distance = 0;
+    time_to_recharge_before_next_fire = 0;
 }
 
 void Peach::doSomething() {
@@ -271,6 +299,7 @@ void Peach::doSomething() {
     
     //check temp invincibility
     //check recharge
+    if(time_to_recharge_before_next_fire > 0) time_to_recharge_before_next_fire--;
     //check overlap
     if(getWorld()->isBlockingObjectAt(getX(), getY())) {
         getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
@@ -323,16 +352,22 @@ void Peach::doSomething() {
                     
                 }
                 break;
-//            case KEY_PRESS_DOWN:
-//                setDirection(right);
-//                targetY -= 4;
-//                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-//                    //bonk
-//                }
-//                else {
-//                    moveTo(targetX, targetY);
-//                }
-//                break;
+            case KEY_PRESS_SPACE:
+                if(!shootPower) break;
+                if(time_to_recharge_before_next_fire > 0) break;
+                else {
+                    getWorld()->playSound(SOUND_PLAYER_FIRE);
+                    time_to_recharge_before_next_fire = 8;
+                    if(getDirection() == left) {
+                        PeachFireball* fire = new PeachFireball(getWorld(), getX()-4, getY(), left);
+                        getWorld()->addActor(fire);
+                    }
+                    else {
+                        PeachFireball* fire = new PeachFireball(getWorld(), getX()-4, getY(), right);
+                        getWorld()->addActor(fire);
+                    }
+                }
+                break;
         }
     }
 }

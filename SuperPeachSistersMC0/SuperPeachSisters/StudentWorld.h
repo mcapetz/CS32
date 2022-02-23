@@ -19,6 +19,7 @@ public:
   virtual void cleanUp();
   bool isBlockingObjectAt(int x, int y);
   Actor* ActorBlockingObjectAt(double x, double y);
+  Actor* ActorBlockingObjectAtAND(double x, double y);
   Peach* getPlayer();
   void addActor(Actor* a);
 
