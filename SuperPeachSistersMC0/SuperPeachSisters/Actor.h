@@ -17,6 +17,8 @@ public:
     StudentWorld* getWorld();
     virtual bool isStatic();
     virtual bool isEnemy();
+    virtual bool isPlayer();
+    virtual bool isGoodie() {return false;}
 private:
     bool m_isAlive;
     StudentWorld* m_world;
@@ -29,7 +31,54 @@ public:
     Block(StudentWorld* mg, int startX, int startY);
     virtual bool isStatic();
     virtual void bonk();
+    bool isHoldingGoodie();
+    void setIsHoldingGoodie(bool b);
 private:
+    bool holdsGoodie;
+};
+
+class starBlock: public Block {
+public:
+    starBlock(StudentWorld* mg, int startX, int startY);
+    virtual void bonk();
+};
+
+class mushroomBlock: public Block {
+public:
+    mushroomBlock(StudentWorld* mg, int startX, int startY);
+    virtual void bonk();
+};
+
+class flowerBlock: public Block {
+public:
+    flowerBlock(StudentWorld* mg, int startX, int startY);
+    virtual void bonk();
+    virtual bool isGoodie() {return true;}
+};
+
+//GOODIES
+class Goodie: public Actor {
+public:
+    Goodie(StudentWorld *mg, int imageID, int startX, int startY);
+    void doGoodie();
+};
+
+class Star: public Goodie {
+public:
+    Star(StudentWorld *mg, int startX, int startY);
+    virtual void doSomething();
+};
+
+class Mushroom: public Goodie {
+public:
+    Mushroom(StudentWorld *mg, int startX, int startY);
+    virtual void doSomething();
+};
+
+class Flower: public Goodie {
+public:
+    Flower(StudentWorld *mg, int startX, int startY);
+    virtual void doSomething();
 };
 
 //PEACH
@@ -38,7 +87,14 @@ public:
     Peach(StudentWorld* mg, int startX, int startY);
     virtual void doSomething();
     bool isStarPower();
-    
+    bool isShootPower();
+    bool isJumpPower();
+    void setStarPower(bool b);
+    void setShootPower(bool b);
+    void setJumpPower(bool b);
+    virtual bool isPlayer();
+    virtual void bonk();
+    void setHealth(int x);
 private:
     int m_health;
     bool starPower;
@@ -46,6 +102,7 @@ private:
     bool jumpPower;
     int remaining_jump_distance;
     int time_to_recharge_before_next_fire;
+    int temp_invincibility;
 };
 
 //PIPE

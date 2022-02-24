@@ -36,12 +36,103 @@ bool Actor::isEnemy() {
     return false;
 }
 
+bool Actor::isPlayer() {
+    return false;
+}
+
 //BLOCK
-Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1) {}
+Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1), holdsGoodie(false) {}
 bool Block::isStatic() {return true;}
 
 void Block::bonk() {
-    std::cout << "block cannot be damanged by bonk" << std::endl;
+    std::cout << "block bonk" << std::endl;
+    getWorld()->playSound(SOUND_PLAYER_BONK);
+    return;
+}
+
+bool Block::isHoldingGoodie() {
+    return holdsGoodie;
+}
+
+void Block::setIsHoldingGoodie(bool b) {
+    holdsGoodie = b;
+}
+
+
+//GOODIE BLOCKS
+starBlock::starBlock(StudentWorld* mg, int startX, int startY) : Block(mg, startX, startY) { setIsHoldingGoodie(true); }
+void starBlock::bonk() {
+    std::cout << "star block bonked" << std::endl;
+}
+
+mushroomBlock::mushroomBlock(StudentWorld* mg, int startX, int startY) : Block(mg, startX, startY) { setIsHoldingGoodie(true); }
+void mushroomBlock::bonk() {
+    std::cout << "mushroom block bonked" << std::endl;
+}
+
+flowerBlock::flowerBlock(StudentWorld* mg, int startX, int startY) : Block(mg, startX, startY){ setIsHoldingGoodie(true);
+}
+
+void flowerBlock::bonk() {
+    std::cout << "flower block bonked" << std::endl;
+    if(isHoldingGoodie()) {
+        getWorld()->playSound(SOUND_POWERUP_APPEARS);
+        Flower* flower = new Flower(getWorld(), getX(), getY() + 8);
+        getWorld()->addActor(flower);
+        setIsHoldingGoodie(false);
+    }
+    else {
+        getWorld()->playSound(SOUND_PLAYER_BONK);
+        return;
+    }
+}
+
+//GOODIES
+Goodie::Goodie(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 1, 1) {}
+void Goodie::doGoodie() {
+    int x = getX();
+    int y = getY();
+    
+    if(!getWorld()->isBlockingObjectAt(x, y-2)) moveTo(x, y-2);
+    
+    if(getDirection() == left) {
+        if(!getWorld()->isBlockingObjectAt(x-2, y)) moveTo(x-2, y);
+        else {
+            setDirection(right);
+            return;
+        }
+    }
+    else {
+        if(!getWorld()->isBlockingObjectAt(x+2, y)) moveTo(x+2, y);
+        else {
+            setDirection(left);
+            return;
+        }
+    }
+}
+
+Star::Star(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_STAR, startX, startY) {}
+void Star::doSomething() {
+    
+    doGoodie();
+}
+
+Mushroom::Mushroom(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_MUSHROOM, startX, startY) {}
+void Mushroom::doSomething() {
+    doGoodie();
+}
+
+Flower::Flower(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_FLOWER, startX, startY) {}
+void Flower::doSomething() {
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY())->isPlayer()) {
+        getWorld()->incScore(50);
+        getWorld()->getPlayer()->setShootPower(true);
+        getWorld()->getPlayer()->setHealth(2);
+        setDead();
+        getWorld()->playSound(SOUND_PLAYER_POWERUP);
+        return;
+    }
+    doGoodie();
 }
 
 //PIPE
@@ -217,13 +308,6 @@ void Projectile::moveWithoutFalling() {
 
 void Projectile::moveWithFalling() {
     if(!isAlive()) return;
-    
-    //check if overlapping with peach
-    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) == getWorld()->getPlayer()) {
-        getWorld()->getPlayer()->bonk();
-        std::cout << "princess is ded" << std::endl;
-        return;
-    }
 
     int x = getX();
     int y = getY();
@@ -284,7 +368,7 @@ void Shell::doSomething() {
 
 PeachFireball::PeachFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
 void PeachFireball::doSomething() {
-    if(getWorld()->ActorBlockingObjectAt(getX(), getY())) std::cout << "BONK" << std::endl;
+    //if(getWorld()->ActorBlockingObjectAt(getX(), getY())) std::cout << "BONK" << std::endl;
     if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isEnemy()) {
         std::cout << "bonked enemy HERE" << std::endl;
         getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
@@ -297,7 +381,18 @@ void PeachFireball::doSomething() {
 }
 
 PiranhaFireball::PiranhaFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PIRANHA_FIRE, startX, startY, dir) {};
-void PiranhaFireball::doSomething() { moveWithFalling(); }
+void PiranhaFireball::doSomething() {
+    //std::cout << getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer() << std::endl;
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
+        std::cout << "princess is ded" << std::endl;
+        getWorld()->getPlayer()->bonk();
+        setDead();
+        return;
+    }
+    
+    moveWithFalling();
+    
+}
 
 
 
@@ -305,14 +400,51 @@ void PiranhaFireball::doSomething() { moveWithFalling(); }
 Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, startX, startY, 0, 0, 1) {
     m_health = 1;
     starPower = false;
-    shootPower = true;
+    shootPower = false;
     jumpPower = false;
     remaining_jump_distance = 0;
     time_to_recharge_before_next_fire = 0;
+    temp_invincibility = 0;
 }
 
 bool Peach::isStarPower() {
     return starPower;
+}
+
+bool Peach::isShootPower() {
+    return shootPower;
+}
+
+bool Peach::isJumpPower() {
+    return jumpPower;
+}
+
+void Peach::setStarPower(bool b) {
+    starPower = b;
+}
+void Peach::setShootPower(bool b) {
+    shootPower = b;
+}
+void Peach::setJumpPower(bool b) {
+    jumpPower = b;
+}
+
+bool Peach::isPlayer() {
+    return true;
+}
+
+void Peach::setHealth(int x) {
+    m_health = x;
+}
+
+void Peach::bonk() {
+    if(starPower) return;
+    m_health--;
+    temp_invincibility = 10;
+    if(shootPower) shootPower = false;
+    if(jumpPower) jumpPower = false;
+    if(m_health > 0) getWorld()->playSound(SOUND_PLAYER_HURT);
+    //else setDead();
 }
 
 void Peach::doSomething() {

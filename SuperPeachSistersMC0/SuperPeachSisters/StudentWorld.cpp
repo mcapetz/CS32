@@ -75,6 +75,7 @@ int StudentWorld::init()
                          break;
                      case Level::block:
                          m_actors.push_back(new Block(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
+                         break;
                      case Level::star_goodie_block:
                          //
                          break;
@@ -82,7 +83,7 @@ int StudentWorld::init()
                          //
                          break;
                      case Level::flower_goodie_block:
-                         //
+                         m_actors.push_back(new flowerBlock(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::pipe:
                          m_actors.push_back(new Pipe(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
