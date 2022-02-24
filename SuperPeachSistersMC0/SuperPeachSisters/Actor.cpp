@@ -395,14 +395,19 @@ void Projectile::moveWithFalling() {
 
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
 void Shell::doSomething() {
-//    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isEnemy()) {
-//        std::cout << "bonked enemy SHELL" << std::endl;
-//        setDead();
-//        if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isAlive()) {
-//            getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
-//        }
-//        return;
-//    }
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isEnemy()) {
+        std::cout << "SHELL bonked enemy" << std::endl;
+        if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isAlive()) {
+            getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
+            std::cout << "shell died" << std::endl;
+            setDead();
+        }
+        return;
+    }
+    
+    //TO DO : shell movement
+    //TO DO : koopa movement
+    //TO DO : next level
     moveWithFalling();
     
 }

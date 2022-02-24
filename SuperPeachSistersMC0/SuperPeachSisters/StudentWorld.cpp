@@ -16,6 +16,11 @@ StudentWorld::StudentWorld(string assetPath)
 {
     isFlagReached = false;
     isMarioReached = false;
+    
+    //initialize data structs
+//    m_player = nullptr;
+//    m_actors = {nullptr};
+    
 }
 
 StudentWorld::~StudentWorld() {
@@ -36,7 +41,7 @@ void StudentWorld::reachedMario() {
 
 int StudentWorld::init()
 {
-     Level lev(assetPath());
+    Level lev(assetPath());
      //m_level
      ostringstream oss;
      oss.fill('0');
