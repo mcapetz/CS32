@@ -63,11 +63,31 @@ void Block::setIsHoldingGoodie(bool b) {
 starBlock::starBlock(StudentWorld* mg, int startX, int startY) : Block(mg, startX, startY) { setIsHoldingGoodie(true); }
 void starBlock::bonk() {
     std::cout << "star block bonked" << std::endl;
+    if(isHoldingGoodie()) {
+        getWorld()->playSound(SOUND_POWERUP_APPEARS);
+        Star* star = new Star(getWorld(), getX(), getY() + 8);
+        getWorld()->addActor(star);
+        setIsHoldingGoodie(false);
+    }
+    else {
+        getWorld()->playSound(SOUND_PLAYER_BONK);
+        return;
+    }
 }
 
 mushroomBlock::mushroomBlock(StudentWorld* mg, int startX, int startY) : Block(mg, startX, startY) { setIsHoldingGoodie(true); }
 void mushroomBlock::bonk() {
     std::cout << "mushroom block bonked" << std::endl;
+    if(isHoldingGoodie()) {
+        getWorld()->playSound(SOUND_POWERUP_APPEARS);
+        Mushroom* mushroom = new Mushroom(getWorld(), getX(), getY() + 8);
+        getWorld()->addActor(mushroom);
+        setIsHoldingGoodie(false);
+    }
+    else {
+        getWorld()->playSound(SOUND_PLAYER_BONK);
+        return;
+    }
 }
 
 flowerBlock::flowerBlock(StudentWorld* mg, int startX, int startY) : Block(mg, startX, startY){ setIsHoldingGoodie(true);
@@ -90,20 +110,20 @@ void flowerBlock::bonk() {
 //GOODIES
 Goodie::Goodie(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 1, 1) {}
 void Goodie::doGoodie() {
-    int x = getX();
-    int y = getY();
     
-    if(!getWorld()->isBlockingObjectAt(x, y-2)) moveTo(x, y-2);
+    if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) {
+        moveTo(getX(), getY()-2);
+    }
     
     if(getDirection() == left) {
-        if(!getWorld()->isBlockingObjectAt(x-2, y)) moveTo(x-2, y);
+        if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
         else {
             setDirection(right);
             return;
         }
     }
     else {
-        if(!getWorld()->isBlockingObjectAt(x+2, y)) moveTo(x+2, y);
+        if(!getWorld()->isBlockingObjectAt(getX()+2, getY())) moveTo(getX()+2, getY());
         else {
             setDirection(left);
             return;
@@ -113,18 +133,36 @@ void Goodie::doGoodie() {
 
 Star::Star(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_STAR, startX, startY) {}
 void Star::doSomething() {
-    
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
+        std::cout << "star touching peach" << std::endl;
+        getWorld()->incScore(100);
+        getWorld()->getPlayer()->setStarPower(true);
+        getWorld()->getPlayer()->setHealth(2);
+        setDead();
+        getWorld()->playSound(SOUND_PLAYER_POWERUP);
+        return;
+    }
     doGoodie();
 }
 
 Mushroom::Mushroom(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_MUSHROOM, startX, startY) {}
 void Mushroom::doSomething() {
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
+        std::cout << "mushroom touching peach" << std::endl;
+        getWorld()->incScore(75);
+        getWorld()->getPlayer()->setJumpPower(true);
+        getWorld()->getPlayer()->setHealth(2);
+        setDead();
+        getWorld()->playSound(SOUND_PLAYER_POWERUP);
+        return;
+    }
     doGoodie();
 }
 
 Flower::Flower(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_FLOWER, startX, startY) {}
 void Flower::doSomething() {
-    if(getWorld()->ActorBlockingObjectAt(getX(), getY())->isPlayer()) {
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
+        std::cout << "flower touching peach" << std::endl;
         getWorld()->incScore(50);
         getWorld()->getPlayer()->setShootPower(true);
         getWorld()->getPlayer()->setHealth(2);
@@ -175,49 +213,69 @@ void Enemy::enemyBonk() {
 void Enemy::doEnemy() {
     if(!isAlive()) return;
     
-    int x = getX();
-    int y = getY();
-    
     //check if overlapping with peach
-    if(x + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getX() && x - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getX() && y + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getY() && y - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getY()) {
+    if(getX() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getX() && getX() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getX() && getY() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getY() && getY() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getY()) {
         //if so bonk peach and return
+        std::cout << "bonk player" << std::endl;
         getPlayer()->bonk();
     }
-        
+    
     if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(x-1, y)) {
+        if(getWorld()->isBlockingObjectAt(getX()-1, getY()) || !getWorld()->isBlockingObjectAt(getX()-1-SPRITE_WIDTH, getY()-1)) {
             setDirection(right);
-            if(getWorld()->isBlockingObjectAt(x+1, y)) {
-                return;
-            }
-            else {
-                if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x+1, y);
-                return;
-            }
-        }
-        else {
-            if(getWorld()->isBlockingObjectAt(x-1-SPRITE_WIDTH, y-1)) moveTo(x-1,y);
-            else setDirection(right);
             return;
         }
     }
-    else if(getDirection() == right) {
-        if(getWorld()->isBlockingObjectAt(x+1, y)) {
+    else {
+        if(getWorld()->isBlockingObjectAt(getX()+1, getY()) || !getWorld()->isBlockingObjectAt(getX()+1+SPRITE_WIDTH, getY()-1)) {
             setDirection(left);
-            if(getWorld()->isBlockingObjectAt(x-1, y)) {
-                return;
-            }
-            else {
-                if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x-1,y);
-                return;
-            }
-        }
-        else {
-            if(getWorld()->isBlockingObjectAt(x+1+SPRITE_WIDTH, y-1)) moveTo(x+1,y);
-            else setDirection(left);
             return;
         }
     }
+    
+    if(getDirection() == left) {
+        if(getWorld()->isBlockingObjectAt(getX()-1, getY())) return;
+        else moveTo(getX()-1, getY());
+    }
+    else {
+        if(getWorld()->isBlockingObjectAt(getX()+1, getY())) return;
+        else moveTo(getX()+1, getY());
+    }
+        
+//    if(getDirection() == left) {
+//        if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
+//            setDirection(right);
+//            if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
+//                return;
+//            }
+//            else {
+//                if(getWorld()->isBlockingObjectAt(getX(), getY()-1)) moveTo(getX()+1, getY());
+//                return;
+//            }
+//        }
+//        else {
+//            if(getWorld()->isBlockingObjectAt(getX()-1-SPRITE_WIDTH, getY()-1)) moveTo(getX()-1,getY());
+//            else setDirection(right);
+//            return;
+//        }
+//    }
+//    else if(getDirection() == right) {
+//        if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
+//            setDirection(left);
+//            if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
+//                return;
+//            }
+//            else {
+//                if(getWorld()->isBlockingObjectAt(getX(), getY()-1)) moveTo(getX()-1,getY());
+//                return;
+//            }
+//        }
+//        else {
+//            if(getWorld()->isBlockingObjectAt(getX()+1+SPRITE_WIDTH, getY()-1)) moveTo(getX()+1,getY());
+//            else setDirection(left);
+//            return;
+//        }
+//    }
     
 }
 
@@ -274,33 +332,29 @@ Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, in
 void Projectile::moveWithoutFalling() {
     if(!isAlive()) return;
     
-    //check if overlapping with peach
-//    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) == getWorld()->getPlayer()) {
-//        std::cout << "princess is ded" << std::endl;
-//        getWorld()->getPlayer()->bonk();
+//    if(!getWorld()->isBlockingObjectAt(getX(), getY()-1)) {
+//        std::cout << "floating" << std::endl;
+//        setDead();
 //        return;
 //    }
-
-    int x = getX();
-    int y = getY();
-        
+            
     if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(x-2, y)) {
+        if(getWorld()->isBlockingObjectAt(getX()-2, getY())) {
             setDead();
             return;
         }
         else {
-            if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x-2, y);
+            if(getWorld()->isBlockingObjectAt(getX()-2, getY()-1)) moveTo(getX()-2, getY());
             return;
         }
     }
     else if(getDirection() == right) {
-        if(getWorld()->isBlockingObjectAt(x+2, y)) {
+        if(getWorld()->isBlockingObjectAt(getX()+2, getY())) {
             setDead();
             return;
         }
         else {
-            if(getWorld()->isBlockingObjectAt(x, y-1)) moveTo(x+2,y);
+            if(getWorld()->isBlockingObjectAt(getX()+2, getY()-1)) moveTo(getX()+2,getY());
             return;
         }
     }
@@ -309,61 +363,79 @@ void Projectile::moveWithoutFalling() {
 void Projectile::moveWithFalling() {
     if(!isAlive()) return;
 
-    int x = getX();
-    int y = getY();
-        
+    if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) moveTo(getX(), getY()-2);
     if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(x-2, y)) {
-            if(getWorld()->ActorBlockingObjectAt(x-2,y)->isStatic()) {
-                if(getWorld()->isBlockingObjectAt(x-2, y-2)) setDead();
-                //std::cout << "fireball cannot move" << std::endl;
-                return;
-            }
-        }
+        if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
         else {
-            //left is not blocked
-            if(getWorld()->isBlockingObjectAt(x-2, y-2)) {
-                //there is something beneath
-                moveTo(x-2, y);
-            }
-            else {
-                //there is nothing beneath
-                moveTo(x-2, y-1);
-            }
+            setDead();
             return;
         }
     }
-    else if(getDirection() == right) {
-        if(getWorld()->isBlockingObjectAt(x+2, y)) {
-            if(getWorld()->ActorBlockingObjectAt(x+2,y)->isStatic()) {
-                if(getWorld()->isBlockingObjectAt(x+2, y-2)) setDead();
-                return;
-            }
-        }
+    else {
+        if(!getWorld()->isBlockingObjectAt(getX()+2, getY())) moveTo(getX()+2, getY());
         else {
-            //right is not blocked
-            if(getWorld()->isBlockingObjectAt(x+2, y-2)) {
-                //there is something beneath
-                moveTo(x+2, y);
-            }
-            else {
-                //there is nothing beneath
-                moveTo(x+2, y-2);
-            }
+            setDead();
             return;
         }
     }
+        
+//    if(getDirection() == left) {
+//        if(getWorld()->isBlockingObjectAt(getX()-2, getY())) {
+//            if(getWorld()->ActorBlockingObjectAt(getX()-2,getY())->isStatic()) {
+//                if(getWorld()->isBlockingObjectAt(getX()-2, getY()-2)) setDead();
+//                //std::cout << "fireball cannot move" << std::endl;
+//                return;
+//            }
+//        }
+//        else {
+//            //left is not blocked
+//            if(getWorld()->isBlockingObjectAt(getX()-2, getY()-2)) {
+//                //there is something beneath
+//                moveTo(getX()-2, getY());
+//                return;
+//            }
+//            else {
+//                //there is nothing beneath
+//                moveTo(getX()-2, getY()-2);
+//                return;
+//            }
+//            return;
+//        }
+//    }
+//    else if(getDirection() == right) {
+//        if(getWorld()->isBlockingObjectAt(getX()+2, getY())) {
+//            if(getWorld()->ActorBlockingObjectAt(getX()+2,getY())->isStatic()) {
+//                if(getWorld()->isBlockingObjectAt(getX()+2, getY()-2)) setDead();
+//                return;
+//            }
+//        }
+//        else {
+//            //right is not blocked
+//            if(getWorld()->isBlockingObjectAt(getX()+2, getY()-2)) {
+//                //there is something beneath
+//                moveTo(getX()+2, getY());
+//                return;
+//            }
+//            else {
+//                //there is nothing beneath
+//                moveTo(getX()+2, getY()-2);
+//                return;
+//            }
+//            return;
+//        }
+//    }
     
 }
 
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
 void Shell::doSomething() {
-    if(getWorld()->ActorBlockingObjectAt(getX(), getY())->isEnemy()) {
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAt(getX(), getY())->isEnemy()) {
         getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
-        std::cout << "bonked enemy" << std::endl;
+        std::cout << "shell bonked enemy" << std::endl;
+        setDead();
         return;
     }
-    moveWithoutFalling();
+    moveWithFalling();
 }
 
 PeachFireball::PeachFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
@@ -400,7 +472,7 @@ void PiranhaFireball::doSomething() {
 Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, startX, startY, 0, 0, 1) {
     m_health = 1;
     starPower = false;
-    shootPower = true;
+    shootPower = false;
     jumpPower = false;
     remaining_jump_distance = 0;
     time_to_recharge_before_next_fire = 0;

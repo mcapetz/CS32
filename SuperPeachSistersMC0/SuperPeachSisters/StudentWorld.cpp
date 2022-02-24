@@ -77,10 +77,10 @@ int StudentWorld::init()
                          m_actors.push_back(new Block(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::star_goodie_block:
-                         //
+                         m_actors.push_back(new starBlock(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::mushroom_goodie_block:
-                         //
+                         m_actors.push_back(new mushroomBlock(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::flower_goodie_block:
                          m_actors.push_back(new flowerBlock(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
@@ -184,16 +184,16 @@ Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) {
 //        }
            
     }
-    cout << "returning null" << endl;
+//    cout << "returning null" << endl;
     return nullptr;
 }
 
 Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) {
-    
+    if((x + SPRITE_WIDTH - 1 >= m_player->getX() && x - SPRITE_WIDTH + 1 <= m_player->getX()) && (y + SPRITE_WIDTH - 1 >= m_player->getY() && y - SPRITE_WIDTH + 1 <= m_player->getY())) return m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) && (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
     }
-    cout << "returning null" << endl;
+    //cout << "returning null" << endl;
     return nullptr;
 }
 
