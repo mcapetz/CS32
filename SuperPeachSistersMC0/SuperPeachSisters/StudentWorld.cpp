@@ -128,6 +128,14 @@ int StudentWorld::move()
         }
     }
     //update status text at top of screen
+    ostringstream oss;
+    oss << "Lives: " << getLives() << "  Level: " << getLevel() << "  Points: " << getScore();
+    if(getPlayer()->isStarPower()) oss << " StarPower!";
+    if(getPlayer()->isShootPower()) oss << " ShootPower!";
+    if(getPlayer()->isJumpPower()) oss << " JumpPower!";
+    string text = oss.str();
+    
+    setGameStatText(text);
     
     return GWSTATUS_CONTINUE_GAME;
     
