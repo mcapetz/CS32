@@ -261,19 +261,15 @@ void Enemy::doEnemy() {
     //check if can move in curr direction
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
-            std::cout << "koopa changed dir because face block on left" << std::endl;
             setDirection(right);
-            std::cout << "new dir " << getDirection() << std::endl;
         }
     }
     else {
         if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
-            std::cout << "koopa changed dir because face block on right" << std::endl;
             setDirection(left);
         }
     }
     
-
     //try to move
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(getX()-1, getY())) return;
@@ -344,7 +340,8 @@ Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, in
 void Projectile::moveWithFalling() {
     if(!isAlive()) return;
 
-        if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) moveTo(getX(), getY()-2);
+    if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) moveTo(getX(), getY()-2);
+
         if(getDirection() == left) {
             if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
             else {
@@ -359,6 +356,7 @@ void Projectile::moveWithFalling() {
                 return;
             }
         }
+    
     
 }
 
