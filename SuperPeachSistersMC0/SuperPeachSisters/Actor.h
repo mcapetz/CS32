@@ -169,7 +169,6 @@ private:
 class Projectile: public Actor {
 public:
     Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir);
-    void moveWithoutFalling();
     void moveWithFalling();
 };
 

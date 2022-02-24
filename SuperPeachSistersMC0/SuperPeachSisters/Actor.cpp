@@ -227,12 +227,13 @@ void Enemy::doEnemy() {
     if(getX() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getX() && getX() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getX() && getY() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getY() && getY() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getY()) {
         //if so bonk peach and return
         std::cout << "bonk player" << std::endl;
+        bonk();
         getPlayer()->bonk();
+        return;
     }
     
     //check if can move in curr direction
     if(getDirection() == left) {
-        std::cout << "koopa moving left" << std::endl;
         if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
             setDirection(right);
         }
@@ -285,6 +286,16 @@ void Piranha::bonk() { enemyBonk(); }
 
 void Piranha::doSomething() {
     if(!isAlive()) return;
+    
+    //check if overlapping with peach
+    if(getX() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getX() && getX() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getX() && getY() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getY() && getY() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getY()) {
+        //if so bonk peach and return
+        std::cout << "bonk player" << std::endl;
+        bonk();
+        getPlayer()->bonk();
+        return;
+    }
+    
     increaseAnimationNumber();
     int pY = getWorld()->getPlayer()->getY();
     int pX = getWorld()->getPlayer()->getX();
@@ -313,38 +324,7 @@ void Piranha::doSomething() {
     
 }
 
-Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir) : Actor(mg, imageID, startX, startY, dir, 1, 1) {};
-void Projectile::moveWithoutFalling() {
-    if(!isAlive()) return;
-    
-//    if(!getWorld()->isBlockingObjectAt(getX(), getY()-1)) {
-//        std::cout << "floating" << std::endl;
-//        setDead();
-//        return;
-//    }
-            
-    if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(getX()-2, getY())) {
-            setDead();
-            return;
-        }
-        else {
-            if(getWorld()->isBlockingObjectAt(getX()-2, getY()-1)) moveTo(getX()-2, getY());
-            return;
-        }
-    }
-    else if(getDirection() == right) {
-        if(getWorld()->isBlockingObjectAt(getX()+2, getY())) {
-            setDead();
-            return;
-        }
-        else {
-            if(getWorld()->isBlockingObjectAt(getX()+2, getY()-1)) moveTo(getX()+2,getY());
-            else setDead();
-            return;
-        }
-    }
-}
+Projectile::Projectile(StudentWorld* mg, int imageID, int startX, int startY, int dir) : Actor(mg, imageID, startX, startY, dir, 1, 1) {}
 
 void Projectile::moveWithFalling() {
     if(!isAlive()) return;
@@ -460,24 +440,38 @@ void Peach::setHealth(int x) {
 }
 
 void Peach::bonk() {
+    std::cout << "peach bonked" << std::endl;
     if(starPower) return;
     m_health--;
     temp_invincibility = 10;
     if(shootPower) shootPower = false;
     if(jumpPower) jumpPower = false;
     if(m_health > 0) getWorld()->playSound(SOUND_PLAYER_HURT);
-    else setDead();
+    //if(m_health <= 0) setDead();
 }
 
 void Peach::doSomething() {
     if(!isAlive()) return;
     
     //check temp invincibility
+    if(starPower) {
+        std::cout << "star power on" << std::endl;
+        temp_invincibility--;
+    }
+    if(temp_invincibility == 0) {
+        std::cout << "star power ran out" << std::endl;
+        starPower = false;
+    }
     //check recharge
     if(time_to_recharge_before_next_fire > 0) time_to_recharge_before_next_fire--;
     //check overlap
-    if(getWorld()->isBlockingObjectAt(getX(), getY())) {
-        getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
+//    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())) {
+//        std::cout << "PEACH BONKING OBJ" << std::endl;
+//        getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
+//    }
+    if(getWorld()->isBlockingObjectAt(getX(), getY()) && getWorld()->ActorBlockingObjectAtAND(getX(), getY())) {
+        std::cout << "PEACH BONKING OBJ" << std::endl;
+        getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
     }
     //check jump
     if(remaining_jump_distance > 0) {
