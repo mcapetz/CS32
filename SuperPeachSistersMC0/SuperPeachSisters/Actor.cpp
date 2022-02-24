@@ -400,7 +400,7 @@ void PiranhaFireball::doSomething() {
 Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, startX, startY, 0, 0, 1) {
     m_health = 1;
     starPower = false;
-    shootPower = false;
+    shootPower = true;
     jumpPower = false;
     remaining_jump_distance = 0;
     time_to_recharge_before_next_fire = 0;
@@ -450,9 +450,6 @@ void Peach::bonk() {
 void Peach::doSomething() {
     if(!isAlive()) return;
     
-    int targetX = getX();
-    int targetY = getY();
-    
     //check temp invincibility
     //check recharge
     if(time_to_recharge_before_next_fire > 0) time_to_recharge_before_next_fire--;
@@ -462,41 +459,39 @@ void Peach::doSomething() {
     }
     //check jump
     if(remaining_jump_distance > 0) {
-        targetY += 4;
-        if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-            getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
+        if(getWorld()->isBlockingObjectAt(getX(), getY()+4)) {
+            std::cout << "trying to jump" << std::endl;
+            getWorld()->ActorBlockingObjectAt(getX(), getY()+4)->bonk();
             remaining_jump_distance = 0;
         }
         else {
-            moveTo(targetX, targetY);
+            moveTo(getX(), getY()+4);
             remaining_jump_distance--;
         }
     }
     //check falling
-    else if(!(getWorld()->isBlockingObjectAt(targetX, targetY - 1) || getWorld()->isBlockingObjectAt(targetX, targetY - 2) || getWorld()->isBlockingObjectAt(targetX, targetY - 3))) {
-        moveTo(targetX, targetY - 4);
+    else if(!(getWorld()->isBlockingObjectAt(getX(), getY() - 1) || getWorld()->isBlockingObjectAt(getX(), getY() - 2) || getWorld()->isBlockingObjectAt(getX(), getY() - 3))) {
+        moveTo(getX(), getY() - 4);
     }
     int key = 0;
     if(getWorld()->getKey(key)) {
         switch(key) {
             case KEY_PRESS_LEFT:
                 setDirection(left);
-                targetX -= 4;
-                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-                    getWorld()->ActorBlockingObjectAt(targetX, targetY)->bonk();
+                if(getWorld()->isBlockingObjectAt(getX()-4, getY())) {
+                    getWorld()->ActorBlockingObjectAt(getX()-4, getY())->bonk();
                 }
                 else {
-                    moveTo(targetX, targetY);
+                    moveTo(getX()-4, getY());
                 }
                 break;
             case KEY_PRESS_RIGHT:
                 setDirection(right);
-                targetX += 4;
-                if(getWorld()->isBlockingObjectAt(targetX, targetY)) {
-                    getWorld()->ActorBlockingObjectAt(targetX, targetY)->bonk();
+                if(getWorld()->isBlockingObjectAt(getX()+4, getY())) {
+                    getWorld()->ActorBlockingObjectAt(getX()+4, getY())->bonk();
                 }
                 else {
-                    moveTo(targetX, targetY);
+                    moveTo(getX()+4, getY());
                 }
                 break;
             case KEY_PRESS_UP:

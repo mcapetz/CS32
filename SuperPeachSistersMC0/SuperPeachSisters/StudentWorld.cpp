@@ -148,21 +148,48 @@ bool StudentWorld::isBlockingObjectAt(int x, int y) {
 //        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y) return true;
         if(!m_actors[i]->isAlive()) continue;
         if(m_actors[i]->isStatic()) {
-            if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) return true;
+            if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) {
+//                cout << "IN BLOCKING" << endl;
+//                cout << m_actors[i]->getX() << ", " << m_actors[i]->getY() << endl;
+//                cout << x << ", " << y << endl;
+                return true;
+            }
         }
     }
     return false;
 }
 
 Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) {
+//    int tempX = int(x);
+//    int tempY = int(y);
     for(int i = 0; i < m_actors.size(); i++) {
-        if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) || (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
+        if(!m_actors[i]->isAlive()) continue;
+        if(m_actors[i]->isStatic()) {
+            if(x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX() && y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY()) {
+//                cout << "IN BLOCKING" << endl;
+//                cout << m_actors[i]->getX() << ", " << m_actors[i]->getY() << endl;
+//                cout << x << ", " << y << endl;
+                return m_actors[i];
+            }
+        }
+        
+//        if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) || (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) {
+//            cout << "IN ACTOR" << endl;
+//            cout << m_actors[i]->getX() << ", " << m_actors[i]->getY() << endl;
+//            cout << x << ", " << y << endl;
+//            return m_actors[i];
+//        }
+//        if(tempX - tempX%SPRITE_WIDTH == m_actors[i]->getX() && tempY - tempY%SPRITE_HEIGHT == m_actors[i]->getY()){
+//            return m_actors[i];
+//        }
+           
     }
     cout << "returning null" << endl;
     return nullptr;
 }
 
 Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) {
+    
     for(int i = 0; i < m_actors.size(); i++) {
         if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) && (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
     }
