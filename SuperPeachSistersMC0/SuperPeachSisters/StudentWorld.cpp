@@ -42,7 +42,7 @@ int StudentWorld::init()
      oss.fill('0');
      oss << "level" << setw(2) << getLevel() << ".txt";
      string level_file = oss.str();
-     //level_file = "level02.txt";
+     //level_file = "level02.txt"; //REMOVE THIS LINE
      Level::LoadResult result = lev.loadLevel(level_file);
     if (result == Level::load_fail_file_not_found) {
        cerr << "Could not find data file "<< level_file << endl;

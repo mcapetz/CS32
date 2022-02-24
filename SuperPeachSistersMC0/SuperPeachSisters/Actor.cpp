@@ -244,26 +244,36 @@ void Enemy::doEnemy() {
     //check if overlapping with peach
     enemyOverlappingPeach();
     
-    //check if can move in curr direction
+    //check if falling off block
     if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
+        if(!getWorld()->isBlockingObjectAt(getX()-SPRITE_WIDTH, getY()-1)) {
+            //std::cout << "koopa changed dir because face block on right" << std::endl;
             setDirection(right);
         }
     }
     else {
-        if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
+        if(!getWorld()->isBlockingObjectAt(getX()+SPRITE_WIDTH, getY()-1)) {
+            //std::cout << "koopa changed dir because face block on right" << std::endl;
             setDirection(left);
         }
     }
     
-    //check if falling off block
+    //check if can move in curr direction
     if(getDirection() == left) {
-        if(!getWorld()->isBlockingObjectAt(getX()-SPRITE_WIDTH, getY()-1)) setDirection(right);
+        if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
+            std::cout << "koopa changed dir because face block on left" << std::endl;
+            setDirection(right);
+            std::cout << "new dir " << getDirection() << std::endl;
+        }
     }
     else {
-        if(!getWorld()->isBlockingObjectAt(getX()+SPRITE_WIDTH, getY()-1)) setDirection(left);
+        if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
+            std::cout << "koopa changed dir because face block on right" << std::endl;
+            setDirection(left);
+        }
     }
     
+
     //try to move
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(getX()-1, getY())) return;
