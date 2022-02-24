@@ -17,18 +17,11 @@ StudentWorld::StudentWorld(string assetPath)
     isFlagReached = false;
     isMarioReached = false;
     
-    //initialize data structs
-//    m_player = nullptr;
-//    m_actors = {nullptr};
-    
 }
 
 StudentWorld::~StudentWorld() {
     if(GWSTATUS_LEVEL_ERROR) return;
-    delete m_player;
-    for(int i = 0; i < m_actors.size(); i++) {
-        delete m_actors[i];
-    }
+    cleanUp();
 }
 
 void StudentWorld::reachedFlag() {
@@ -41,15 +34,20 @@ void StudentWorld::reachedMario() {
 
 int StudentWorld::init()
 {
+    
+    isFlagReached = false;
+    isMarioReached = false;
+    
     Level lev(assetPath());
      //m_level
      ostringstream oss;
      oss.fill('0');
      oss << "level" << setw(2) << getLevel() << ".txt";
      string level_file = oss.str();
+//     level_file = "level03.txt";
      Level::LoadResult result = lev.loadLevel(level_file);
     if (result == Level::load_fail_file_not_found) {
-       cerr << "Could not find level01.txt data file" << endl;
+       cerr << "Could not find data file "<< level_file << endl;
        return GWSTATUS_LEVEL_ERROR;
     }
      else if (result == Level::load_fail_bad_format) {
@@ -58,7 +56,7 @@ int StudentWorld::init()
      }
      else if (result == Level::load_success)
      {
-     cerr << "Successfully loaded level" << endl;
+     cerr << "Successfully loaded level " << level_file << endl;
      Level::GridEntry ge;
          for(int i = 0; i < 32; i++) {
              for(int j = 0; j < 32; j++)  {
@@ -99,7 +97,7 @@ int StudentWorld::init()
                          m_actors.push_back(new Flag(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                      case Level::mario:
-                         //
+                         m_actors.push_back(new Mario(this, i * SPRITE_WIDTH, j * SPRITE_HEIGHT));
                          break;
                  }
              }
@@ -124,6 +122,8 @@ int StudentWorld::move()
     
     //if peach reaches flag
     if(isFlagReached) {
+        cout << "flag reached at level " << getLevel() << endl;
+        cout << "finished level" << endl;
         playSound(SOUND_FINISHED_LEVEL);
         return GWSTATUS_FINISHED_LEVEL;
     }
@@ -161,7 +161,19 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
-    StudentWorld::~StudentWorld();
+    cout << "IN CLEANUP " << endl;
+    
+    cout << "IN CLEANUP 2" << endl;
+    delete m_player;
+    for(int i = 0; i < m_actors.size(); i++) {
+        delete m_actors[i];
+    }
+    m_actors.clear();
+    
+    cout << "is m_actors empty? " <<
+    m_actors.empty() << endl;
+    
+    cout << "actors cleared" << endl;
 }
 
 bool StudentWorld::isBlockingObjectAt(int x, int y) {

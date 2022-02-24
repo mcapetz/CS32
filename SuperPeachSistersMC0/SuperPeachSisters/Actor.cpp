@@ -194,7 +194,7 @@ void Flag::doSomething() {
 Mario::Mario(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_MARIO, startX, startY, 0, 1, 1) {}
 void Mario::doSomething() {
     if(!isAlive()) return;
-    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) && getWorld()->ActorBlockingObjectAt(getX(), getY())->isPlayer()) {
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
         getWorld()->increaseScore(1000);
         setDead();
         getWorld()->reachedMario();
@@ -230,19 +230,28 @@ void Enemy::doEnemy() {
         getPlayer()->bonk();
     }
     
+    //check if can move in curr direction
     if(getDirection() == left) {
-        if(getWorld()->isBlockingObjectAt(getX()-1, getY()) || !getWorld()->isBlockingObjectAt(getX()-1-SPRITE_WIDTH, getY()-1)) {
+        std::cout << "koopa moving left" << std::endl;
+        if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
             setDirection(right);
-            return;
         }
     }
     else {
-        if(getWorld()->isBlockingObjectAt(getX()+1, getY()) || !getWorld()->isBlockingObjectAt(getX()+1+SPRITE_WIDTH, getY()-1)) {
+        if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
             setDirection(left);
-            return;
         }
     }
     
+    //check if falling off block
+    if(getDirection() == left) {
+        if(!getWorld()->isBlockingObjectAt(getX()-SPRITE_WIDTH, getY()-1)) setDirection(right);
+    }
+    else {
+        if(!getWorld()->isBlockingObjectAt(getX()+SPRITE_WIDTH, getY()-1)) setDirection(left);
+    }
+    
+    //try to move
     if(getDirection() == left) {
         if(getWorld()->isBlockingObjectAt(getX()-1, getY())) return;
         else moveTo(getX()-1, getY());
@@ -251,42 +260,7 @@ void Enemy::doEnemy() {
         if(getWorld()->isBlockingObjectAt(getX()+1, getY())) return;
         else moveTo(getX()+1, getY());
     }
-        
-//    if(getDirection() == left) {
-//        if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
-//            setDirection(right);
-//            if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
-//                return;
-//            }
-//            else {
-//                if(getWorld()->isBlockingObjectAt(getX(), getY()-1)) moveTo(getX()+1, getY());
-//                return;
-//            }
-//        }
-//        else {
-//            if(getWorld()->isBlockingObjectAt(getX()-1-SPRITE_WIDTH, getY()-1)) moveTo(getX()-1,getY());
-//            else setDirection(right);
-//            return;
-//        }
-//    }
-//    else if(getDirection() == right) {
-//        if(getWorld()->isBlockingObjectAt(getX()+1, getY())) {
-//            setDirection(left);
-//            if(getWorld()->isBlockingObjectAt(getX()-1, getY())) {
-//                return;
-//            }
-//            else {
-//                if(getWorld()->isBlockingObjectAt(getX(), getY()-1)) moveTo(getX()-1,getY());
-//                return;
-//            }
-//        }
-//        else {
-//            if(getWorld()->isBlockingObjectAt(getX()+1+SPRITE_WIDTH, getY()-1)) moveTo(getX()+1,getY());
-//            else setDirection(left);
-//            return;
-//        }
-//    }
-    
+            
 }
 
 //GOOMBA
@@ -492,7 +466,7 @@ void Peach::bonk() {
     if(shootPower) shootPower = false;
     if(jumpPower) jumpPower = false;
     if(m_health > 0) getWorld()->playSound(SOUND_PLAYER_HURT);
-    //else setDead();
+    else setDead();
 }
 
 void Peach::doSomething() {
