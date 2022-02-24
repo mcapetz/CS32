@@ -18,7 +18,8 @@ public:
     virtual bool isStatic();
     virtual bool isEnemy();
     virtual bool isPlayer();
-    virtual bool isGoodie() {return false;}
+    bool overlappingPeach();
+    bool reachedFlagOrMario();
 private:
     bool m_isAlive;
     StudentWorld* m_world;
@@ -33,6 +34,7 @@ public:
     virtual void bonk();
     bool isHoldingGoodie();
     void setIsHoldingGoodie(bool b);
+    bool powerUp();
 private:
     bool holdsGoodie;
 };
@@ -60,6 +62,7 @@ public:
 class Goodie: public Actor {
 public:
     Goodie(StudentWorld *mg, int imageID, int startX, int startY);
+    bool powerUpPeach(int score);
     void doGoodie();
 };
 
@@ -133,6 +136,7 @@ public:
     virtual void doEnemy();
     virtual bool isEnemy();
     virtual void enemyBonk();
+    void enemyOverlappingPeach();
 private:
     Peach* m_player;
 };
