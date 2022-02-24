@@ -24,11 +24,16 @@ public:
   void addActor(Actor* a);
   void incScore(int x);
   void decScore(int x);
+  void reachedFlag();
+  void reachedMario();
 
 private:
     Peach* m_player;
     std::vector<Actor*> m_actors;
     int m_score;
+    bool isFlagReached;
+    bool isMarioReached;
+    
 };
 
 #endif // STUDENTWORLD_H_

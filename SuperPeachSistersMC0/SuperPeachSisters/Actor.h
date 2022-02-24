@@ -119,6 +119,12 @@ public:
     virtual void doSomething();
 };
 
+class Mario: public Actor {
+public:
+    Mario(StudentWorld* mg, int startX, int startY);
+    virtual void doSomething();
+};
+
 //ENEMY
 class Enemy: public Actor {
 public:

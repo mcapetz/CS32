@@ -14,7 +14,8 @@ GameWorld* createStudentWorld(string assetPath)
 StudentWorld::StudentWorld(string assetPath)
 : GameWorld(assetPath)
 {
-    m_score = 0;
+    isFlagReached = false;
+    isMarioReached = false;
 }
 
 StudentWorld::~StudentWorld() {
@@ -25,12 +26,13 @@ StudentWorld::~StudentWorld() {
     }
 }
 
-//void StudentWorld::incScore(int x) {
-//    m_score += x;
-//}
-//void StudentWorld::decScore(int x) {
-//    m_score -= x;
-//}
+void StudentWorld::reachedFlag() {
+    isFlagReached = true;
+}
+
+void StudentWorld::reachedMario() {
+    isMarioReached = true;
+}
 
 int StudentWorld::init()
 {
@@ -116,20 +118,27 @@ int StudentWorld::move()
     }
     
     //if peach reaches flag
+    if(isFlagReached) {
+        playSound(SOUND_FINISHED_LEVEL);
+        return GWSTATUS_FINISHED_LEVEL;
+    }
     //if peach reaches mario
+    if(isMarioReached) {
+        playSound(SOUND_GAME_OVER);
+        return GWSTATUS_PLAYER_WON;
+    }
+    
     //delete dead actors
     for(int i = 0; i < m_actors.size(); i++) {
         if(!m_actors[i]->isAlive()) {
             delete m_actors[i];
             m_actors.erase(m_actors.begin() + i);
-//            for(int j = i; j < m_actors.size() - 1; j++) {
-//                m_actors[j] = m_actors[j+1];
-//            }
         }
     }
     //update status text at top of screen
     ostringstream oss;
-    oss << "Lives: " << getLives() << "  Level: " << getLevel() << "  Points: " << getScore();
+    oss.fill('0');
+    oss << "Lives: " << getLives() << "  Level: " << setw(2) << getLevel() << "  Points: " << setw(6) << getScore();
     if(getPlayer()->isStarPower()) oss << " StarPower!";
     if(getPlayer()->isShootPower()) oss << " ShootPower!";
     if(getPlayer()->isJumpPower()) oss << " JumpPower!";

@@ -183,12 +183,22 @@ Flag::Flag(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_FLAG, start
 
 void Flag::doSomething() {
     if(!isAlive()) return;
-    //check if overlaps with peach
-        //if so, increase score by 1000
-        //set state to not alive
-        //inform student world that level is complete
-    
-    //do not block other players from moving on it
+    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
+        std::cout << "reached flag" << std::endl;
+        getWorld()->increaseScore(1000);
+        setDead();
+        getWorld()->reachedFlag();
+    }
+}
+
+Mario::Mario(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_MARIO, startX, startY, 0, 1, 1) {}
+void Mario::doSomething() {
+    if(!isAlive()) return;
+    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) && getWorld()->ActorBlockingObjectAt(getX(), getY())->isPlayer()) {
+        getWorld()->increaseScore(1000);
+        setDead();
+        getWorld()->reachedMario();
+    }
 }
 
 //ENEMY
@@ -205,8 +215,8 @@ void Enemy::enemyBonk() {
     //If the bonker is not Peach, then ignore the bonk
     if(getPlayer()->isStarPower()) {
         getWorld()->playSound(SOUND_PLAYER_KICK);
-        getWorld()->increaseScore(100);
     }
+    getWorld()->increaseScore(100);
     setDead();
 }
 
@@ -289,6 +299,7 @@ Koopa::Koopa(StudentWorld* mg, int startX, int startY) : Enemy(mg, IID_KOOPA, st
 void Koopa::doSomething() { doEnemy(); }
 void Koopa::bonk() {
     enemyBonk();
+    std::cout << "koopa bonked" << std::endl;
     Shell* shell = new Shell(getWorld(), getX(), getY(), getDirection());
     getWorld()->addActor(shell);
 }
@@ -355,6 +366,7 @@ void Projectile::moveWithoutFalling() {
         }
         else {
             if(getWorld()->isBlockingObjectAt(getX()+2, getY()-1)) moveTo(getX()+2,getY());
+            else setDead();
             return;
         }
     }
@@ -363,79 +375,36 @@ void Projectile::moveWithoutFalling() {
 void Projectile::moveWithFalling() {
     if(!isAlive()) return;
 
-    if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) moveTo(getX(), getY()-2);
-    if(getDirection() == left) {
-        if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
-        else {
-            setDead();
-            return;
+        if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) moveTo(getX(), getY()-2);
+        if(getDirection() == left) {
+            if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
+            else {
+                setDead();
+                return;
+            }
         }
-    }
-    else {
-        if(!getWorld()->isBlockingObjectAt(getX()+2, getY())) moveTo(getX()+2, getY());
         else {
-            setDead();
-            return;
+            if(!getWorld()->isBlockingObjectAt(getX()+2, getY())) moveTo(getX()+2, getY());
+            else {
+                setDead();
+                return;
+            }
         }
-    }
-        
-//    if(getDirection() == left) {
-//        if(getWorld()->isBlockingObjectAt(getX()-2, getY())) {
-//            if(getWorld()->ActorBlockingObjectAt(getX()-2,getY())->isStatic()) {
-//                if(getWorld()->isBlockingObjectAt(getX()-2, getY()-2)) setDead();
-//                //std::cout << "fireball cannot move" << std::endl;
-//                return;
-//            }
-//        }
-//        else {
-//            //left is not blocked
-//            if(getWorld()->isBlockingObjectAt(getX()-2, getY()-2)) {
-//                //there is something beneath
-//                moveTo(getX()-2, getY());
-//                return;
-//            }
-//            else {
-//                //there is nothing beneath
-//                moveTo(getX()-2, getY()-2);
-//                return;
-//            }
-//            return;
-//        }
-//    }
-//    else if(getDirection() == right) {
-//        if(getWorld()->isBlockingObjectAt(getX()+2, getY())) {
-//            if(getWorld()->ActorBlockingObjectAt(getX()+2,getY())->isStatic()) {
-//                if(getWorld()->isBlockingObjectAt(getX()+2, getY()-2)) setDead();
-//                return;
-//            }
-//        }
-//        else {
-//            //right is not blocked
-//            if(getWorld()->isBlockingObjectAt(getX()+2, getY()-2)) {
-//                //there is something beneath
-//                moveTo(getX()+2, getY());
-//                return;
-//            }
-//            else {
-//                //there is nothing beneath
-//                moveTo(getX()+2, getY()-2);
-//                return;
-//            }
-//            return;
-//        }
-//    }
     
 }
 
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};
 void Shell::doSomething() {
-    if(getWorld()->ActorBlockingObjectAt(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAt(getX(), getY())->isEnemy()) {
-        getWorld()->ActorBlockingObjectAt(getX(), getY())->bonk();
-        std::cout << "shell bonked enemy" << std::endl;
-        setDead();
-        return;
-    }
+//    if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isEnemy()) {
+//        std::cout << "bonked enemy SHELL" << std::endl;
+//        setDead();
+//        if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isAlive()) {
+//            getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
+//        }
+//        return;
+//    }
     moveWithFalling();
+    
 }
 
 PeachFireball::PeachFireball(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_PEACH_FIRE, startX, startY, dir) {};
@@ -443,8 +412,10 @@ void PeachFireball::doSomething() {
     //if(getWorld()->ActorBlockingObjectAt(getX(), getY())) std::cout << "BONK" << std::endl;
     if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isEnemy()) {
         std::cout << "bonked enemy HERE" << std::endl;
-        getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
         setDead();
+        if(getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isAlive()) {
+            getWorld()->ActorBlockingObjectAtAND(getX(), getY())->bonk();
+        }
         return;
     }
     
