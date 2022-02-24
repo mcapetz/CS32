@@ -135,7 +135,7 @@ Star::Star(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_STAR, star
 void Star::doSomething() {
     if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
         std::cout << "star touching peach" << std::endl;
-        getWorld()->incScore(100);
+        getWorld()->increaseScore(100);
         getWorld()->getPlayer()->setStarPower(true);
         getWorld()->getPlayer()->setHealth(2);
         setDead();
@@ -149,7 +149,7 @@ Mushroom::Mushroom(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_MU
 void Mushroom::doSomething() {
     if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
         std::cout << "mushroom touching peach" << std::endl;
-        getWorld()->incScore(75);
+        getWorld()->increaseScore(75);
         getWorld()->getPlayer()->setJumpPower(true);
         getWorld()->getPlayer()->setHealth(2);
         setDead();
@@ -163,7 +163,7 @@ Flower::Flower(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_FLOWER
 void Flower::doSomething() {
     if(getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer()) {
         std::cout << "flower touching peach" << std::endl;
-        getWorld()->incScore(50);
+        getWorld()->increaseScore(50);
         getWorld()->getPlayer()->setShootPower(true);
         getWorld()->getPlayer()->setHealth(2);
         setDead();
@@ -205,7 +205,7 @@ void Enemy::enemyBonk() {
     //If the bonker is not Peach, then ignore the bonk
     if(getPlayer()->isStarPower()) {
         getWorld()->playSound(SOUND_PLAYER_KICK);
-        getWorld()->incScore(100);
+        getWorld()->increaseScore(100);
     }
     setDead();
 }

@@ -25,12 +25,12 @@ StudentWorld::~StudentWorld() {
     }
 }
 
-void StudentWorld::incScore(int x) {
-    m_score += x;
-}
-void StudentWorld::decScore(int x) {
-    m_score -= x;
-}
+//void StudentWorld::incScore(int x) {
+//    m_score += x;
+//}
+//void StudentWorld::decScore(int x) {
+//    m_score -= x;
+//}
 
 int StudentWorld::init()
 {
