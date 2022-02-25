@@ -161,7 +161,7 @@ void StudentWorld::cleanUp()
     m_actors.clear();
 }
 
-bool StudentWorld::isBlockingObjectAt(int x, int y) {
+bool StudentWorld::isBlockingObjectAt(int x, int y) const {
     for(int i = 0; i < m_actors.size(); i++) {
         if(!m_actors[i]->isAlive()) continue;
         if(m_actors[i]->isStatic()) {
@@ -173,7 +173,7 @@ bool StudentWorld::isBlockingObjectAt(int x, int y) {
     return false;
 }
 
-Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) {
+Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) const {
     for(int i = 0; i < m_actors.size(); i++) {
         if(!m_actors[i]->isAlive()) continue;
         if(m_actors[i]->isStatic()) {
@@ -186,7 +186,7 @@ Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) {
     return nullptr;
 }
 
-Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) {
+Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) const {
     if((x + SPRITE_WIDTH - 1 >= m_player->getX() && x - SPRITE_WIDTH + 1 <= m_player->getX()) && (y + SPRITE_WIDTH - 1 >= m_player->getY() && y - SPRITE_WIDTH + 1 <= m_player->getY())) return m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) && (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
@@ -194,7 +194,7 @@ Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) {
     return nullptr;
 }
 
-Peach* StudentWorld::getPlayer() {return m_player;}
+Peach* StudentWorld::getPlayer() const {return m_player;}
 
 void StudentWorld::addActor(Actor* a) {
     m_actors.push_back(a);

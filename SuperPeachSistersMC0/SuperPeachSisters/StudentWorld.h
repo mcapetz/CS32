@@ -17,10 +17,10 @@ public:
   virtual int init();
   virtual int move();
   virtual void cleanUp();
-  bool isBlockingObjectAt(int x, int y);
-  Actor* ActorBlockingObjectAt(double x, double y);
-  Actor* ActorBlockingObjectAtAND(double x, double y);
-  Peach* getPlayer();
+  bool isBlockingObjectAt(int x, int y) const;
+  Actor* ActorBlockingObjectAt(double x, double y) const;
+  Actor* ActorBlockingObjectAtAND(double x, double y) const;
+  Peach* getPlayer() const;
   void addActor(Actor* a);
   void incScore(int x);
   void decScore(int x);
