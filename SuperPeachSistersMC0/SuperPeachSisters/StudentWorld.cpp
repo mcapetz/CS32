@@ -120,8 +120,6 @@ int StudentWorld::move()
     
     //if peach reaches flag
     if(isFlagReached) {
-        cout << "flag reached at level " << getLevel() << endl;
-        cout << "finished level" << endl;
         playSound(SOUND_FINISHED_LEVEL);
         return GWSTATUS_FINISHED_LEVEL;
     }
@@ -156,19 +154,11 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
-    cout << "IN CLEANUP " << endl;
-    
-    cout << "IN CLEANUP 2" << endl;
     delete m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         delete m_actors[i];
     }
     m_actors.clear();
-    
-    cout << "is m_actors empty? " <<
-    m_actors.empty() << endl;
-    
-    cout << "actors cleared" << endl;
 }
 
 bool StudentWorld::isBlockingObjectAt(int x, int y) {
