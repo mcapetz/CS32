@@ -25,12 +25,17 @@ private:
     StudentWorld* m_world;
 };
 
+class Obstacle: public Actor {
+public:
+    Obstacle(StudentWorld* mg, int imageID, int startX, int startY);
+    virtual bool isStatic();
+};
+
 
 //BLOCK
-class Block: public Actor {
+class Block: public Obstacle {
 public:
     Block(StudentWorld* mg, int startX, int startY);
-    virtual bool isStatic();
     virtual void bonk();
     bool isHoldingGoodie();
     void setIsHoldingGoodie(bool b);
@@ -112,23 +117,30 @@ private:
 };
 
 //PIPE
-class Pipe: public Actor {
+class Pipe: public Obstacle {
 public:
     Pipe(StudentWorld* mg, int startX, int startY);
-    virtual bool isStatic();
 };
 
 //FLAG
-class Flag: public Actor {
+
+class levelEnder: public Actor {
 public:
-    Flag(StudentWorld* mg, int startX, int startY);
+    levelEnder(StudentWorld* mg, int imageID, int startX, int startY);
     virtual void doSomething();
+    virtual void endLevel() = 0;
 };
 
-class Mario: public Actor {
+class Flag: public levelEnder {
+public:
+    Flag(StudentWorld* mg, int startX, int startY);
+    virtual void endLevel();
+};
+
+class Mario: public levelEnder {
 public:
     Mario(StudentWorld* mg, int startX, int startY);
-    virtual void doSomething();
+    virtual void endLevel();
 };
 
 //ENEMY

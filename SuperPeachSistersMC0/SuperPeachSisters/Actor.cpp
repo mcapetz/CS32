@@ -52,11 +52,13 @@ bool Actor::reachedFlagOrMario() {
     return false;
 }
 
+//OBSTACLE
+Obstacle::Obstacle(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 2, 1) {}
+bool Obstacle::isStatic() { return true; }
 
 
 //BLOCK
-Block::Block(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_BLOCK, startX, startY, 0, 2, 1), holdsGoodie(false) {}
-bool Block::isStatic() {return true;}
+Block::Block(StudentWorld* mg, int startX, int startY) : Obstacle(mg, IID_BLOCK, startX, startY), holdsGoodie(false) {}
 
 void Block::bonk() {
     getWorld()->playSound(SOUND_PLAYER_BONK);
@@ -182,26 +184,33 @@ void Flower::doSomething() {
 }
 
 //PIPE
-Pipe::Pipe(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PIPE, startX, startY, 0, 2, 1) {
+Pipe::Pipe(StudentWorld* mg, int startX, int startY) : Obstacle(mg, IID_PIPE, startX, startY) {
 }
-bool Pipe::isStatic() {return true;}
+
+
+//class levelEnder: public Actor {
+//public:
+//    levelEnder(StudentWorld* mg, int imageID, int startX, int startY);
+//    virtual void doSomething();
+//    virtual void endLevel() = 0;
+//};
+
+levelEnder::levelEnder(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 1, 1) {}
+
+void levelEnder::doSomething() {
+    if(!isAlive()) return;
+    if(reachedFlagOrMario()) endLevel();
+}
 
 //FLAG
-Flag::Flag(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_FLAG, startX, startY, 0, 1, 1) {}
-
-void Flag::doSomething() {
-    if(!isAlive()) return;
-    if(reachedFlagOrMario()) {
-        getWorld()->reachedFlag();
-    }
+Flag::Flag(StudentWorld* mg, int startX, int startY) : levelEnder(mg, IID_FLAG, startX, startY) {}
+void Flag::endLevel() {
+    getWorld()->reachedFlag();
 }
 
-Mario::Mario(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_MARIO, startX, startY, 0, 1, 1) {}
-void Mario::doSomething() {
-    if(!isAlive()) return;
-    if(reachedFlagOrMario()) {
-        getWorld()->reachedMario();
-    }
+Mario::Mario(StudentWorld* mg, int startX, int startY) : levelEnder(mg, IID_MARIO, startX, startY) {}
+void Mario::endLevel() {
+    getWorld()->reachedMario();
 }
 
 //ENEMY
