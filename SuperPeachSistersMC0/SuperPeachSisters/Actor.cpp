@@ -15,7 +15,7 @@ void Actor::doSomething() {
     if(!isAlive()) return;
 }
 
-bool Actor::isAlive() {
+bool Actor::isAlive() const {
     return m_isAlive;
 }
 
@@ -23,7 +23,7 @@ void Actor::setDead() {
     m_isAlive = false;
 }
 
-StudentWorld* Actor::getWorld() {
+StudentWorld* Actor::getWorld() const {
     return m_world;
 }
 
@@ -39,7 +39,7 @@ bool Actor::isPlayer() {
     return false;
 }
 
-bool Actor::overlappingPeach() {
+bool Actor::overlappingPeach() const {
     return getWorld()->ActorBlockingObjectAtAND(getX(), getY()) != nullptr && getWorld()->ActorBlockingObjectAtAND(getX(), getY())->isPlayer();
 }
 
@@ -65,7 +65,7 @@ void Block::bonk() {
     return;
 }
 
-bool Block::isHoldingGoodie() {
+bool Block::isHoldingGoodie() const {
     return holdsGoodie;
 }
 
@@ -187,14 +187,7 @@ void Flower::doSomething() {
 Pipe::Pipe(StudentWorld* mg, int startX, int startY) : Obstacle(mg, IID_PIPE, startX, startY) {
 }
 
-
-//class levelEnder: public Actor {
-//public:
-//    levelEnder(StudentWorld* mg, int imageID, int startX, int startY);
-//    virtual void doSomething();
-//    virtual void endLevel() = 0;
-//};
-
+//LEVEL ENDER
 levelEnder::levelEnder(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, 0, 1, 1) {}
 
 void levelEnder::doSomething() {
@@ -414,15 +407,15 @@ Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, st
     star_invincibility = 0;
 }
 
-bool Peach::isStarPower() {
+bool Peach::isStarPower() const {
     return starPower;
 }
 
-bool Peach::isShootPower() {
+bool Peach::isShootPower() const {
     return shootPower;
 }
 
-bool Peach::isJumpPower() {
+bool Peach::isJumpPower() const {
     return jumpPower;
 }
 

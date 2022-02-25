@@ -12,13 +12,13 @@ public:
     Actor(StudentWorld* mg, int imageID, int startX, int startY, int dir = 0, int depth = 0, double size = 1.0);
     virtual void doSomething();
     virtual void bonk();
-    bool isAlive();
+    bool isAlive() const;
     void setDead();
-    StudentWorld* getWorld();
+    StudentWorld* getWorld() const;
     virtual bool isStatic();
     virtual bool isEnemy();
     virtual bool isPlayer();
-    bool overlappingPeach();
+    bool overlappingPeach() const;
     bool reachedFlagOrMario();
 private:
     bool m_isAlive;
@@ -37,7 +37,7 @@ class Block: public Obstacle {
 public:
     Block(StudentWorld* mg, int startX, int startY);
     virtual void bonk();
-    bool isHoldingGoodie();
+    bool isHoldingGoodie() const;
     void setIsHoldingGoodie(bool b);
     bool powerUp();
 private:
@@ -93,9 +93,9 @@ class Peach: public Actor {
 public:
     Peach(StudentWorld* mg, int startX, int startY);
     virtual void doSomething();
-    bool isStarPower();
-    bool isShootPower();
-    bool isJumpPower();
+    bool isStarPower() const;
+    bool isShootPower() const;
+    bool isJumpPower() const;
     void setStarPower(bool b);
     void setShootPower(bool b);
     void setJumpPower(bool b);
@@ -127,8 +127,10 @@ public:
 class levelEnder: public Actor {
 public:
     levelEnder(StudentWorld* mg, int imageID, int startX, int startY);
-    virtual void doSomething();
     virtual void endLevel() = 0;
+private:
+    virtual void doSomething();
+
 };
 
 class Flag: public levelEnder {
