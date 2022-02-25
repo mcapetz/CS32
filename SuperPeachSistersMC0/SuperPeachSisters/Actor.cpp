@@ -399,9 +399,10 @@ Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, st
     shootPower = false;
     jumpPower = false;
     temp_invincibility = false;
-//    remaining_jump_distance = 0;
-//    time_to_recharge_before_next_fire = 0;
-//    temp_invincibility = 0;
+    remaining_jump_distance = 0;
+    time_to_recharge_before_next_fire = 0;
+    temp_invincibility = 0;
+    star_invincibility = 0;
 }
 
 bool Peach::isStarPower() {
