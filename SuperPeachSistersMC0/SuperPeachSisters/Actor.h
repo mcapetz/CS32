@@ -55,7 +55,6 @@ class flowerBlock: public Block {
 public:
     flowerBlock(StudentWorld* mg, int startX, int startY);
     virtual void bonk();
-    virtual bool isGoodie() {return true;}
 };
 
 //GOODIES
@@ -98,14 +97,18 @@ public:
     virtual bool isPlayer();
     virtual void bonk();
     void setHealth(int x);
+    void setTempInvincibility(int x);
+    void setStarInvincibility(int x);
 private:
     int m_health;
     bool starPower;
     bool shootPower;
     bool jumpPower;
+    bool tempInvincibility;
     int remaining_jump_distance;
     int time_to_recharge_before_next_fire;
     int temp_invincibility;
+    int star_invincibility;
 };
 
 //PIPE

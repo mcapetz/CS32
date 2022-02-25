@@ -46,7 +46,6 @@ bool Actor::overlappingPeach() {
 
 bool Actor::reachedFlagOrMario() {
     if(overlappingPeach()) {
-        std::cout << "reached flag" << std::endl;
         getWorld()->increaseScore(1000);
         setDead();
         return true;
@@ -161,6 +160,7 @@ Star::Star(StudentWorld* mg, int startX, int startY) : Goodie(mg, IID_STAR, star
 void Star::doSomething() {
     if(powerUpPeach(100)) {
         getWorld()->getPlayer()->setStarPower(true);
+        getWorld()->getPlayer()->setStarInvincibility(150);
         return;
     }
     else doGoodie();
@@ -210,7 +210,7 @@ void Mario::doSomething() {
 }
 
 //ENEMY
-Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, randInt(0, 1)*180, 1, 1) {};
+Enemy::Enemy(StudentWorld* mg, int imageID, int startX, int startY) : Actor(mg, imageID, startX, startY, randInt(0, 1)*180, 1, 0) {};
 
 bool Enemy::isEnemy() {
     return true;
@@ -224,7 +224,7 @@ void Enemy::enemyBonk() {
     if(getPlayer()->isStarPower()) {
         getWorld()->playSound(SOUND_PLAYER_KICK);
     }
-    getWorld()->increaseScore(100);
+    if(getWorld()->getPlayer()->isAlive()) getWorld()->increaseScore(100);
     setDead();
 }
 
@@ -320,7 +320,10 @@ void Piranha::doSomething() {
             //peach is on the right
             setDirection(right);
         }
-        if(m_firingDelay > 0) m_firingDelay--;
+        if(m_firingDelay > 0) {
+            m_firingDelay--;
+            return;
+        }
         else {
             //no firing delay
             if(abs(pX - getX()) < 8*SPRITE_WIDTH) {
@@ -410,9 +413,10 @@ Peach::Peach(StudentWorld* mg, int startX, int startY) : Actor(mg, IID_PEACH, st
     starPower = false;
     shootPower = false;
     jumpPower = false;
-    remaining_jump_distance = 0;
-    time_to_recharge_before_next_fire = 0;
-    temp_invincibility = 0;
+    temp_invincibility = false;
+//    remaining_jump_distance = 0;
+//    time_to_recharge_before_next_fire = 0;
+//    temp_invincibility = 0;
 }
 
 bool Peach::isStarPower() {
@@ -445,27 +449,37 @@ void Peach::setHealth(int x) {
     m_health = x;
 }
 
+void Peach::setTempInvincibility(int x) {
+    temp_invincibility = x;
+}
+
+void Peach::setStarInvincibility(int x) {
+    star_invincibility = x;
+}
+
 void Peach::bonk() {
     std::cout << "peach bonked" << std::endl;
-    if(starPower) return;
+    if(starPower || tempInvincibility) return;
     m_health--;
     temp_invincibility = 10;
     if(shootPower) shootPower = false;
     if(jumpPower) jumpPower = false;
     if(m_health > 0) getWorld()->playSound(SOUND_PLAYER_HURT);
-    if(m_health <= 0) setDead();
+    if(m_health <= 0) {
+        setDead();
+        std::cout << "peach died**********************" << std::endl;
+
+    }
 }
 
 void Peach::doSomething() {
     if(!isAlive()) return;
     
-    //check temp invincibility
-    if(starPower) {
-        temp_invincibility--;
-    }
-    if(temp_invincibility == 0) {
-        starPower = false;
-    }
+    //check invincibility
+    if(starPower) star_invincibility--;
+    if(star_invincibility == 0) starPower = false;
+    if(temp_invincibility > 0) temp_invincibility--;
+    if(temp_invincibility == 0) tempInvincibility = false;
     //check recharge
     if(time_to_recharge_before_next_fire > 0) time_to_recharge_before_next_fire--;
     
@@ -517,7 +531,6 @@ void Peach::doSomething() {
                     if(jumpPower) remaining_jump_distance = 12;
                     else remaining_jump_distance = 8;
                     getWorld()->playSound(SOUND_PLAYER_JUMP);
-                    
                 }
                 break;
             case KEY_PRESS_SPACE:
@@ -531,7 +544,7 @@ void Peach::doSomething() {
                         getWorld()->addActor(fire);
                     }
                     else {
-                        PeachFireball* fire = new PeachFireball(getWorld(), getX()-4, getY(), right);
+                        PeachFireball* fire = new PeachFireball(getWorld(), getX()+4, getY(), right);
                         getWorld()->addActor(fire);
                     }
                 }

@@ -107,9 +107,9 @@ int StudentWorld::init()
 
 int StudentWorld::move()
 {
-    m_player->doSomething();
+    if(m_player->isAlive()) m_player->doSomething();
     for(int i = 0; i < m_actors.size(); i++) {
-        m_actors[i]->doSomething();
+        if(m_actors[i]->isAlive()) m_actors[i]->doSomething();
     }
     
     if(!m_player->isAlive()) {
@@ -141,7 +141,7 @@ int StudentWorld::move()
     //update status text at top of screen
     ostringstream oss;
     oss.fill('0');
-    oss << "Lives: " << getLives() << "  Level: " << setw(2) << getLevel() << "  Points: " << setw(6) << getScore();
+    oss << "Lives: " << getLives() << "  Level: " << setw(2) << getLevel() << " Points: " << setw(6) << getScore();
     if(getPlayer()->isStarPower()) oss << " StarPower!";
     if(getPlayer()->isShootPower()) oss << " ShootPower!";
     if(getPlayer()->isJumpPower()) oss << " JumpPower!";
