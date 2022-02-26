@@ -213,7 +213,7 @@ bool Enemy::isEnemy() {
     return true;
 }
 
-Peach* Enemy::getPlayer() { return getWorld()->getPlayer(); }
+Peach* Enemy::getPlayer() const { return getWorld()->getPlayer(); }
 
 void Enemy::enemyBonk() {
     //If the bonker is not Peach, then ignore the bonk
@@ -225,12 +225,12 @@ void Enemy::enemyBonk() {
 }
 
 void Enemy::enemyOverlappingPeach() {
-    if(getX() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getX() && getX() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getX() && getY() + SPRITE_WIDTH - 1 >= getWorld()->getPlayer()->getY() && getY() - SPRITE_WIDTH + 1 <= getWorld()->getPlayer()->getY()) {
-        //if so bonk peach and return
+    if(overlappingPeach()) {
         getPlayer()->bonk();
         bonk();
         return;
     }
+    
 }
 
 void Enemy::doEnemy() {
@@ -337,22 +337,20 @@ void Projectile::moveWithFalling() {
 
     if(!getWorld()->isBlockingObjectAt(getX(), getY()-2)) moveTo(getX(), getY()-2);
 
-        if(getDirection() == left) {
-            if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
-            else {
-                setDead();
-                return;
-            }
-        }
+    if(getDirection() == left) {
+        if(!getWorld()->isBlockingObjectAt(getX()-2, getY())) moveTo(getX()-2, getY());
         else {
-            if(!getWorld()->isBlockingObjectAt(getX()+2, getY())) moveTo(getX()+2, getY());
-            else {
-                setDead();
-                return;
-            }
+            setDead();
+            return;
         }
-    
-    
+    }
+    else {
+        if(!getWorld()->isBlockingObjectAt(getX()+2, getY())) moveTo(getX()+2, getY());
+        else {
+            setDead();
+            return;
+        }
+    }
 }
 
 Shell::Shell(StudentWorld* mg, int startX, int startY, int dir) : Projectile(mg, IID_SHELL, startX, startY, dir) {};

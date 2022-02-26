@@ -22,8 +22,6 @@ public:
   Actor* ActorBlockingObjectAtAND(double x, double y) const;
   Peach* getPlayer() const;
   void addActor(Actor* a);
-  void incScore(int x);
-  void decScore(int x);
   void reachedFlag();
   void reachedMario();
 

@@ -149,7 +149,7 @@ public:
 class Enemy: public Actor {
 public:
     Enemy(StudentWorld* mg, int imageID, int startX, int startY);
-    Peach* getPlayer();
+    Peach* getPlayer() const;
     virtual void doEnemy();
     virtual bool isEnemy();
     virtual void enemyBonk();

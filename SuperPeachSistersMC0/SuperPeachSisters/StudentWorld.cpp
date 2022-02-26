@@ -18,7 +18,6 @@ StudentWorld::StudentWorld(string assetPath)
 }
 
 StudentWorld::~StudentWorld() {
-    if(GWSTATUS_LEVEL_ERROR) return;
     cleanUp();
 }
 
@@ -186,7 +185,7 @@ Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) const {
     return nullptr;
 }
 
-Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) const {
+Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) const{
     if((x + SPRITE_WIDTH - 1 >= m_player->getX() && x - SPRITE_WIDTH + 1 <= m_player->getX()) && (y + SPRITE_WIDTH - 1 >= m_player->getY() && y - SPRITE_WIDTH + 1 <= m_player->getY())) return m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) && (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
