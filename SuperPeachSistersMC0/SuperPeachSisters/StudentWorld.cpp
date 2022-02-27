@@ -2,6 +2,7 @@
 #include "GameConstants.h"
 #include <string>
 #include <sstream>
+#include <iomanip>
 using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
@@ -138,7 +139,9 @@ int StudentWorld::move()
     //update status text at top of screen
     ostringstream oss;
     oss.fill('0');
-    oss << "Lives: " << getLives() << "  Level: " << setw(2) << getLevel() << " Points: " << setw(6) << getScore();
+    oss << "Lives: " << getLives() << "  Level: " << setw(2) << getLevel() << " Points: ";
+    oss.fill('0');
+    oss << setw(6) << getScore();
     if(getPlayer()->isStarPower()) oss << " StarPower!";
     if(getPlayer()->isShootPower()) oss << " ShootPower!";
     if(getPlayer()->isJumpPower()) oss << " JumpPower!";
