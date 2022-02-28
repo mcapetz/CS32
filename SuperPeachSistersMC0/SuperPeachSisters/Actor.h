@@ -19,7 +19,6 @@ public:
     virtual bool isEnemy();
     virtual bool isPlayer();
     bool overlappingPeach() const;
-    bool reachedFlagOrMario();
 private:
     bool m_isAlive;
     StudentWorld* m_world;
@@ -128,6 +127,7 @@ class levelEnder: public Actor {
 public:
     levelEnder(StudentWorld* mg, int imageID, int startX, int startY);
     virtual void endLevel() = 0;
+    bool reachedFlagOrMario();
 private:
     virtual void doSomething();
 

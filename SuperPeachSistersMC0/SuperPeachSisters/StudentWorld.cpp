@@ -13,6 +13,7 @@ GameWorld* createStudentWorld(string assetPath)
 StudentWorld::StudentWorld(string assetPath)
 : GameWorld(assetPath)
 {
+    //intialize booleans to false because the level has not ended
     isFlagReached = false;
     isMarioReached = false;
     
@@ -37,12 +38,10 @@ int StudentWorld::init()
     isMarioReached = false;
     
     Level lev(assetPath());
-     //m_level
      ostringstream oss;
      oss.fill('0');
      oss << "level" << setw(2) << getLevel() << ".txt";
      string level_file = oss.str();
-     //level_file = "level02.txt"; //REMOVE THIS LINE
      Level::LoadResult result = lev.loadLevel(level_file);
     if (result == Level::load_fail_file_not_found) {
        cerr << "Could not find data file "<< level_file << endl;
@@ -107,11 +106,15 @@ int StudentWorld::init()
 
 int StudentWorld::move()
 {
+    //if the player is alive, call player's doSomething()
     if(m_player->isAlive()) m_player->doSomething();
+    
+    //for all actors, if they are alive, call doSomething()
     for(int i = 0; i < m_actors.size(); i++) {
         if(m_actors[i]->isAlive()) m_actors[i]->doSomething();
     }
     
+    //if player is not alive
     if(!m_player->isAlive()) {
         playSound(SOUND_PLAYER_DIE);
         decLives();
@@ -156,6 +159,7 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
+    //delete player and all actors and clear the vector data structure
     delete m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         delete m_actors[i];
@@ -164,6 +168,7 @@ void StudentWorld::cleanUp()
 }
 
 bool StudentWorld::isBlockingObjectAt(int x, int y) const {
+    //checks for overlap with Obstacles
     for(int i = 0; i < m_actors.size(); i++) {
         if(!m_actors[i]->isAlive()) continue;
         if(m_actors[i]->isStatic()) {
@@ -176,6 +181,7 @@ bool StudentWorld::isBlockingObjectAt(int x, int y) const {
 }
 
 Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) const {
+    //checks overlap with other actors
     for(int i = 0; i < m_actors.size(); i++) {
         if(!m_actors[i]->isAlive()) continue;
         if(m_actors[i]->isStatic()) {
@@ -189,6 +195,7 @@ Actor* StudentWorld::ActorBlockingObjectAt(double x, double y) const {
 }
 
 Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) const{
+    //checks overlap with player AND other actors
     if((x + SPRITE_WIDTH - 1 >= m_player->getX() && x - SPRITE_WIDTH + 1 <= m_player->getX()) && (y + SPRITE_WIDTH - 1 >= m_player->getY() && y - SPRITE_WIDTH + 1 <= m_player->getY())) return m_player;
     for(int i = 0; i < m_actors.size(); i++) {
         if((x + SPRITE_WIDTH - 1 >= m_actors[i]->getX() && x - SPRITE_WIDTH + 1 <= m_actors[i]->getX()) && (y + SPRITE_WIDTH - 1 >= m_actors[i]->getY() && y - SPRITE_WIDTH + 1 <= m_actors[i]->getY())) return m_actors[i];
@@ -198,6 +205,6 @@ Actor* StudentWorld::ActorBlockingObjectAtAND(double x, double y) const{
 
 Peach* StudentWorld::getPlayer() const {return m_player;}
 
-void StudentWorld::addActor(Actor* a) {
+void StudentWorld::addActor(Actor* a) { //allows actors to add actors to the world through getWorld() call
     m_actors.push_back(a);
 }
