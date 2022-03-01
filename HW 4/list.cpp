@@ -53,7 +53,7 @@ int main()
     listAll(d1);
     cout << "====" << endl;
 
-    d1->add(new Class("SoopaKoopa"));
+    d1->add(new Class("SoopaKoopaTroopa"));
     Class* d2 = new Class("Enemy");
     d2->add(new Class("Piranha"));
     d2->add(d1);
