@@ -19,9 +19,13 @@
 void testRadixTree() {
     RadixTree<std::string> tree;
     tree.insert("cash", "money");
-    std::string* val;
-    val = tree.search("cash");
-    assert(*val == "money");
+    std::string val;
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    
+    tree.insert("bash", "sudo");
+    val = *(tree.search("bash"));
+    assert(val == "sudo");
     
 }
 
