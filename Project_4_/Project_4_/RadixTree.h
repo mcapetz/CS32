@@ -53,28 +53,49 @@ public:
         
         for(int i = 0; i < key.size(); i++) {
             int currLetter = key[i] - 'a';
+            string originalWord = "";
+            if(curr) originalWord = curr->word;
             
             //a path doesn't exist
             if (curr->edges[currLetter] == nullptr) {
                 cout << "path doesn't exist" << endl;
                 cout << "curr letter: " << key[i] - 'a' << endl;
                 
-                //add a new node
+                //add a new node for new word
                 Node* next = new Node();
                 curr->edges[currLetter] = next;
                 next->word = key.substr(1);
-                cout << "next word is " << next->word;
+                cout << "next word is " << next->word << endl;
+                next->value = value;
+                next->endOfWord = true;
                 
-                //factor the word
-                curr->edges[curr->word[0]] = new Node();
-                curr->edges[curr->word[0]]->word = curr->word.substr(1);
-                curr->edges[curr->word[0]]->endOfWord = true;
+                //cancel original word
                 curr->word = "";
                 
-                //new node for new word
-                curr->edges[key[i]] = new Node();
-                curr->edges[key[i]]->word = curr->word.substr(1);
-                curr->edges[key[i]]->endOfWord = true;
+                //add a new node for original word
+                //check if path exists
+                if(curr->edges[originalWord[0] - 'a'] == nullptr) {
+                    //path does not exits
+                    Node* onext = new Node();
+                    curr->edges[originalWord[0] - 'a'] = onext;
+                    onext->word = originalWord.substr(1);
+                    cout << "original next word is " << onext->word << endl;
+                    onext->value = curr->value;
+                    onext->endOfWord = true;
+                    return;
+                }
+                else cout << "path exists... now what" << endl;
+                
+//                //factor the word
+//                curr->edges[curr->word[0]] = new Node();
+//                curr->edges[curr->word[0]]->word = curr->word.substr(1);
+//                curr->edges[curr->word[0]]->endOfWord = true;
+//                curr->word = "";
+//
+//                //new node for new word
+//                curr->edges[key[i]] = new Node();
+//                curr->edges[key[i]]->word = curr->word.substr(1);
+//                curr->edges[key[i]]->endOfWord = true;
             }
             
             //go to next word
@@ -113,7 +134,7 @@ public:
         
         //check if prefixes match
         int size = (int)curr->word.size();
-        if(curr->word == key.substr(0, size)) {
+        if(curr->word != "" && curr->word == key.substr(0, size)) {
             cout << "prefixes match" << endl;
             
             //words match
@@ -133,10 +154,14 @@ public:
             for(int j = i; j < key.size(); j++) {
                 remainingWord += key[j];
             }
-            if(remainingWord == curr->word && curr->endOfWord) return &curr->value;
-
+            cout << "remaining word: " << remainingWord << endl;
+            if(curr->word != "" && remainingWord == curr->word && curr->endOfWord) {
+                cout << "found!" << endl;
+                cout << "value: " << curr->value << endl;
+                return &curr->value;
+            }
             //go to the next node
-            curr = curr->edges[key[i]];
+            curr = curr->edges[key[i] - 'a'];
 
             //if the key is not in the RT
             if(curr == nullptr) return nullptr;

@@ -17,15 +17,23 @@
 #include "RadixTree.h"
 
 void testRadixTree() {
+    //initiate tree
     RadixTree<std::string> tree;
+    
+    //insert first word: cash
     tree.insert("cash", "money");
     std::string val;
     val = *(tree.search("cash"));
     assert(val == "money");
     
+    //insert second word: bash
     tree.insert("bash", "sudo");
     val = *(tree.search("bash"));
     assert(val == "sudo");
+    
+    //make sure first word is still in there
+    val = *(tree.search("cash"));
+    assert(val == "money");
     
 }
 
