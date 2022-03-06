@@ -35,6 +35,11 @@ void testRadixTree() {
     val = *(tree.search("cash"));
     assert(val == "money");
     
+    //add third word: cashier
+    tree.insert("cashier", "job");
+    //val = *(tree.search("cashier"));
+    //assert(val == "job");
+    
 }
 
 void testAttTranslator() {

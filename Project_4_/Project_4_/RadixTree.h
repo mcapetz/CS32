@@ -25,7 +25,7 @@ public:
         
     }
     void insert(std::string key, const ValueType& value) {
-        cout << "beginning insert" << endl;
+        cout << "beginning insert: " << key << endl;
         // start from the root node
         Node* curr = root;
             
@@ -39,32 +39,59 @@ public:
             return;
         }
         
-        //check if prefixes match
-        int size = (int)curr->word.size();
-        if(curr->word == key.substr(0, size)) {
-            cout << "prefixes match" << endl;
-            
-            //???
-            
-            //words don't match so move to the next node
-            curr = curr->edges[key[size-1]];
+        
+        if(curr->word != "") {
+            //find prefix
+            int i = 0;
+            int j = 0;
+            int count = 0;
+            while(i < curr->word.size() && j < key.size()) {
+                if(curr->word[i] == key[j]) count++;
+                i++;
+                j++;
+            }
+            cout << "prefix is: " << key.substr(0,count) << endl;
         }
-        else cout << "prefixes don't match" << endl;
+       
+        
+//        //check if prefixes match
+//        int size = (int)curr->word.size();
+//        if(curr->word != "" && curr->word == key.substr(0, size)) {
+//            cout << "prefixes match" << endl;
+//            cout << "prefix is: " << curr->word << endl;
+//            //???
+//
+//            //words don't match so move to the next node
+//            curr = curr->edges[key[size-1]];
+//        }
+//        else cout << "prefixes don't match" << endl;
         
         for(int i = 0; i < key.size(); i++) {
+            cout << "curr letter: " << key[i] << endl;
             int currLetter = key[i] - 'a';
             string originalWord = "";
             if(curr) originalWord = curr->word;
+            cout << "curr word is: " << curr->word << endl;
+            cout << "key substr: " << key.substr(i, curr->word.size()) << endl;
+            
+            //check if matches word
+            if(curr->word != "" && curr->word == key.substr(i, curr->word.size())) {
+                cout << "prefixes match" << endl;
+                i += curr->word.size();
+                //curr = curr->edges[key[i]-'a'];
+                currLetter = key[i] - 'a';
+                cout << "curr letter: " << key[i] << endl;
+            }
             
             //a path doesn't exist
             if (curr->edges[currLetter] == nullptr) {
                 cout << "path doesn't exist" << endl;
-                cout << "curr letter: " << key[i] - 'a' << endl;
+                cout << "curr letter: " << key[i] << endl;
                 
                 //add a new node for new word
                 Node* next = new Node();
                 curr->edges[currLetter] = next;
-                next->word = key.substr(1);
+                next->word = key.substr(i+1);
                 cout << "next word is " << next->word << endl;
                 next->value = value;
                 next->endOfWord = true;
@@ -99,7 +126,8 @@ public:
             }
             
             //go to next word
-            curr = curr->edges[key[i]];
+            cout << "going to " << key[i] << endl;
+            curr = curr->edges[key[i]-'a'];
         }
         
     }
