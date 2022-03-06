@@ -10,8 +10,9 @@
 
 #include <stdio.h>
 #include <string>
-
-struct AttValPair;
+#include "RadixTree.h"
+#include <vector>
+#include "provided.h"
 
 class PersonProfile {
 public:
@@ -25,7 +26,8 @@ public:
 private:
     std::string m_name;
     std::string m_email;
-    //RadixTree<string val> m_tree;
+    RadixTree<string> m_tree;
+    vector<AttValPair> m_vect;
 };
 
 #endif /* PersonProfile_hpp */
