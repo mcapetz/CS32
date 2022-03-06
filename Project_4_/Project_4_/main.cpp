@@ -37,8 +37,23 @@ void testRadixTree() {
     
     //add third word: cashier
     tree.insert("cashier", "job");
-    //val = *(tree.search("cashier"));
-    //assert(val == "job");
+    val = *(tree.search("cashier"));
+    assert(val == "job");
+    
+    //add fourth word: cashier
+    tree.insert("bashes", "trash");
+    val = *(tree.search("bashes"));
+    assert(val == "trash");
+    
+    //add fifth word: cashier
+    tree.insert("cashes", "moola");
+    val = *(tree.search("cashes"));
+    assert(val == "moola");
+    
+    //add sixth word: cashier
+    tree.insert("case", "closed");
+    val = *(tree.search("case"));
+    assert(val == "closed");
     
 }
 

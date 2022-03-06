@@ -41,12 +41,18 @@ public:
         
         
         if(curr->word != "") {
+            cout << "first check" << endl;
+            cout << "curr word: " << curr->word << endl;
+            cout << "key word: " << key << endl;
+            
             //find prefix
             int i = 0;
             int j = 0;
             int count = 0;
             while(i < curr->word.size() && j < key.size()) {
+                cout << curr->word[i] << " , " << key[j] << endl;
                 if(curr->word[i] == key[j]) count++;
+                if(curr->word[i] != key[j]) break;
                 i++;
                 j++;
             }
@@ -74,16 +80,93 @@ public:
             cout << "curr word is: " << curr->word << endl;
             cout << "key substr: " << key.substr(i, curr->word.size()) << endl;
             
-            //check if matches word
+            //check if curr->word is a prefix
             if(curr->word != "" && curr->word == key.substr(i, curr->word.size())) {
                 cout << "prefixes match" << endl;
                 i += curr->word.size();
                 //curr = curr->edges[key[i]-'a'];
                 currLetter = key[i] - 'a';
                 cout << "curr letter: " << key[i] << endl;
+                
+                if (curr->edges[currLetter] == nullptr) {
+                    //a path doesn't exist
+                    //add a new node for new word
+                    Node* next = new Node();
+                    curr->edges[currLetter] = next;
+                    next->word = key.substr(i+1);
+                    cout << "next word is " << next->word << endl;
+                    next->value = value;
+                    next->endOfWord = true;
+                    cout << "done" << endl;
+                    return;
+                }
             }
             
-            //a path doesn't exist
+            //check if they share a common prefix
+            if(curr->word != "") {
+                cout << "curr word: " << curr->word << endl;
+                cout << "key word: " << key.substr(i) << endl;
+                //find prefix
+                int k = 0;
+                int j = 0;
+                int count = 0;
+                string currkey = key.substr(i);
+                while(k < curr->word.size() && j < currkey.size()) {
+                    if(curr->word[k] == currkey[j]) count++;
+                    if(curr->word[k] != currkey[j]) break;
+                    k++;
+                    j++;
+                }
+                cout << "i: " << i << endl;
+                cout << "count: " << count << endl;
+                cout << "prefix is: " << key.substr(i,count) << endl;
+                
+                
+                if(key.substr(i,count) != "") {
+                    //prefix exists
+                    cout << "prefix exists" << endl;
+                    
+                    //original is now next: onext
+                    Node* onext = new Node();
+                    for(int i = 0; i < CHAR_SIZE; i++) { //copy over child nodes
+                        onext->edges[i] = curr->edges[i];
+                    }
+                    
+                    //make connector if necessary
+                    if(curr->word.substr(count).size() > 1) {
+                        Node* connector = new Node();
+                        connector->word = curr->word.substr(count, curr->word.size()-count-1);
+                        connector->edges[curr->word.substr(curr->word.size()-1)[0] - 'a'] = onext;
+                        cout << "connector word: " << connector->word << endl;
+                    }
+                    
+                    //new key
+                    Node* newKey = new Node();
+                    newKey->word = key.substr(i+count+1);
+                    cout << "newKey: " << newKey->word << endl;
+                    newKey->value = value;
+                    newKey->endOfWord = true;
+                    
+                    //change curr node
+                    for(int i = 0; i < CHAR_SIZE; i++) { //reset pointers
+                        curr->edges[i] = nullptr;
+                    }
+                    curr->word = key.substr(i,count); //set word to prefix
+                    if(curr->word.substr(count).size() > 1) {
+                        //connector exists
+                        //TO DO !!!
+                    }
+                    //connector doesn't exist
+                    else {
+                        curr->edges[curr->word.substr(count)[0] - 'a'] = onext;
+                    }
+                    curr->edges[key.substr(i+count)[0] - 'a'] = newKey;
+                    return;
+                    
+                }
+            }
+            
+            //a path doesn't exist, need to make a leaf
             if (curr->edges[currLetter] == nullptr) {
                 cout << "path doesn't exist" << endl;
                 cout << "curr letter: " << key[i] << endl;
@@ -172,22 +255,30 @@ public:
             }
             
             //words don't match so move to the next node
-            curr = curr->edges[key[size-1]];
+            curr = curr->edges[key[size-1] - 'a'];
         }
         else cout << "prefixes don't match" << endl;
         
         for(int i = 0; i < key.size(); i++) {
             //check if word matches
-            std::string remainingWord = "";
-            for(int j = i; j < key.size(); j++) {
-                remainingWord += key[j];
-            }
+            string remainingWord = key.substr(i);
             cout << "remaining word: " << remainingWord << endl;
+            
+            //see if words match
             if(curr->word != "" && remainingWord == curr->word && curr->endOfWord) {
                 cout << "found!" << endl;
                 //cout << "value: " << curr->value << endl;
                 return &curr->value;
             }
+            
+            //see if curr->word is a prefix
+            if(curr->word != "" && curr->word == key.substr(i, curr->word.size())) {
+                cout << "prefixes match" << endl;
+                cout << "curr word: " << curr->word << endl;
+                i += curr->word.size();
+            }
+            
+            
             //go to the next node
             curr = curr->edges[key[i] - 'a'];
 
