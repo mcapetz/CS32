@@ -40,18 +40,21 @@ bool AttributeTranslator::Load(std::string filename) {
         
 //        vector<AttValPair>* vect = m_compTree.search(source);
 //        if(vect == nullptr) {
+//            cout << "source not in tree" << endl;
 //            //source does not exist in tree
 //            vector<AttValPair> newVect;
 //            newVect.push_back(AttValPair(att, val));
 //            m_compTree.insert(source, newVect);
 //        }
 //        else {
+//            cout << "source in tree" << endl;
 //            //if source already exists in tree
 //            vect->push_back(AttValPair(att, val));
 //        }
     }
     
     return true;
+
 }
 
 std::vector<AttValPair> AttributeTranslator::FindCompatibleAttPairs(const AttValPair& src) const {

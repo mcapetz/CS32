@@ -78,10 +78,17 @@ void testAttTranslator() {
     cout << at.Load(filename) << endl;
 }
 
+void testMDB() {
+    MemberDatabase mdb;
+    string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/members.txt";
+    cout << mdb.LoadDatabase(filename) << endl;
+}
+
 int main() {
     std::cout << "begin testing" << std::endl;
-    testRadixTree();
+    //testRadixTree();
     //testAttTranslator();
+    testMDB();
     std::cout << "all tests passed" << std::endl;
 }
 
