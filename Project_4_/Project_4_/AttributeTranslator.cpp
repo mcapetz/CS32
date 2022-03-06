@@ -21,26 +21,36 @@ bool AttributeTranslator::Load(std::string filename) {
     cout << "begin loading translator" << endl;
     string line;
     ifstream file(filename);
-    int i = 0;
+    
     while(getline(file, line, ',')) {
-        //if(getline(file, line, '\n')) cout << line << " contains a line break" << endl;
-        switch(i) {
-            case 0:
-                cout << "attribute 1 is: " << line << endl;
-                break;
-            case 1:
-                cout << "value 1 is: " << line << endl;
-                break;
-            case 2:
-                cout << "attribute 2 is: " << line << endl;
-                break;
-            case 3:
-                cout << "value 2 is: " << line << endl;
-                break;
-        }
-        i++;
-        if(i == 4) i = 0;
+        string source;
+        //cout << "attribute 1 is: " << line << endl;
+        source += line + ",";
+        getline(file, line, ',');
+        //cout << "value 1 is: " << line << endl;
+        source += line;
+        getline(file, line, ',');
+        //cout << "attribute 2 is: " << line << endl;
+        string att = line;
+        getline(file, line, '\n');
+        //cout << "value 2 is: " << line << endl;
+        string val = line;
+        cout << "source: " << source << endl;
+        cout << "other: " << att << "," << val << endl;
+        
+//        vector<AttValPair>* vect = m_compTree.search(source);
+//        if(vect == nullptr) {
+//            //source does not exist in tree
+//            vector<AttValPair> newVect;
+//            newVect.push_back(AttValPair(att, val));
+//            m_compTree.insert(source, newVect);
+//        }
+//        else {
+//            //if source already exists in tree
+//            vect->push_back(AttValPair(att, val));
+//        }
     }
+    
     return true;
 }
 

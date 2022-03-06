@@ -45,8 +45,8 @@ void testAttTranslator() {
 
 int main() {
     std::cout << "begin testing" << std::endl;
-    //testRadixTree();
-    testAttTranslator();
+    testRadixTree();
+    //testAttTranslator();
     std::cout << "all tests passed" << std::endl;
 }
 
