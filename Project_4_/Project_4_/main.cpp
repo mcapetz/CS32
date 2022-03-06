@@ -37,9 +37,16 @@ void testRadixTree() {
     
 }
 
+void testAttTranslator() {
+    AttributeTranslator at;
+    string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
+    cout << at.Load(filename) << endl;
+}
+
 int main() {
     std::cout << "begin testing" << std::endl;
-    testRadixTree();
+    //testRadixTree();
+    testAttTranslator();
     std::cout << "all tests passed" << std::endl;
 }
 

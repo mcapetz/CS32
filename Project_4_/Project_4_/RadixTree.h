@@ -157,7 +157,7 @@ public:
             cout << "remaining word: " << remainingWord << endl;
             if(curr->word != "" && remainingWord == curr->word && curr->endOfWord) {
                 cout << "found!" << endl;
-                cout << "value: " << curr->value << endl;
+                //cout << "value: " << curr->value << endl;
                 return &curr->value;
             }
             //go to the next node

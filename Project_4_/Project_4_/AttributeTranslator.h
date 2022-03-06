@@ -12,8 +12,9 @@
 #include <string>
 #include <vector>
 #include "RadixTree.h"
+#include "provided.h"
 
-struct AttValPair;
+//struct AttValPair;
 
 class AttributeTranslator {
 public:
@@ -22,7 +23,7 @@ public:
     bool Load(std::string filename);
     std::vector<AttValPair> FindCompatibleAttPairs(const AttValPair& src) const;
 private:
-    RadixTree<vector<AttValPair*>> m_compTree;
+    RadixTree<vector<AttValPair>> m_compTree;
 };
 
 #endif /* AttributeTranslator_hpp */
