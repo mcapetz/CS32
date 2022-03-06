@@ -55,6 +55,21 @@ void testRadixTree() {
     val = *(tree.search("case"));
     assert(val == "closed");
     
+    //add seventh word: cashier
+    tree.insert("call", "me");
+    val = *(tree.search("call"));
+    assert(val == "me");
+    
+    //add eighth word: ca
+    tree.insert("ca", "lifornia");
+    val = *(tree.search("ca"));
+    assert(val == "lifornia");
+    
+//    //add ninth word: ca
+//    tree.insert("ba", "kery");
+//    val = *(tree.search("ba"));
+//    assert(val == "kery");
+    
 }
 
 void testAttTranslator() {

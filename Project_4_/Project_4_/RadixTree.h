@@ -154,7 +154,7 @@ public:
                     curr->word = key.substr(i,count); //set word to prefix
                     if(curr->word.substr(count).size() > 1) {
                         //connector exists
-                        //TO DO !!!
+                        cout << "i got here" << endl;
                     }
                     //connector doesn't exist
                     else {
@@ -206,6 +206,15 @@ public:
 //                curr->edges[key[i]] = new Node();
 //                curr->edges[key[i]]->word = curr->word.substr(1);
 //                curr->edges[key[i]]->endOfWord = true;
+            }
+            
+            cout << "i: " << i << endl;
+            cout << "key size: " << key.size() << endl;
+            if(i == key.size()) {
+                //reached end
+                cout << "reached end" << endl;
+                curr->endOfWord = true;
+                curr->value = value;
             }
             
             //go to next word
