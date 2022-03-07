@@ -47,32 +47,32 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             //cout << att << ", " << val << endl;
             string pair = att + "," + val;
             
+//            if(m_pairToEmail.search(pair) == nullptr) {
+//                cout << "pair not in tree" << endl;
+//                //source does not exist in tree
+//                vector<string> newVect;
+//                newVect.push_back(email);
+//                m_pairToEmail.insert(pair, newVect);
+//            }
+//            else {
+//                cout << "pair in tree" << endl;
+//                //if source already exists in tree
+//                vector<string> vect = *m_pairToEmail.search(pair);
+//                vect.push_back(email);
+//            }
+            
             //m_pairToEmail.insert(pair, email);
         }
         getline(file, line, '\n');
-        
-        
-        
-//        vector<AttValPair>* vect = m_compTree.search(source);
-//        if(vect == nullptr) {
-//            cout << "source not in tree" << endl;
-//            //source does not exist in tree
-//            vector<AttValPair> newVect;
-//            newVect.push_back(AttValPair(att, val));
-//            m_compTree.insert(source, newVect);
-//        }
-//        else {
-//            cout << "source in tree" << endl;
-//            //if source already exists in tree
-//            vect->push_back(AttValPair(att, val));
-//        }
     }
     
     return true;
 }
 
 std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& input) const {
-    std::vector<std::string> vect;
-    return vect;
+    string pair = input.attribute + "," + input.value;
+    return *m_pairToEmail.search(pair);
 }
-const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {return new PersonProfile("a", "b"); }
+const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {
+    return m_emailToPerson.search(email);
+}

@@ -23,8 +23,8 @@ public:
     std::vector<std::string> FindMatchingMembers(const AttValPair& input) const;
     const PersonProfile* GetMemberByEmail(std::string email) const;
 private:
-    RadixTree<std::string> m_pairToEmail;
-    RadixTree<PersonProfile*> m_emailToPerson;
+    RadixTree<vector<std::string>> m_pairToEmail;
+    RadixTree<PersonProfile> m_emailToPerson;
 };
 
 #endif /* MemberDatabase_hpp */
