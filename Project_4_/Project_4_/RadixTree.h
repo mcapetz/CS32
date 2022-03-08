@@ -124,15 +124,15 @@ private:
             string nextKeyWord = curr->word.substr(prefix.size());
             //cout << "next key word: " << nextKeyWord << endl;
             
-            cout << "curr word: " << curr->word << endl;
-            cout << "prefix: " << prefix << endl;
+            //cout << "curr word: " << curr->word << endl;
+            //cout << "prefix: " << prefix << endl;
             
             if(prefix == key) {
-                cout << "i got here" << endl;
+                //cout << "i got here" << endl;
                 curr->endOfWord = true;
                 curr->value = value;
                 curr->word = prefix;
-                cout << "adding nexKey to: " << nextKeyWord[0] << endl;
+                //cout << "adding nexKey to: " << nextKeyWord[0] << endl;
                 curr->edges[nextKeyWord[0]] = nextKey;
                 return;
             }
@@ -198,8 +198,8 @@ private:
         
         if(prefix != curr->word) return nullptr;
         if(curr->edges[key[prefix.size()]] == nullptr) return nullptr;
-        cout << "going to: " << key[prefix.size()] << endl;
-        cout << "new key substr: " << key.substr(prefix.size()) << endl;
+        //cout << "going to: " << key[prefix.size()] << endl;
+        //cout << "new key substr: " << key.substr(prefix.size()) << endl;
         return searchH(curr->edges[key[prefix.size()]], key.substr(prefix.size()));
         
     }

@@ -113,6 +113,24 @@ void testRadixTree() {
     tree.insert("ba", "kery");
     val = *(tree.search("ba"));
     assert(val == "kery");
+    
+    //make sure previous words are still there
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    val = *(tree.search("bash"));
+    assert(val == "sudo");
+    val = *(tree.search("cashier"));
+    assert(val == "job");
+    val = *(tree.search("bashes"));
+    assert(val == "trash");
+    val = *(tree.search("cashes"));
+    assert(val == "moola");
+    val = *(tree.search("case"));
+    assert(val == "closed");
+    val = *(tree.search("call"));
+    assert(val == "me");
+    val = *(tree.search("ca"));
+    assert(val == "lifornia");
         
     
 }
@@ -145,9 +163,9 @@ void testMDB() {
 int main() {
     std::cout << "begin testing" << std::endl;
     testRadixTree();
-    //testAttTranslator();
-    //testMDB();
-    //testRT2();
+    testAttTranslator();
+    testMDB();
+    testRT2();
     std::cout << "all tests passed" << std::endl;
 }
 
