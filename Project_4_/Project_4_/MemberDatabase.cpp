@@ -74,5 +74,5 @@ std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& i
     return *m_pairToEmail.search(pair);
 }
 const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {
-    return m_emailToPerson.search(email);
+    return *m_emailToPerson.search(email);
 }

@@ -31,20 +31,46 @@ void testRadixTree() {
     val = *(tree.search("bash"));
     assert(val == "sudo");
     
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    
     //add third word: cashier
     tree.insert("cashier", "job");
     val = *(tree.search("cashier"));
     assert(val == "job");
+    
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    val = *(tree.search("bash"));
+    assert(val == "sudo");
     
     //add fourth word: cashier
     tree.insert("bashes", "trash");
     val = *(tree.search("bashes"));
     assert(val == "trash");
     
-    //add fifth word: cashier
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    val = *(tree.search("bash"));
+    assert(val == "sudo");
+    val = *(tree.search("cashier"));
+    assert(val == "job");
+
+    
+    //add fifth word: cashes
     tree.insert("cashes", "moola");
     val = *(tree.search("cashes"));
     assert(val == "moola");
+    
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    val = *(tree.search("bash"));
+    assert(val == "sudo");
+    val = *(tree.search("cashier"));
+    assert(val == "job");
+    val = *(tree.search("bashes"));
+    assert(val == "trash");
+
     
     //add sixth word: case
     tree.insert("case", "closed");
