@@ -31,10 +31,6 @@ void testRadixTree() {
     val = *(tree.search("bash"));
     assert(val == "sudo");
     
-    //make sure first word is still in there
-    val = *(tree.search("cash"));
-    assert(val == "money");
-    
     //add third word: cashier
     tree.insert("cashier", "job");
     val = *(tree.search("cashier"));
@@ -50,12 +46,16 @@ void testRadixTree() {
     val = *(tree.search("cashes"));
     assert(val == "moola");
     
-    //add sixth word: cashier
+    //add sixth word: case
     tree.insert("case", "closed");
     val = *(tree.search("case"));
     assert(val == "closed");
     
-    //add seventh word: cashier
+    //make sure first word is still in there
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    
+    //add seventh word: call
     tree.insert("call", "me");
     val = *(tree.search("call"));
     assert(val == "me");
@@ -65,10 +65,29 @@ void testRadixTree() {
     val = *(tree.search("ca"));
     assert(val == "lifornia");
     
-//    //add ninth word: ca
+    //make sure previous words are still there
+    val = *(tree.search("cash"));
+    assert(val == "money");
+    val = *(tree.search("bash"));
+    assert(val == "sudo");
+    val = *(tree.search("cashier"));
+    assert(val == "job");
+    val = *(tree.search("bashes"));
+    assert(val == "trash");
+    val = *(tree.search("cashes"));
+    assert(val == "moola");
+    val = *(tree.search("case"));
+    assert(val == "closed");
+    val = *(tree.search("call"));
+    assert(val == "me");
+    val = *(tree.search("ca"));
+    assert(val == "lifornia");
+    
+    //add ninth word: ba
 //    tree.insert("ba", "kery");
 //    val = *(tree.search("ba"));
 //    assert(val == "kery");
+        
     
 }
 
@@ -86,9 +105,9 @@ void testMDB() {
 
 int main() {
     std::cout << "begin testing" << std::endl;
-    //testRadixTree();
+    testRadixTree();
     //testAttTranslator();
-    testMDB();
+    //testMDB();
     std::cout << "all tests passed" << std::endl;
 }
 

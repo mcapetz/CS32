@@ -8,6 +8,11 @@
 #include "PersonProfile.h"
 #include "provided.h"
 
+#include <vector>
+#include <string>
+
+using namespace std;
+
 PersonProfile::PersonProfile(std::string n, std::string e) {
     m_name = n;
     m_email = e;
@@ -24,11 +29,26 @@ std::string PersonProfile::GetName() const { return m_name; }
 std::string PersonProfile::GetEmail() const { return m_email; }
 
 void PersonProfile::AddAttValPair(const AttValPair& attval) {
-    string* val = m_tree.search(attval.attribute);
-    if(val != nullptr) return; //return if val already in the tree
-    //otherwise insert into radix tree and vector
-    m_tree.insert(attval.attribute, attval.value);
-    m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+    //check if attval pair is already in radix tree
+    std::vector<std::string>* val_vect = m_tree.search(attval.attribute);
+    std::vector<std::string>::iterator it;
+    it = find(val_vect->begin(), val_vect->end(), attval.value);
+    if(it == val_vect->end()) {
+        //value already exists in the vect
+        //do not add pair
+        return;
+    }
+    else {
+        //value does not exist in the vect
+        val_vect->push_back(attval.value);
+        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+    }
+    
+    
+//    if(*val.size() != ) return; //return if val already in the tree
+//    //otherwise insert into radix tree and vector
+//    //m_tree.insert(attval.attribute, attval.value);
+//    m_vect.push_back(new AttValPair(attval.attribute, attval.value));
 }
 int PersonProfile::GetNumAttValPairs() const {
     return (int)m_vect.size();

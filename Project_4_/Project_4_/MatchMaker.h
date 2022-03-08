@@ -11,10 +11,9 @@
 #include <stdio.h>
 #include <string>
 
-struct AttValPair;
-struct EmailCount;
-class MemberDatabase;
-class AttributeTranslator;
+#include "AttributeTranslator.h"
+#include "MemberDatabase.h"
+#include "provided.h"
 
 class MatchMaker {
 public:
@@ -22,8 +21,8 @@ public:
     ~MatchMaker();
     std::vector<EmailCount> IdentifyRankedMatches(std::string email, int threshold) const;
 private:
-    MemberDatabase* m_mdb;
-    AttributeTranslator* m_at;
+    MemberDatabase m_mdb;
+    AttributeTranslator m_at;
 };
 
 #endif /* MatchMaker_hpp */

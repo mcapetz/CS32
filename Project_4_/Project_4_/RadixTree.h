@@ -39,7 +39,7 @@ template <typename ValueType>
 class RadixTree {
 public:
     RadixTree() {
-        root = nullptr;
+        root = new Node();
     }
     ~RadixTree() {
 
@@ -141,16 +141,47 @@ public:
                 cout << "count: " << count << endl;
                 cout << "prefix is: " << key.substr(i,count) << endl;
 
+                if(key.substr(i,count).size() == 1 && key.size() == i + count) {
+                    //prefix is only one char
+                    cout << "prefix is only one char" << endl;
+                    
+                    //original node is now next: onext
+                    Node* onext = new Node();
+                    //copy over the edges
+                    for(int i = 0; i < CHAR_SIZE; i++) { //copy over child nodes
+                        onext->edges[i] = curr->edges[i];
+                    }
+                    onext->word = curr->word.substr(1);
+                    cout << "onext word: " << onext->word << endl;
+                    onext->endOfWord = curr->endOfWord;
+                    
+                    //change the curr node
+                    for(int i = 0; i < CHAR_SIZE; i++) { //reset pointers
+                        curr->edges[i] = nullptr;
+                    }
+                    curr->word = ""; //set word to ""
+                    curr->edges[key.substr(i,count)[0]-'a'] = onext;
+                    curr->endOfWord = true;
+                    curr->value = value;
+                    cout << "key: " << key << endl;
+                    cout << "curr->val: " << curr->value << endl;
+                    return;
+                }
 
                 if(key.substr(i,count) != "") {
                     //prefix exists
                     cout << "prefix exists" << endl;
+                    
+                    cout << "curr value: " << curr->value << endl;
 
                     //original is now next: onext
                     Node* onext = new Node();
                     for(int i = 0; i < CHAR_SIZE; i++) { //copy over child nodes
                         onext->edges[i] = curr->edges[i];
                     }
+                    onext->endOfWord = curr->endOfWord;
+//                    onext->value = curr->value;
+//                    cout << "onext val: " << onext->value << endl;
 
                     //make connector if necessary
                     if(curr->word.substr(count).size() > 1) {
@@ -271,6 +302,7 @@ public:
 
         cout << "key: " << key << endl;
         cout << "curr word: " << curr->word << endl;
+        //cout << "curr value: " << curr->value << endl;
 //        cout << "curr value: " << &(curr->value) << endl;
 //        cout << "curr end of word: " << &(curr->endOfWord) << endl;
 
@@ -308,7 +340,9 @@ public:
                 cout << "curr word: " << curr->word << endl;
                 i += curr->word.size();
             }
-
+            
+            //if reached endOfWord and end of key
+            //if(curr->endOfWord && i == key.size() - 1) return &curr->value;
 
             //go to the next node
             curr = curr->edges[key[i] - 'a'];
@@ -318,6 +352,8 @@ public:
         }
 
         //end of string is reached
+        cout << "curr word: " << curr->word << endl;
+        cout << "curr val: " << &curr->value << endl;
         if(curr->endOfWord) return &curr->value;
         else return nullptr;
     }

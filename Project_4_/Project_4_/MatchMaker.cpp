@@ -9,9 +9,7 @@
 #include "provided.h"
 #include <vector>
 
-MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at) {
-//    m_mdb = &mdb;
-//    m_at = &at;
+MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at) : m_mdb(mdb), m_at(at) {
 }
 
 MatchMaker::~MatchMaker() {
