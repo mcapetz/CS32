@@ -117,6 +117,19 @@ void testRadixTree() {
     
 }
 
+void testRT2() {
+    RadixTree<std::string> tree;
+    string val;
+    
+    tree.insert("cashier", "lifornia");
+    val = *(tree.search("cashier"));
+    assert(val == "lifornia");
+    
+    tree.insert("cash", "x");
+    val = *(tree.search("cash"));
+    assert(val == "x");
+}
+
 void testAttTranslator() {
     AttributeTranslator at;
     string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
@@ -131,9 +144,10 @@ void testMDB() {
 
 int main() {
     std::cout << "begin testing" << std::endl;
-    //testRadixTree();
-    testAttTranslator();
+    testRadixTree();
+    //testAttTranslator();
     //testMDB();
+    //testRT2();
     std::cout << "all tests passed" << std::endl;
 }
 

@@ -38,19 +38,19 @@ bool AttributeTranslator::Load(std::string filename) {
         cout << "source: " << source << endl;
         cout << "other: " << att << "," << val << endl;
         
-//        vector<AttValPair>* vect = m_compTree.search(source);
-//        if(vect == nullptr) {
-//            cout << "source not in tree" << endl;
-//            //source does not exist in tree
-//            vector<AttValPair> newVect;
-//            newVect.push_back(AttValPair(att, val));
-//            m_compTree.insert(source, newVect);
-//        }
-//        else {
-//            cout << "source in tree" << endl;
-//            //if source already exists in tree
-//            vect->push_back(AttValPair(att, val));
-//        }
+        vector<AttValPair>* vect = m_compTree.search(source);
+        if(vect == nullptr) {
+            cout << "source not in tree" << endl;
+            //source does not exist in tree
+            vector<AttValPair> newVect;
+            newVect.push_back(AttValPair(att, val));
+            m_compTree.insert(source, newVect);
+        }
+        else {
+            cout << "source in tree" << endl;
+            //if source already exists in tree
+            vect->push_back(AttValPair(att, val));
+        }
     }
     
     return true;

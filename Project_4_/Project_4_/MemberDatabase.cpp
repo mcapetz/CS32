@@ -47,19 +47,19 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             //cout << att << ", " << val << endl;
             string pair = att + "," + val;
             
-//            if(m_pairToEmail.search(pair) == nullptr) {
-//                cout << "pair not in tree" << endl;
-//                //source does not exist in tree
-//                vector<string> newVect;
-//                newVect.push_back(email);
-//                m_pairToEmail.insert(pair, newVect);
-//            }
-//            else {
-//                cout << "pair in tree" << endl;
-//                //if source already exists in tree
-//                vector<string> vect = *m_pairToEmail.search(pair);
-//                vect.push_back(email);
-//            }
+            if(m_pairToEmail.search(pair) == nullptr) {
+                //cout << "pair not in tree" << endl;
+                //source does not exist in tree
+                vector<string> newVect;
+                newVect.push_back(email);
+                m_pairToEmail.insert(pair, newVect);
+            }
+            else {
+                //cout << "pair in tree" << endl;
+                //if source already exists in tree
+                vector<string> vect = *m_pairToEmail.search(pair);
+                vect.push_back(email);
+            }
             
             //m_pairToEmail.insert(pair, email);
         }

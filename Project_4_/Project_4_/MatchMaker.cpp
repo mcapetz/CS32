@@ -17,6 +17,7 @@ MatchMaker::~MatchMaker() {
 }
 
 std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int threshold) const {
+    
     std::vector<EmailCount> vect;
     return vect;
 }
