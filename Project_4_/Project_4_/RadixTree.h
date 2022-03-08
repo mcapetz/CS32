@@ -402,7 +402,7 @@ private:
         }
         
         //case a: all of child is in parent
-        else if(curr->word.substr(0, prefix.size()) == prefix) {
+        else if(curr->word == key.substr(0,prefix.size())) {
             cout << "case a" << endl;
             cout << "going to: " << key[prefix.size()] << endl;
             cout << "new key is: " << key.substr(prefix.size()) << endl;
@@ -428,9 +428,11 @@ private:
             nextKey->endOfWord = curr->endOfWord;
             nextKey->word = curr->word.substr(prefix.size());
             cout << "next key value: " << nextKey->value << endl;
-            cout << "next key word: " << curr->word.substr(prefix.size()) << endl;
+            string nextKeyWord = curr->word.substr(prefix.size());
+            cout << "next key word: " << nextKeyWord << endl;
             
             if(curr->word.size() == prefix.size()) {
+                cout << "i got here" << endl;
                 curr->endOfWord = true;
                 curr->value = value;
                 return;
@@ -446,6 +448,10 @@ private:
             newKey->value = value;
             newKey->endOfWord = true;
             newKey->word = key.substr(prefix.size());
+            cout << "new key word: " << newKey->word << endl;
+            
+            curr->edges[key[prefix.size()]-'a'] = newKey;
+            curr->edges[nextKeyWord[0]-'a'] = nextKey;
             return;
                 
         }

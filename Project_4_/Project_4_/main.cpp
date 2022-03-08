@@ -110,9 +110,9 @@ void testRadixTree() {
     assert(val == "lifornia");
     
     //add ninth word: ba
-//    tree.insert("ba", "kery");
-//    val = *(tree.search("ba"));
-//    assert(val == "kery");
+    tree.insert("ba", "kery");
+    val = *(tree.search("ba"));
+    assert(val == "kery");
         
     
 }
@@ -131,8 +131,8 @@ void testMDB() {
 
 int main() {
     std::cout << "begin testing" << std::endl;
-    testRadixTree();
-    //testAttTranslator();
+    //testRadixTree();
+    testAttTranslator();
     //testMDB();
     std::cout << "all tests passed" << std::endl;
 }
