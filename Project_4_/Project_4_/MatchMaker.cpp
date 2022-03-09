@@ -12,6 +12,8 @@
 #include <unordered_set>
 #include <unordered_map>
 
+using namespace std;
+
 MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at) : m_mdb(&mdb), m_at(&at) {
 }
 

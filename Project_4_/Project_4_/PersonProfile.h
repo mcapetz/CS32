@@ -27,8 +27,8 @@ public:
 private:
     std::string m_name;
     std::string m_email;
-    RadixTree<vector<string>> m_tree;
-    vector<AttValPair*> m_vect;
+    RadixTree<std::vector<std::string>> m_tree;
+    std::vector<AttValPair*> m_vect;
 };
 
 #endif /* PersonProfile_hpp */

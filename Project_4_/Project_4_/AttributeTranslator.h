@@ -23,7 +23,7 @@ public:
     bool Load(std::string filename);
     std::vector<AttValPair> FindCompatibleAttPairs(const AttValPair& src) const;
 private:
-    RadixTree<vector<AttValPair>> m_compTree;
+    RadixTree<std::vector<AttValPair>> m_compTree;
 };
 
 #endif /* AttributeTranslator_hpp */

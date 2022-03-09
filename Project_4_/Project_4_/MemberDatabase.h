@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string>
 #include "RadixTree.h"
+#include <vector>
 
 struct AttValPair;
 class PersonProfile;
@@ -23,8 +24,8 @@ public:
     std::vector<std::string> FindMatchingMembers(const AttValPair& input) const;
     const PersonProfile* GetMemberByEmail(std::string email) const;
 private:
-    RadixTree<vector<std::string>> m_pairToEmail;
-    RadixTree<PersonProfile*> m_emailToPerson;
+    RadixTree<std::vector<std::string>> m_pairToEmail;
+    RadixTree<PersonProfile> m_emailToPerson;
 };
 
 #endif /* MemberDatabase_hpp */

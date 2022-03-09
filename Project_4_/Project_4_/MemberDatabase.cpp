@@ -13,6 +13,8 @@
 #include <iostream>
 #include "provided.h"
 
+using namespace std;
+
 
 MemberDatabase::MemberDatabase() {}
 
@@ -36,7 +38,9 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
         //cout << "email: " << email << endl;
         //cout << "num: " << num << endl;
         
-        //m_emailToPerson.insert(email, new PersonProfile(name, email));
+        //const PersonProfile p(name, email);
+        m_emailToPerson.insert(email, new PersonProfile(name, email));
+        
         
         for(int i = 0; i < num; i++) {
             string att, val;
@@ -74,5 +78,5 @@ std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& i
     return *m_pairToEmail.search(pair);
 }
 const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {
-    return *m_emailToPerson.search(email);
+    return m_emailToPerson.search(email);
 }

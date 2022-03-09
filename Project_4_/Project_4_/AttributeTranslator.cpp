@@ -11,6 +11,8 @@
 #include <string>
 #include <fstream>
 
+#include <iostream>
+
 using namespace std;
 
 AttributeTranslator::AttributeTranslator() {}
