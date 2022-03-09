@@ -167,29 +167,14 @@ public:
                 return;
             }
             
-            //find prefix
-//            int count = 0;
-//            while(i < curr->word.size() && j < key.size()) {
-//                //cout << curr->word[i] << " , " << key[j] << endl;
-//                if(curr->word[i] == key[j]) count++;
-//                if(curr->word[i] != key[j]) break;
-//                i++;
-//                j++;
-//            }
-//            string prefix = curr->word.substr(0,i);
-//            cout << "prefix is: " << prefix << endl;
-            
             //prefix
-            while(i < key.size() && j < curr -> word.size())
-            {
-                if(key.at(i) == curr -> word.at(j))
-                {
-                    i++;
-                    j++;
-                }else{
-                    break;
-                }
-            }
+            while(i < key.size() && j < curr -> word.size()) {
+                if(key[i] == curr->word[j]) {
+                    i++;
+                    j++;
+                }
+                else break;
+            }
             string prefix = curr->word.substr(0,j);
             
             
@@ -269,208 +254,26 @@ public:
                 //cout << "done splitting: " << key << endl;
                 return;
             }
-            
-            //curr = curr->edges[key[i]]
-            //i += prefix.size();
- 
-            
+               
         }
-        
-        //cout << "beginning insert: " << key << endl;
-
-        //insertH(root, key, value);
-        
-        //Node* curr = root;
-        
-        //insert first node
-//        if(root->edges[key[0]] == nullptr) {
-//            //root is nullptr so make a new node
-//            Node* newKey = new Node();
-//            newKey->word = key;
-//            newKey->value = value;
-//            newKey->endOfWord = true;
-//            root->edges[key[0]] = newKey;
-//            return;
-//        }
-//
-//        Node* curr = root->edges[key[0]];
-//
-//        //int i = 0;
-//        while(key.size() != 0) {
-//            //case II: first letter matches
-//            //check for prefix
-//            int i = 0;
-//            int j = 0;
-//            int count = 0;
-//            while(i < curr->word.size() && j < key.size()) {
-//                //cout << curr->word[i] << " , " << key[j] << endl;
-//                if(curr->word[i] == key[j]) count++;
-//                if(curr->word[i] != key[j]) break;
-//                i++;
-//                j++;
-//            }
-//            string prefix = key.substr(0,count);
-//            //cout << "prefix is: " << prefix << endl;
-//
-//            //case 0: no prefix
-//            if(prefix == "") {
-//                //cout << "case 0: no prefix" << endl;
-//                //insertH(curr->edges[key[prefix.size()]], key, value);
-//                curr = curr->edges[key[prefix.size()]];
-//
-//                int i = 0;
-//                int j = 0;
-//                int count = 0;
-//                while(i < curr->word.size() && j < key.size()) {
-//                    //cout << curr->word[i] << " , " << key[j] << endl;
-//                    if(curr->word[i] == key[j]) count++;
-//                    if(curr->word[i] != key[j]) break;
-//                    i++;
-//                    j++;
-//                }
-//                prefix = key.substr(0,count);
-//            }
-//
-//            //case a: all of child is in parent
-//            else if(curr->word == key.substr(0,prefix.size())) {
-//                //cout << "case a" << endl;
-//                //cout << "going to: " << key[prefix.size()] << endl;
-//                //cout << "new key is: " << key.substr(prefix.size()) << endl;
-//                //insertH(curr->edges[key[prefix.size()]], key.substr(prefix.size()), value);
-//                curr = curr->edges[key[prefix.size()]];
-//                key = key.substr(prefix.size());
-//
-//                int i = 0;
-//                int j = 0;
-//                int count = 0;
-//                while(i < curr->word.size() && j < key.size()) {
-//                    //cout << curr->word[i] << " , " << key[j] << endl;
-//                    if(curr->word[i] == key[j]) count++;
-//                    if(curr->word[i] != key[j]) break;
-//                    i++;
-//                    j++;
-//                }
-//                prefix = key.substr(0,count);
-//            }
-//
-//            //case b: exact match and endOfWord is false
-//            else if(curr->word == key && !curr->endOfWord) {
-//                //cout << "case b" << endl;
-//                curr->value = value;
-//                curr->endOfWord = true;
-//                return;
-//            }
-//
-//            //case c: partial prefix
-//            else {
-//                cout << "case c" << endl;
-//                Node* nextKey = new Node();
-//                for(int i = 0; i < CHAR_SIZE; i++) {
-//                    nextKey->edges[i] = curr->edges[i];
-//                }
-//                nextKey->value = curr->value;
-//                nextKey->endOfWord = curr->endOfWord;
-//                nextKey->word = curr->word.substr(prefix.size());
-//                //cout << "next key value: " << nextKey->value << endl;
-//                string nextKeyWord = curr->word.substr(prefix.size());
-//                //cout << "next key word: " << nextKeyWord << endl;
-//
-//                //cout << "curr word: " << curr->word << endl;
-//                //cout << "prefix: " << prefix << endl;
-//
-//                if(prefix == key) {
-//                    //cout << "i got here" << endl;
-//                    curr->endOfWord = true;
-//                    curr->value = value;
-//                    curr->word = prefix;
-//                    //cout << "adding nexKey to: " << nextKeyWord[0] << endl;
-//                    curr->edges[nextKeyWord[0]] = nextKey;
-//                    return;
-//                }
-//
-//                curr->word = prefix;
-//                for(int i = 0; i < CHAR_SIZE; i++) {
-//                    curr->edges[i] = nullptr;
-//                }
-//                curr->endOfWord = false;
-//
-//                Node* newKey = new Node();
-//                newKey->value = value;
-//                newKey->endOfWord = true;
-//                newKey->word = key.substr(prefix.size());
-//                //cout << "new key word: " << newKey->word << endl;
-//
-//                curr->edges[key[prefix.size()]] = newKey;
-//                curr->edges[nextKeyWord[0]] = nextKey;
-//                cout << "done splitting: " << key << endl;
-//                return;
-//
-//            }
-//
-//            //case: word & first letter doesn't match
-//            if(curr->word != key && curr->edges[key[0]] == nullptr) {
-//                cout << "i got here: " << key << endl;
-//                //make a new node
-//                //cout << "made a new node base case" << endl;
-//                //cout << "prefix is: " << prefix << endl;
-//                //cout << "parent is: " << curr->word << endl;
-//                Node* newNode = new Node();
-//                newNode->word = key.substr(prefix.size());
-//                newNode->value = value;
-//                newNode->endOfWord = true;
-//                curr->edges[key[prefix.size()]] = newNode;
-//                //cout << "at " << key[prefix.size()] << endl;
-//                //cout << "key: " << newNode->word << endl;
-//                return;
-//            }
-//
-//
-//            curr = curr->edges[key[1]];
-//            key = key.substr(1);
-//        }
-
     }
 
     ValueType* search(std::string key) const {
-        //cout << "beginning search" << endl;
-
-        //return searchH(root, key);
-
         int i = 0;
-        Node* curr;
-        curr = root;
-
-        while(i < key.size())
-        {
-            
-            //cout << "key[i]: " << key[i] << endl;
-            int ind = key[i];
-//            if(curr->edges[ind] != nullptr)
-//            {
-//                cout<<"FLAG"<<endl;
-//                cout << "i: " << i << endl;
-//                //increment curr
-//                curr = curr->edges[ind];
-//                if(curr->word == key.substr(i))
-//                {
-//                    i += curr->word.size();
-//                }
-//            }else {
-//                return nullptr;
-//            }
-            if(curr -> edges[ind] != nullptr)
-            {
-                curr = curr -> edges[ind];
-                if(curr -> word == key.substr(i, curr -> word.size()))
-                {
-                    i += curr -> word.size();
+        Node* curr = root;
+        
+        while(i < key.size()) {
+            int index = key[i];
+            if(curr->edges[index] != nullptr) {
+                curr = curr->edges[index]; //set curr to child
+                if(curr->word == key.substr(i, curr->word.size())) { //if word matches, then increment i
+                    i += curr->word.size();
                 }
-            }else{
-                return nullptr;
             }
+            else return nullptr;
         }
-
-        if(i == key.size()) return &curr->value;
+        
+        if(i == key.size() && curr->endOfWord) return &curr->value;
         else return nullptr;
 
     }
@@ -490,194 +293,12 @@ private:
             for(int i = 0; i < CHAR_SIZE; i++) {
                 edges[i] = nullptr;
             }
-            //value = nullptr;
         }
     };
 
     Node* root;
-
-    void insertH(Node* curr, string key, const ValueType& value) {
-        
-//        while(key != "") {
-//            //base case
-//            if(curr == root) {
-//                //root is nullptr so make a new node
-//                curr = new Node();
-//                curr->word = key;
-//                curr->value = value;
-//                curr->endOfWord = true;
-//                return;
-//            }
-//
-//
-//            //case II: first letter matches
-//            //check for prefix
-//            int i = 0;
-//            int j = 0;
-//            int count = 0;
-//            while(i < curr->word.size() && j < key.size()) {
-//                //cout << curr->word[i] << " , " << key[j] << endl;
-//                if(curr->word[i] == key[j]) count++;
-//                if(curr->word[i] != key[j]) break;
-//                i++;
-//                j++;
-//            }
-//            string prefix = key.substr(0,count);
-//            //cout << "prefix is: " << prefix << endl;
-//
-//            //case 0: no prefix
-//            if(prefix == "") {
-//                //cout << "case 0: no prefix" << endl;
-//                //insertH(curr->edges[key[prefix.size()]], key, value);
-//                curr = curr->edges[key[prefix.size()]];
-//            }
-//
-//            //case a: all of child is in parent
-//            else if(curr->word == key.substr(0,prefix.size())) {
-//                //cout << "case a" << endl;
-//                //cout << "going to: " << key[prefix.size()] << endl;
-//                //cout << "new key is: " << key.substr(prefix.size()) << endl;
-//                //insertH(curr->edges[key[prefix.size()]], key.substr(prefix.size()), value);
-//                curr = curr->edges[key[prefix.size()]];
-//                key = key.substr(prefix.size());
-//            }
-//
-//            //case b: exact match and endOfWord is false
-//            else if(curr->word == key && !curr->endOfWord) {
-//                //cout << "case b" << endl;
-//                curr->value = value;
-//                curr->endOfWord = true;
-//                return;
-//            }
-//
-//            //case c: partial prefix
-//            else {
-//                //cout << "case c" << endl;
-//                Node* nextKey = new Node();
-//                for(int i = 0; i < CHAR_SIZE; i++) {
-//                    nextKey->edges[i] = curr->edges[i];
-//                }
-//                nextKey->value = curr->value;
-//                nextKey->endOfWord = curr->endOfWord;
-//                nextKey->word = curr->word.substr(prefix.size());
-//                //cout << "next key value: " << nextKey->value << endl;
-//                string nextKeyWord = curr->word.substr(prefix.size());
-//                //cout << "next key word: " << nextKeyWord << endl;
-//
-//                //cout << "curr word: " << curr->word << endl;
-//                //cout << "prefix: " << prefix << endl;
-//
-//                if(prefix == key) {
-//                    //cout << "i got here" << endl;
-//                    curr->endOfWord = true;
-//                    curr->value = value;
-//                    curr->word = prefix;
-//                    //cout << "adding nexKey to: " << nextKeyWord[0] << endl;
-//                    curr->edges[nextKeyWord[0]] = nextKey;
-//                    return;
-//                }
-//
-//                curr->word = prefix;
-//                for(int i = 0; i < CHAR_SIZE; i++) {
-//                    curr->edges[i] = nullptr;
-//                }
-//                curr->endOfWord = false;
-//
-//                Node* newKey = new Node();
-//                newKey->value = value;
-//                newKey->endOfWord = true;
-//                newKey->word = key.substr(prefix.size());
-//                //cout << "new key word: " << newKey->word << endl;
-//
-//                curr->edges[key[prefix.size()]] = newKey;
-//                curr->edges[nextKeyWord[0]] = nextKey;
-//                return;
-//
-//            }
-//
-//            //case: word & first letter doesn't match
-//            if(curr->edges[key[0]] == nullptr) {
-//                //make a new node
-//                //cout << "made a new node base case" << endl;
-//                //cout << "prefix is: " << prefix << endl;
-//                //cout << "parent is: " << curr->word << endl;
-//                Node* newNode = new Node();
-//                newNode->word = key.substr(prefix.size());
-//                newNode->value = value;
-//                newNode->endOfWord = true;
-//                curr->edges[key[prefix.size()]] = newNode;
-//                //cout << "at " << key[prefix.size()] << endl;
-//                //cout << "key: " << newNode->word << endl;
-//                return;
-//            }
-//
-//
-//            curr = curr->edges[key[1]];
-//            key = key.substr(1);
-//        }
-        
-        
-    }
-
-    ValueType* searchH(Node* curr, string key) const {
-        //base case
-        if(key == curr->word && curr->endOfWord) return &curr->value;
-
-        //case I: first letter matches
-        //check for prefix
-        int i = 0;
-        int j = 0;
-        int count = 0;
-        while(i < curr->word.size() && j < key.size()) {
-            //cout << curr->word[i] << " , " << key[j] << endl;
-            if(curr->word[i] == key[j]) count++;
-            if(curr->word[i] != key[j]) break;
-            i++;
-            j++;
-        }
-        string prefix = key.substr(0,count);
-        //cout << "prefix is: " << prefix << endl;
-
-        if(prefix == "" && curr->edges[key[0]] == nullptr) return nullptr;
-
-        if(prefix != curr->word) return nullptr;
-        if(curr->edges[key[prefix.size()]] == nullptr) return nullptr;
-        //cout << "going to: " << key[prefix.size()] << endl;
-        //cout << "new key substr: " << key.substr(prefix.size()) << endl;
-        return searchH(curr->edges[key[prefix.size()]], key.substr(prefix.size()));
-
-    }
+    
 };
 
-
-//template <typename ValueType>
-//ValueType* RadixTree<ValueType>::search(std::string key) const
-//{
-//    int i = 0;
-//    Node* ptr = new Node;
-//    ptr = root;
-//    while (i < key.size())
-//    {
-//        int index = key.at(i);
-//
-//        if(ptr -> edges[index] != nullptr)
-//        {
-//            ptr = ptr -> edges[index];
-//            if(ptr -> word == key.substr(i, ptr -> word.size()))
-//            {
-//                i += ptr -> word.size();
-//            }
-//        }else{
-//            return nullptr;
-//        }
-//    }
-//    if(i == key.size())
-//    {
-//        ValueType* a = &(ptr -> value);
-//        return a;
-//    }
-//
-//    return nullptr;
-//}
 
 #endif /* RadixTree_h */
