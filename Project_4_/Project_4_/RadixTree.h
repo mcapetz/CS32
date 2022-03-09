@@ -139,7 +139,7 @@ public:
 
 
     void insert(std::string key, const ValueType& value) {
-        cout << "beginnign to insert: " << key << endl;
+        //cout << "beginnign to insert: " << key << endl;
         
         //insert first node
         if(root->edges[key[0]] == nullptr) {
@@ -161,7 +161,7 @@ public:
             
             //case 1: key and curr word are the same
             if(curr->word == key.substr(i)) {
-                cout << "case 1: " << key << endl;
+                //cout << "case 1: " << key << endl;
                 curr->value = value;
                 if(!curr->endOfWord) curr->endOfWord = true;
                 return;
@@ -195,13 +195,13 @@ public:
             
             //case 2: all of child is in parent (carpet is already there, inputting car)
             if(i == key.size()) {
-                cout << "case 2" << endl;
+                //cout << "case 2" << endl;
                 //make a new node
                 Node* newKey = new Node();
                 newKey->word = curr->word.substr(prefix.size());
                 newKey->value = curr->value;
                 newKey->endOfWord = curr->endOfWord;
-                cout << "new key word: " << newKey->word << endl;
+                //cout << "new key word: " << newKey->word << endl;
                 
                 //copy over the children & wipe out curr children
                 for(int k = 0; k < CHAR_SIZE; k++) {
@@ -219,7 +219,7 @@ public:
             
             //case 3: went through entire node, more input (car is already there, inputting carpet)
             else if(j == curr->word.size()) {
-                cout << "case 3" << endl;
+                //cout << "case 3" << endl;
                 if(curr->edges[key[i]] == nullptr) {
                     //add a new node
                     Node* newKey = new Node();
@@ -237,10 +237,10 @@ public:
             
             //case 4: splitting
             else {
-                cout << "splitting" << endl;
-                cout << "curr word: " << curr->word << endl;
-                cout << "key: " << key << endl;
-                cout << "curr key: " << key.substr(i) << endl;
+//                cout << "splitting" << endl;
+//                cout << "curr word: " << curr->word << endl;
+//                cout << "key: " << key << endl;
+//                cout << "curr key: " << key.substr(i) << endl;
                 Node* nextKey = new Node();
                 //copy the children & wipe them out
                 for(int x = 0; x < CHAR_SIZE; x++) {
@@ -250,23 +250,23 @@ public:
                 nextKey->value = curr->value;
                 nextKey->endOfWord = curr->endOfWord;
                 nextKey->word = curr->word.substr(j);
-                cout << "next: " << nextKey->word << endl;
+                //cout << "next: " << nextKey->word << endl;
 
                 Node* newKey = new Node();
                 newKey->value = value;
                 newKey->endOfWord = true;
-                cout << "i: " << i << endl;
-                cout << "j: " << j << endl;
-                cout << "prefix: " << prefix << endl;
+                //cout << "i: " << i << endl;
+                //cout << "j: " << j << endl;
+                //cout << "prefix: " << prefix << endl;
                 newKey->word = key.substr(i);
-                cout << "new key word: " << newKey->word << endl;
+                //cout << "new key word: " << newKey->word << endl;
                 
                 curr->word = prefix;
                 curr->endOfWord = false;
 
                 curr->edges[newKey->word[0]] = newKey;
                 curr->edges[nextKey->word[0]] = nextKey;
-                cout << "done splitting: " << key << endl;
+                //cout << "done splitting: " << key << endl;
                 return;
             }
             
@@ -442,7 +442,8 @@ public:
 
         while(i < key.size())
         {
-            cout << "key[i]: " << key[i] << endl;
+            
+            //cout << "key[i]: " << key[i] << endl;
             int ind = key[i];
 //            if(curr->edges[ind] != nullptr)
 //            {
