@@ -38,8 +38,10 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
         //cout << "email: " << email << endl;
         //cout << "num: " << num << endl;
         
-        //const PersonProfile p(name, email);
-        m_emailToPerson.insert(email, new PersonProfile(name, email));
+        PersonProfile* currP = new PersonProfile(name, email);
+        
+        //cout << "loaded: " << email << endl;
+        
         
         
         for(int i = 0; i < num; i++) {
@@ -50,6 +52,10 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             val = line;
             //cout << att << ", " << val << endl;
             string pair = att + "," + val;
+            
+            
+            AttValPair currPair(att, val);
+            currP->AddAttValPair(currPair);
             
             if(m_pairToEmail.search(pair) == nullptr) {
                 //cout << "pair not in tree" << endl;
@@ -66,6 +72,9 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             }
             
             //m_pairToEmail.insert(pair, email);
+            
+            deletePeople.push_back(currP);
+            m_emailToPerson.insert(email, currP);
         }
         getline(file, line, '\n');
     }
@@ -77,6 +86,8 @@ std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& i
     string pair = input.attribute + "," + input.value;
     return *m_pairToEmail.search(pair);
 }
+
 const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {
-    return m_emailToPerson.search(email);
+    if(m_emailToPerson.search(email) == nullptr) return nullptr;
+    else return *m_emailToPerson.search(email);
 }

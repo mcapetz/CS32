@@ -31,17 +31,27 @@ std::string PersonProfile::GetEmail() const { return m_email; }
 void PersonProfile::AddAttValPair(const AttValPair& attval) {
     //check if attval pair is already in radix tree
     std::vector<std::string>* val_vect = m_tree.search(attval.attribute);
+    if(val_vect == nullptr) {
+        std::vector<std::string> new_vect;
+        new_vect.push_back(attval.value);
+        m_tree.insert(attval.attribute, new_vect);
+        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+        return;
+    }
     std::vector<std::string>::iterator it;
     it = find(val_vect->begin(), val_vect->end(), attval.value);
     if(it == val_vect->end()) {
         //value already exists in the vect
         //do not add pair
+        val_vect->push_back(attval.value);
+        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
         return;
     }
     else {
         //value does not exist in the vect
-        val_vect->push_back(attval.value);
-        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+//        val_vect->push_back(attval.value);
+//        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+        return;
     }
     
     

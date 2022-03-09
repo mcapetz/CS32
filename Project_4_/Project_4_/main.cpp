@@ -171,8 +171,8 @@ void testMDB() {
 //    std::cout << "all tests passed" << std::endl;
 //}
 
-const std::string MEMBERS_FILE    = "members.txt";
-const std::string TRANSLATOR_FILE = "translator.txt";
+const std::string MEMBERS_FILE    = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/members.txt";
+const std::string TRANSLATOR_FILE = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
 
 bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at);
 

@@ -11,6 +11,7 @@
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
@@ -46,24 +47,27 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int
     
     //iterate through set of att val pairs
     unordered_set<string>::iterator it;
+    it = m_setOfPairs.begin();
     while(it != m_setOfPairs.end()) {
+        //cout << "i got here" << endl;
         string s_pair = *it;
         int ind = (int)s_pair.find(',');
         string att = s_pair.substr(0, ind);
         string val = s_pair.substr(ind+1);
+        //cout << att << "," << val << endl;
         AttValPair pair = AttValPair(att, val);
         vector<string> matchingEmails = m_mdb->FindMatchingMembers(pair);
         
         //iterate through vector of emails
         for(int j = 0; j < matchingEmails.size(); j++) {
             string em = matchingEmails[j];
-            if(m_mapOfEmailCounts.count(matchingEmails[j]) == 0) {
-                //not yet in map, so add to map
-                m_mapOfEmailCounts[em] = 1;
-            }
-            else {
+            if(m_mapOfEmailCounts.count(em) > 0) {
                 //already in map, so increment
                 m_mapOfEmailCounts[em]++;
+            }
+            else {
+                //not yet in map, so add to map
+                m_mapOfEmailCounts[em] = 1;
             }
         }
         
@@ -74,7 +78,8 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int
     
     //iterate through map of emails
     for(auto key : m_mapOfEmailCounts) {
-        if(key.second > threshold) e_vect.push_back(EmailCount(key.first, key.second));
+        if(key.first == email) continue; //do not include og person
+        if(key.second >= threshold) e_vect.push_back(EmailCount(key.first, key.second));
     }
     
     return e_vect;

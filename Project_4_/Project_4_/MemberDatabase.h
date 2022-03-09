@@ -25,7 +25,8 @@ public:
     const PersonProfile* GetMemberByEmail(std::string email) const;
 private:
     RadixTree<std::vector<std::string>> m_pairToEmail;
-    RadixTree<PersonProfile> m_emailToPerson;
+    RadixTree<PersonProfile*> m_emailToPerson;
+    std::vector<PersonProfile*> deletePeople;
 };
 
 #endif /* MemberDatabase_hpp */
