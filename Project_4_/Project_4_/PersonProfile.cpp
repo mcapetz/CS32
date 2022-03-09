@@ -19,10 +19,10 @@ PersonProfile::PersonProfile(std::string n, std::string e) {
 }
 
 PersonProfile::~PersonProfile() {
-    for(int i = 0; i < m_vect.size(); i++) {
-        delete m_vect[i];
-    }
-    m_vect.clear();
+//    for(int i = 0; i < m_vect.size(); i++) {
+//        delete m_vect[i];
+//    }
+//    m_vect.clear();
 }
 
 std::string PersonProfile::GetName() const { return m_name; }

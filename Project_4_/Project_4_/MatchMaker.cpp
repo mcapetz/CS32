@@ -54,7 +54,7 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int
         int ind = (int)s_pair.find(',');
         string att = s_pair.substr(0, ind);
         string val = s_pair.substr(ind+1);
-        //cout << att << "," << val << endl;
+        cout << att << "," << val << endl;
         AttValPair pair = AttValPair(att, val);
         vector<string> matchingEmails = m_mdb->FindMatchingMembers(pair);
         

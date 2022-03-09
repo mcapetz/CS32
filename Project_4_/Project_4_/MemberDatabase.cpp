@@ -90,6 +90,8 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
 
 std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& input) const {
     string pair = input.attribute + "," + input.value;
+    std::vector<std::string> res;
+    if(m_pairToEmail.search(pair) == nullptr) return res;
     return *m_pairToEmail.search(pair);
 }
 
