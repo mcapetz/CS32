@@ -22,6 +22,7 @@ MemberDatabase::~MemberDatabase() {}
 
 bool MemberDatabase::LoadDatabase(std::string filename) {
     cout << "begin loading member database" << endl;
+    int count = 0;
     string line;
     ifstream file(filename);
     
@@ -69,6 +70,7 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
                 //if source already exists in tree
                 vector<string> vect = *m_pairToEmail.search(pair);
                 vect.push_back(email);
+                m_pairToEmail.insert(pair, vect);
             }
             
             //m_pairToEmail.insert(pair, email);
@@ -77,6 +79,9 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             m_emailToPerson.insert(email, currP);
         }
         getline(file, line, '\n');
+        
+        count++;
+        cout << count << endl;
     }
     
     return true;

@@ -52,6 +52,7 @@ bool AttributeTranslator::Load(std::string filename) {
             //cout << "source in tree" << endl;
             //if source already exists in tree
             vect->push_back(AttValPair(att, val));
+            m_compTree.insert(source, *vect);
         }
     }
     
