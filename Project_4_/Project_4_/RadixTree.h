@@ -21,7 +21,7 @@
 
 /*
 
- 
+
 
  ● MUST be a class template, implemented fully in RadixTree.h.
 
@@ -122,8 +122,6 @@ private:
 //#include <string>
 //
 //#include <iostream>
-//#include <unordered_map>
-//
 //
 //using namespace std;
 //
@@ -158,7 +156,7 @@ private:
 //        std::string word;
 //        bool endOfWord;
 //        Node* edges[CHAR_SIZE];
-//        ValueType* value;
+//        ValueType value;
 //
 //        Node() {
 //            word = "";
@@ -166,7 +164,7 @@ private:
 //            for(int i = 0; i < CHAR_SIZE; i++) {
 //                edges[i] = nullptr;
 //            }
-//            value = nullptr;
+//            //value = nullptr;
 //        }
 //    };
 //
@@ -178,7 +176,7 @@ private:
 //            //root is nullptr so make a new node
 //            curr = new Node();
 //            curr->word = key;
-//            *curr->value = value;
+//            curr->value = value;
 //            curr->endOfWord = true;
 //            return;
 //        }
@@ -216,7 +214,7 @@ private:
 //        //case b: exact match and endOfWord is false
 //        else if(curr->word == key && !curr->endOfWord) {
 //            //cout << "case b" << endl;
-//            *curr->value = value;
+//            curr->value = value;
 //            curr->endOfWord = true;
 //            return;
 //        }
@@ -241,7 +239,7 @@ private:
 //            if(prefix == key) {
 //                //cout << "i got here" << endl;
 //                curr->endOfWord = true;
-//                *curr->value = value;
+//                curr->value = value;
 //                curr->word = prefix;
 //                //cout << "adding nexKey to: " << nextKeyWord[0] << endl;
 //                curr->edges[nextKeyWord[0]] = nextKey;
@@ -255,7 +253,7 @@ private:
 //            curr->endOfWord = false;
 //
 //            Node* newKey = new Node();
-//            *newKey->value = value;
+//            newKey->value = value;
 //            newKey->endOfWord = true;
 //            newKey->word = key.substr(prefix.size());
 //            //cout << "new key word: " << newKey->word << endl;
@@ -274,7 +272,7 @@ private:
 //            //cout << "parent is: " << curr->word << endl;
 //            Node* newNode = new Node();
 //            newNode->word = key.substr(prefix.size());
-//            *newNode->value = value;
+//            newNode->value = value;
 //            newNode->endOfWord = true;
 //            curr->edges[key[prefix.size()]] = newNode;
 //            //cout << "at " << key[prefix.size()] << endl;
@@ -288,7 +286,7 @@ private:
 //
 //    ValueType* searchH(Node* curr, string key) const {
 //        //base case
-//        if(key == curr->word && curr->endOfWord) return curr->value;
+//        if(key == curr->word && curr->endOfWord) return &curr->value;
 //
 //        //case I: first letter matches
 //        //check for prefix

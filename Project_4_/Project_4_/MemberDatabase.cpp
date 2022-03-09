@@ -22,7 +22,7 @@ MemberDatabase::~MemberDatabase() {}
 
 bool MemberDatabase::LoadDatabase(std::string filename) {
     cout << "begin loading member database" << endl;
-    int count = 0;
+    //int count = 0;
     string line;
     ifstream file(filename);
     
@@ -58,7 +58,8 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             AttValPair currPair(att, val);
             currP->AddAttValPair(currPair);
             
-            if(m_pairToEmail.search(pair) == nullptr) {
+            std::vector<std::string>* resVect = m_pairToEmail.search(pair);
+            if(resVect == nullptr) {
                 //cout << "pair not in tree" << endl;
                 //source does not exist in tree
                 vector<string> newVect;
@@ -68,9 +69,9 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             else {
                 //cout << "pair in tree" << endl;
                 //if source already exists in tree
-                vector<string> vect = *m_pairToEmail.search(pair);
-                vect.push_back(email);
-                m_pairToEmail.insert(pair, vect);
+                //vector<string> vect = *m_pairToEmail.search(pair);
+                resVect->push_back(email);
+                //m_pairToEmail.insert(pair, vect);
             }
             
             //m_pairToEmail.insert(pair, email);
@@ -80,8 +81,8 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
         }
         getline(file, line, '\n');
         
-        count++;
-        cout << count << endl;
+        //count++;
+        //if(count % 1000 == 0) cout << count << endl;
     }
     
     return true;

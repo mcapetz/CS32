@@ -25,6 +25,11 @@ public:
 private:
     const MemberDatabase* m_mdb;
     const AttributeTranslator* m_at;
+    
+    static inline bool customSort(const EmailCount& e1, const EmailCount& e2) {
+        if(e1.count == e2.count) return e1.email < e2.email;
+        return (e1.count > e2.count);
+    }
 };
 
 #endif /* MatchMaker_hpp */

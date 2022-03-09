@@ -82,5 +82,7 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int
         if(key.second >= threshold) e_vect.push_back(EmailCount(key.first, key.second));
     }
     
+    std::sort(e_vect.begin(), e_vect.end(), customSort);
+    
     return e_vect;
 }
