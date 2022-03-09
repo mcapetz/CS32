@@ -165,6 +165,7 @@ void testRT3() {
     assert(val == "1");
 
     tree.insert("AmH74@gmail.com", "3");
+    cout << *(tree.search("AmH74@gmail.com")) << endl;
     val = *(tree.search("AmH74@gmail.com"));
     assert(val == "3");
     val = *(tree.search("AmJuare@gmail.com"));
