@@ -79,8 +79,8 @@
 				EBE798DF27D28F1B00B3218C /* AttributeTranslator.cpp */,
 				EBE798E027D28F1B00B3218C /* AttributeTranslator.h */,
 				EBE798E427D28F3300B3218C /* MemberDatabase.cpp */,
-				EBE798EA27D28F5F00B3218C /* provided.h */,
 				EBE798E527D28F3300B3218C /* MemberDatabase.h */,
+				EBE798EA27D28F5F00B3218C /* provided.h */,
 				EBE798EC27D2902100B3218C /* RadixTree.h */,
 			);
 			path = Project_4_;

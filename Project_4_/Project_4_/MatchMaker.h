@@ -14,6 +14,8 @@
 #include "AttributeTranslator.h"
 #include "MemberDatabase.h"
 #include "provided.h"
+#include <unordered_set>
+#include <unordered_map>
 
 class MatchMaker {
 public:
@@ -21,8 +23,8 @@ public:
     ~MatchMaker();
     std::vector<EmailCount> IdentifyRankedMatches(std::string email, int threshold) const;
 private:
-    MemberDatabase m_mdb;
-    AttributeTranslator m_at;
+    const MemberDatabase* m_mdb;
+    const AttributeTranslator* m_at;
 };
 
 #endif /* MatchMaker_hpp */

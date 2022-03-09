@@ -162,10 +162,10 @@ void testMDB() {
 
 int main() {
     std::cout << "begin testing" << std::endl;
-    testRadixTree();
-    testAttTranslator();
-    testMDB();
-    testRT2();
+//    testRadixTree();
+//    testAttTranslator();
+//    testMDB();
+//    testRT2();
     std::cout << "all tests passed" << std::endl;
 }
 
