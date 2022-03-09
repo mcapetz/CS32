@@ -134,8 +134,12 @@ public:
     ~RadixTree() {
 
     }
+    
+    //ValueType* search(std::string key) const;
+
 
     void insert(std::string key, const ValueType& value) {
+        cout << "beginnign to insert: " << key << endl;
         
         //insert first node
         if(root->edges[key[0]] == nullptr) {
@@ -151,59 +155,78 @@ public:
         Node* curr = root->edges[key[0]];
         
         int i = 0;
-        int j;
         
         while(i < key.size()) {
-            j = 0;
+            int j = 0;
             
             //case 1: key and curr word are the same
             if(curr->word == key.substr(i)) {
+                cout << "case 1: " << key << endl;
                 curr->value = value;
                 if(!curr->endOfWord) curr->endOfWord = true;
                 return;
             }
             
             //find prefix
-            int count = 0;
-            while(i < curr->word.size() && j < key.size()) {
-                //cout << curr->word[i] << " , " << key[j] << endl;
-                if(curr->word[i] == key[j]) count++;
-                if(curr->word[i] != key[j]) break;
-                i++;
-                j++;
-            }
-            string prefix = curr->word.substr(0,i);
-            //cout << "prefix is: " << prefix << endl;
+//            int count = 0;
+//            while(i < curr->word.size() && j < key.size()) {
+//                //cout << curr->word[i] << " , " << key[j] << endl;
+//                if(curr->word[i] == key[j]) count++;
+//                if(curr->word[i] != key[j]) break;
+//                i++;
+//                j++;
+//            }
+//            string prefix = curr->word.substr(0,i);
+//            cout << "prefix is: " << prefix << endl;
+            
+            //prefix
+            while(i < key.size() && j < curr -> word.size())
+            {
+                if(key.at(i) == curr -> word.at(j))
+                {
+                    i++;
+                    j++;
+                }else{
+                    break;
+                }
+            }
+            string prefix = curr->word.substr(0,j);
+            
             
             //case 2: all of child is in parent (carpet is already there, inputting car)
             if(i == key.size()) {
+                cout << "case 2" << endl;
                 //make a new node
                 Node* newKey = new Node();
-                newKey->word = key.substr(prefix.size());
+                newKey->word = curr->word.substr(prefix.size());
                 newKey->value = curr->value;
                 newKey->endOfWord = curr->endOfWord;
+                cout << "new key word: " << newKey->word << endl;
                 
                 //copy over the children & wipe out curr children
                 for(int k = 0; k < CHAR_SIZE; k++) {
-                    newKey->edges[i] = curr->edges[i];
-                    curr->edges[i] = nullptr;
+                    newKey->edges[k] = curr->edges[k];
+                    curr->edges[k] = nullptr;
                 }
                 
                 //reset curr val
+                curr->word = prefix;
                 curr->value = value;
                 curr->endOfWord = true;
+                curr->edges[newKey->word[0]] = newKey;
                 return;
             }
             
             //case 3: went through entire node, more input (car is already there, inputting carpet)
             else if(j == curr->word.size()) {
+                cout << "case 3" << endl;
                 if(curr->edges[key[i]] == nullptr) {
                     //add a new node
                     Node* newKey = new Node();
                     newKey->word = key.substr(i);
                     newKey->value = value;
                     newKey->endOfWord = true;
-                    root->edges[key[i]] = newKey;
+                    curr->edges[key[i]] = newKey;
                     return;
                 }
                 else {
@@ -214,32 +237,41 @@ public:
             
             //case 4: splitting
             else {
+                cout << "splitting" << endl;
+                cout << "curr word: " << curr->word << endl;
+                cout << "key: " << key << endl;
+                cout << "curr key: " << key.substr(i) << endl;
                 Node* nextKey = new Node();
                 //copy the children & wipe them out
-                for(int i = 0; i < CHAR_SIZE; i++) {
-                    nextKey->edges[i] = curr->edges[i];
-                    curr->edges[i] = nullptr;
+                for(int x = 0; x < CHAR_SIZE; x++) {
+                    nextKey->edges[x] = curr->edges[x];
+                    curr->edges[x] = nullptr;
                 }
                 nextKey->value = curr->value;
                 nextKey->endOfWord = curr->endOfWord;
                 nextKey->word = curr->word.substr(j);
-                string nextKeyWord = curr->word.substr(prefix.size());
+                cout << "next: " << nextKey->word << endl;
 
                 Node* newKey = new Node();
                 newKey->value = value;
                 newKey->endOfWord = true;
+                cout << "i: " << i << endl;
+                cout << "j: " << j << endl;
+                cout << "prefix: " << prefix << endl;
                 newKey->word = key.substr(i);
-                //cout << "new key word: " << newKey->word << endl;
+                cout << "new key word: " << newKey->word << endl;
                 
                 curr->word = prefix;
                 curr->endOfWord = false;
 
-                curr->edges[key[i]] = newKey;
-                curr->edges[nextKeyWord[0]] = nextKey;
+                curr->edges[newKey->word[0]] = newKey;
+                curr->edges[nextKey->word[0]] = nextKey;
                 cout << "done splitting: " << key << endl;
                 return;
             }
             
+            //curr = curr->edges[key[i]]
+            //i += prefix.size();
  
             
         }
@@ -402,7 +434,43 @@ public:
     ValueType* search(std::string key) const {
         //cout << "beginning search" << endl;
 
-        return searchH(root, key);
+        //return searchH(root, key);
+
+        int i = 0;
+        Node* curr;
+        curr = root;
+
+        while(i < key.size())
+        {
+            cout << "key[i]: " << key[i] << endl;
+            int ind = key[i];
+//            if(curr->edges[ind] != nullptr)
+//            {
+//                cout<<"FLAG"<<endl;
+//                cout << "i: " << i << endl;
+//                //increment curr
+//                curr = curr->edges[ind];
+//                if(curr->word == key.substr(i))
+//                {
+//                    i += curr->word.size();
+//                }
+//            }else {
+//                return nullptr;
+//            }
+            if(curr -> edges[ind] != nullptr)
+            {
+                curr = curr -> edges[ind];
+                if(curr -> word == key.substr(i, curr -> word.size()))
+                {
+                    i += curr -> word.size();
+                }
+            }else{
+                return nullptr;
+            }
+        }
+
+        if(i == key.size()) return &curr->value;
+        else return nullptr;
 
     }
 
@@ -579,5 +647,36 @@ private:
 
     }
 };
+
+
+//template <typename ValueType>
+//ValueType* RadixTree<ValueType>::search(std::string key) const
+//{
+//    int i = 0;
+//    Node* ptr = new Node;
+//    ptr = root;
+//    while (i < key.size())
+//    {
+//        int index = key.at(i);
+//
+//        if(ptr -> edges[index] != nullptr)
+//        {
+//            ptr = ptr -> edges[index];
+//            if(ptr -> word == key.substr(i, ptr -> word.size()))
+//            {
+//                i += ptr -> word.size();
+//            }
+//        }else{
+//            return nullptr;
+//        }
+//    }
+//    if(i == key.size())
+//    {
+//        ValueType* a = &(ptr -> value);
+//        return a;
+//    }
+//
+//    return nullptr;
+//}
 
 #endif /* RadixTree_h */

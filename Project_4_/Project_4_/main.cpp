@@ -172,6 +172,16 @@ void testRT3() {
     assert(val == "2");
     val = *(tree.search("Ahart@gmail.com"));
     assert(val == "1");
+    
+    tree.insert("AmH57@gmail.com", "4");
+    val = *(tree.search("AmH57@gmail.com"));
+    assert(val == "4");
+    val = *(tree.search("AmH74@gmail.com"));
+    assert(val == "3");
+    val = *(tree.search("AmJuare@gmail.com"));
+    assert(val == "2");
+    val = *(tree.search("Ahart@gmail.com"));
+    assert(val == "1");
 }
 
 void testAttTranslator() {
@@ -188,10 +198,10 @@ void testMDB() {
 
 int main() {
     std::cout << "begin testing" << std::endl;
-//    testRadixTree();
+    testRadixTree();
 //    testAttTranslator();
 //    testMDB();
-//    testRT2();
+    testRT2();
     testRT3();
     std::cout << "all tests passed" << std::endl;
 }

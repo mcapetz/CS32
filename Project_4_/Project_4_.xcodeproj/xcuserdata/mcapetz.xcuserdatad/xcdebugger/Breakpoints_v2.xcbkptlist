@@ -78,72 +78,10 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "569"
-            endingLineNumber = "569"
+            startingLineNumber = "637"
+            endingLineNumber = "637"
             landmarkName = "searchH(curr, key)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "066CE151-1231-4171-BABC-1184AF409A07 - b234e97ed5bc6f76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::searchH(RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::Node*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "462"
-                  endingLineNumber = "462"
-                  offsetFromSymbolStart = "406">
-               </Location>
-               <Location
-                  uuid = "066CE151-1231-4171-BABC-1184AF409A07 - 4c076ad56ebd9194"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::searchH(RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::Node*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "462"
-                  endingLineNumber = "462"
-                  offsetFromSymbolStart = "406">
-               </Location>
-               <Location
-                  uuid = "066CE151-1231-4171-BABC-1184AF409A07 - a18919eeabdbdf4c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::searchH(RadixTree&lt;std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::Node*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "462"
-                  endingLineNumber = "462"
-                  offsetFromSymbolStart = "406">
-               </Location>
-               <Location
-                  uuid = "066CE151-1231-4171-BABC-1184AF409A07 - 808a3dbc81ddead7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;PersonProfile*&gt;::searchH(RadixTree&lt;PersonProfile*&gt;::Node*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "462"
-                  endingLineNumber = "462"
-                  offsetFromSymbolStart = "406">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -156,8 +94,8 @@
             filePath = "Project_4_/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -252,8 +190,8 @@
             filePath = "Project_4_/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -278,7 +216,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9F07B0FC-5E65-46DF-9BD1-51E4DB8FA8E3"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project_4_/main.cpp"
@@ -294,7 +232,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "94055A1D-1D0C-4D0A-B8D0-98DD7BB489FE"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project_4_/main.cpp"
@@ -316,43 +254,13 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "insert(key, value)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - 78eced58bb12ba76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1206">
-               </Location>
-               <Location
-                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - a67c96b9e55fc18c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1193">
-               </Location>
-               <Location
-                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - 84144d72996aea6c"
+                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - 84144d72996af1fb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -362,12 +270,42 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1206">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
                </Location>
                <Location
-                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - e9c605b98c5438ca"
+                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - 78eced58bb12a1e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - a67c96b9e55fda1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3594">
+               </Location>
+               <Location
+                  uuid = "87514F74-6D2B-4A27-9360-AEF7A671BEFC - e9c605b98c54235d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -377,9 +315,9 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1190">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3565">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -394,43 +332,13 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
             landmarkName = "insert(key, value)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - 78eced58bb12835d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "172"
-                  endingLineNumber = "172"
-                  offsetFromSymbolStart = "391">
-               </Location>
-               <Location
-                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - a67c96b9e55ff8a7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "172"
-                  endingLineNumber = "172"
-                  offsetFromSymbolStart = "379">
-               </Location>
-               <Location
-                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - 84144d72996ad347"
+                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - 84144d72996af1fb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -440,12 +348,42 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "172"
-                  endingLineNumber = "172"
-                  offsetFromSymbolStart = "391">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
                </Location>
                <Location
-                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - e9c605b98c5401e1"
+                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - 78eced58bb12a1e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - a67c96b9e55fda1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3594">
+               </Location>
+               <Location
+                  uuid = "AB48A3FE-C1AA-487C-8492-CC5FED25EBBE - e9c605b98c54235d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -455,9 +393,9 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "172"
-                  endingLineNumber = "172"
-                  offsetFromSymbolStart = "372">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3565">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -472,43 +410,13 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
             landmarkName = "insert(key, value)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - 78eced58bb12bc24"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "213"
-                  endingLineNumber = "213"
-                  offsetFromSymbolStart = "982">
-               </Location>
-               <Location
-                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - a67c96b9e55fc7de"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "213"
-                  endingLineNumber = "213"
-                  offsetFromSymbolStart = "969">
-               </Location>
-               <Location
-                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - 84144d72996aec3e"
+                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - 84144d72996af1fb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -518,12 +426,42 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "213"
-                  endingLineNumber = "213"
-                  offsetFromSymbolStart = "982">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
                </Location>
                <Location
-                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - e9c605b98c543e98"
+                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - 78eced58bb12a1e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - a67c96b9e55fda1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3594">
+               </Location>
+               <Location
+                  uuid = "442EA582-AEEC-41AF-8A54-FD9634EDB1C9 - e9c605b98c54235d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -533,9 +471,9 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "213"
-                  endingLineNumber = "213"
-                  offsetFromSymbolStart = "967">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3565">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -550,43 +488,13 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "367"
+            endingLineNumber = "367"
             landmarkName = "insert(key, value)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - 78eced58bb12ba76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1206">
-               </Location>
-               <Location
-                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - a67c96b9e55fc18c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1193">
-               </Location>
-               <Location
-                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - 84144d72996aea6c"
+                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - 84144d72996af1fb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -596,12 +504,42 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1206">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
                </Location>
                <Location
-                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - e9c605b98c5438ca"
+                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - 78eced58bb12a1e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - a67c96b9e55fda1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3594">
+               </Location>
+               <Location
+                  uuid = "C8D277CA-E094-4F65-92E5-E9BDEF076534 - e9c605b98c54235d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -611,9 +549,9 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "1190">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3565">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -628,13 +566,43 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
             landmarkName = "insert(key, value)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "6C82B7CD-E9B1-403A-8CFF-5D0CFE135A12 - a67c96b9e55fc000"
+                  uuid = "6C82B7CD-E9B1-403A-8CFF-5D0CFE135A12 - 84144d72996af1fb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "6C82B7CD-E9B1-403A-8CFF-5D0CFE135A12 - 78eced58bb12a1e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "6C82B7CD-E9B1-403A-8CFF-5D0CFE135A12 - a67c96b9e55fda1b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -644,12 +612,12 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "231"
-                  endingLineNumber = "231"
-                  offsetFromSymbolStart = "1244">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3594">
                </Location>
                <Location
-                  uuid = "6C82B7CD-E9B1-403A-8CFF-5D0CFE135A12 - e9c605b98c543946"
+                  uuid = "6C82B7CD-E9B1-403A-8CFF-5D0CFE135A12 - e9c605b98c54235d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -659,9 +627,9 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "231"
-                  endingLineNumber = "231"
-                  offsetFromSymbolStart = "1236">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3565">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -676,43 +644,13 @@
             filePath = "Project_4_/RadixTree.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
             landmarkName = "insert(key, value)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - 78eced58bb12b692"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "255"
-                  endingLineNumber = "255"
-                  offsetFromSymbolStart = "1589">
-               </Location>
-               <Location
-                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - a67c96b9e55fcd68"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
-                  moduleName = "Project_4_"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "255"
-                  endingLineNumber = "255"
-                  offsetFromSymbolStart = "1554">
-               </Location>
-               <Location
-                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - 84144d72996ae688"
+                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - 84144d72996af1fb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -722,12 +660,42 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "255"
-                  endingLineNumber = "255"
-                  offsetFromSymbolStart = "1589">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
                </Location>
                <Location
-                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - e9c605b98c54342e"
+                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - 78eced58bb12a1e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3712">
+               </Location>
+               <Location
+                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - a67c96b9e55fda1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::insert(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3594">
+               </Location>
+               <Location
+                  uuid = "D85E6EC7-510E-436D-922D-E09850B27BDA - e9c605b98c54235d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -737,11 +705,169 @@
                   urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "255"
-                  endingLineNumber = "255"
-                  offsetFromSymbolStart = "1541">
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "3565">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D36758F4-5078-447C-B20B-70BCD106CF9D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/RadixTree.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "621"
+            endingLineNumber = "621"
+            landmarkName = "searchH(curr, key)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1DFF6A43-9221-46B7-A502-6E885902D079"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "testRT3()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F6ED464-42E7-4F8B-BB80-02C01CA38EF7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/RadixTree.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "search(key)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0F6ED464-42E7-4F8B-BB80-02C01CA38EF7 - c8f13d47190a8c69"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt; &gt;::search(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "411"
+                  endingLineNumber = "411"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "0F6ED464-42E7-4F8B-BB80-02C01CA38EF7 - 3b3663a460ff3a7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::vector&lt;AttValPair, std::__1::allocator&lt;AttValPair&gt; &gt; &gt;::search(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "411"
+                  endingLineNumber = "411"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "0F6ED464-42E7-4F8B-BB80-02C01CA38EF7 - 19a552c152db6b34"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;::search(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "411"
+                  endingLineNumber = "411"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "0F6ED464-42E7-4F8B-BB80-02C01CA38EF7 - a6d78ad294b6d16f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RadixTree&lt;PersonProfile*&gt;::search(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;) const"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/RadixTree.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "411"
+                  endingLineNumber = "411"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9ED6741E-E638-4F83-8C34-D109C432E5AB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "testRT3()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3ED23A6E-40CA-482A-B4BD-9E488F4ACF04"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "testRT3()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9574B6E7-C9A1-40D1-A861-D2362CBD5157"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "testRT3()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
