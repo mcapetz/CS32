@@ -20,9 +20,12 @@ class RadixTree {
 public:
     RadixTree() {
         root = new Node();
+        nodesToDelete.push_back(root);
     }
     ~RadixTree() {
-
+        for(int i = 0; i < nodesToDelete.size(); i++) {
+            delete nodesToDelete[i];
+        }
     }
     
     void insert(std::string key, const ValueType& value) {
@@ -35,6 +38,7 @@ public:
             newKey->value = value;
             newKey->endOfWord = true;
             root->edges[key[0]] = newKey;
+            nodesToDelete.push_back(newKey);
             return;
         }
 
@@ -82,6 +86,8 @@ public:
                 curr->value = value;
                 curr->endOfWord = true;
                 curr->edges[newKey->word[0]] = newKey;
+                
+                nodesToDelete.push_back(newKey);
                 return;
             }
             
@@ -94,6 +100,8 @@ public:
                     newKey->value = value;
                     newKey->endOfWord = true;
                     curr->edges[key[i]] = newKey;
+                    
+                    nodesToDelete.push_back(newKey);
                     return;
                 }
                 else {
@@ -126,6 +134,9 @@ public:
                 //connect new nodes
                 curr->edges[newKey->word[0]] = newKey;
                 curr->edges[nextKey->word[0]] = nextKey;
+                
+                nodesToDelete.push_back(newKey);
+                nodesToDelete.push_back(nextKey);
                 return;
             }
                
@@ -171,6 +182,7 @@ private:
     };
 
     Node* root;
+    vector<Node*> nodesToDelete;
     
 };
 

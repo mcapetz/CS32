@@ -19,7 +19,7 @@ using namespace std;
 MemberDatabase::MemberDatabase() {}
 
 MemberDatabase::~MemberDatabase() {
-    cout << "mdb destructor: delPeople size is: " << deletePeople.size() << endl;
+    //cout << "mdb destructor: delPeople size is: " << deletePeople.size() << endl;
     std::vector<PersonProfile*>::iterator it;
     it = deletePeople.begin();
     while(it != deletePeople.end()) {
