@@ -183,32 +183,81 @@ void testRT3() {
     assert(val == "1");
 }
 
-void testAttTranslator() {
+void testAttTranslator() { //tests attribute translator and person profile classes
     AttributeTranslator at;
     string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
-    //string filename = "translator.txt";
     cout << at.Load(filename) << endl;
+    
+    std::vector<AttValPair> pair_vect;
+    AttValPair pair = AttValPair("job", "architect");
+    pair_vect = at.FindCompatibleAttPairs(pair);
+    
+    cout << "***compatible attvalpairs for job, architect: " << pair_vect.size() << endl;
+    
+    for(int i = 0; i < pair_vect.size(); i++) {
+        cout << pair_vect[i].attribute << "," << pair_vect[i].value << endl;
+    }
+    
+    cout << endl;
+    
+    pair = AttValPair("trait", "bland");
+    pair_vect = at.FindCompatibleAttPairs(pair);
+    
+    cout << "***compatible attvalpairs for trait,bland: " << pair_vect.size() << endl;
+    
+    for(int i = 0; i < pair_vect.size(); i++) {
+        cout << pair_vect[i].attribute << "," << pair_vect[i].value << endl;
+    }
+    
+    cout << endl;
+    
+    pair = AttValPair("trait", "anal retentive");
+    pair_vect = at.FindCompatibleAttPairs(pair);
+    
+    cout << "***compatible attvalpairs for trait,anal retentive: " << pair_vect.size() << endl;
+    
+    for(int i = 0; i < pair_vect.size(); i++) {
+        cout << pair_vect[i].attribute << "," << pair_vect[i].value << endl;
+    }
+    
+    cout << endl;
+    
 }
 
-void testMDB() {
+void testMDB() { //tests member data base and person profile classes
     MemberDatabase mdb;
     string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/members.txt";
-    //string filename = "members.txt";
     cout << mdb.LoadDatabase(filename) << endl;
+    
+    const PersonProfile* currentPerson = mdb.GetMemberByEmail("AbFow2483@charter.net");
+    assert(currentPerson->GetName() == "Abdullah Fowler"); //test first person
+    
+    currentPerson = mdb.GetMemberByEmail("ReValenzuela7003@charter.net");
+    assert(currentPerson->GetName() == "Rex Valenzuela"); //test middle person
+    
+    currentPerson = mdb.GetMemberByEmail("ELand@live.com");
+    assert(currentPerson->GetName() == "Elliott Landry"); //test last person
 }
+
+
+
 
 //int main() {
 //    std::cout << "begin testing" << std::endl;
 //    testRadixTree();
-////    testAttTranslator();
-////    testMDB();
 //    testRT2();
 //    testRT3();
+//    testAttTranslator();
+//    testMDB();
+//
 //    std::cout << "all tests passed" << std::endl;
 //}
 
 const std::string MEMBERS_FILE    = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/members.txt";
 const std::string TRANSLATOR_FILE = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
+
+// std::string MEMBERS_FILE    = "members.txt";
+//const std::string TRANSLATOR_FILE = "translator.txt";
 
 bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at);
 
