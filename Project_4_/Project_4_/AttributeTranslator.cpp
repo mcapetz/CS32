@@ -17,7 +17,14 @@ using namespace std;
 
 AttributeTranslator::AttributeTranslator() {}
 
-AttributeTranslator::~AttributeTranslator() {}
+AttributeTranslator::~AttributeTranslator() {
+//    for(int i = 0; i < deleteMe.size(); i++) {
+//        for(int j = 0; j < deleteMe[i].size(); j++) {
+//            delete deleteMe[i][j];
+//        }
+//    }
+//    deleteMe.clear();
+}
 
 bool AttributeTranslator::Load(std::string filename) {
     cout << "begin loading translator" << endl;
@@ -47,12 +54,14 @@ bool AttributeTranslator::Load(std::string filename) {
             vector<AttValPair> newVect;
             newVect.push_back(AttValPair(att, val));
             m_compTree.insert(source, newVect);
+            //deleteMe.push_back(newVect);
         }
         else {
             //cout << "source in tree" << endl;
             //if source already exists in tree
             vect->push_back(AttValPair(att, val));
             m_compTree.insert(source, *vect);
+            //deleteMe.push_back(*vect);
         }
     }
     
