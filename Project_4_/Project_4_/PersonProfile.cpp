@@ -29,20 +29,20 @@ void PersonProfile::AddAttValPair(const AttValPair& attval) {
         std::vector<std::string> new_vect;
         new_vect.push_back(attval.value);
         m_tree.insert(attval.attribute, new_vect);
-        m_vect.push_back(AttValPair(attval.attribute, attval.value));
+        m_vect.push_back(attval);
         return;
     }
     std::vector<std::string>::iterator it;
     it = find(val_vect->begin(), val_vect->end(), attval.value);
     if(it == val_vect->end()) {
-        //value already exists in the vect
-        //do not add pair
+        //value does not exist in the vect
         val_vect->push_back(attval.value);
-        m_vect.push_back(AttValPair(attval.attribute, attval.value));
+        m_vect.push_back(attval);
         return;
     }
     else {
-        //value does not exist in the vect
+        //value already exists in the vect
+        //do not add pair
         return;
     }
     
