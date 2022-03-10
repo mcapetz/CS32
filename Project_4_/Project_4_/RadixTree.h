@@ -135,11 +135,7 @@ public:
 
     }
     
-    //ValueType* search(std::string key) const;
-
-
     void insert(std::string key, const ValueType& value) {
-        //cout << "beginnign to insert: " << key << endl;
         
         //insert first node
         if(root->edges[key[0]] == nullptr) {
@@ -161,8 +157,7 @@ public:
             
             //case 1: key and curr word are the same
             if(curr->word == key.substr(i)) {
-                //cout << "case 1: " << key << endl;
-                curr->value = value;
+                curr->value = value; //update value
                 if(!curr->endOfWord) curr->endOfWord = true;
                 return;
             }
@@ -170,8 +165,8 @@ public:
             //prefix
             while(i < key.size() && j < curr -> word.size()) {
                 if(key[i] == curr->word[j]) {
-                    i++;
-                    j++;
+                    i++; //index for key
+                    j++; //index for curr->word
                 }
                 else break;
             }
@@ -180,13 +175,11 @@ public:
             
             //case 2: all of child is in parent (carpet is already there, inputting car)
             if(i == key.size()) {
-                //cout << "case 2" << endl;
                 //make a new node
                 Node* newKey = new Node();
                 newKey->word = curr->word.substr(prefix.size());
                 newKey->value = curr->value;
                 newKey->endOfWord = curr->endOfWord;
-                //cout << "new key word: " << newKey->word << endl;
                 
                 //copy over the children & wipe out curr children
                 for(int k = 0; k < CHAR_SIZE; k++) {
@@ -204,7 +197,6 @@ public:
             
             //case 3: went through entire node, more input (car is already there, inputting carpet)
             else if(j == curr->word.size()) {
-                //cout << "case 3" << endl;
                 if(curr->edges[key[i]] == nullptr) {
                     //add a new node
                     Node* newKey = new Node();
@@ -215,17 +207,13 @@ public:
                     return;
                 }
                 else {
-                    //incrememnt curr
-                    curr = curr->edges[key[i]];
+                    curr = curr->edges[key[i]]; //increment curr
                 }
             }
             
             //case 4: splitting
             else {
-//                cout << "splitting" << endl;
-//                cout << "curr word: " << curr->word << endl;
-//                cout << "key: " << key << endl;
-//                cout << "curr key: " << key.substr(i) << endl;
+                //make a new node for the old curr word
                 Node* nextKey = new Node();
                 //copy the children & wipe them out
                 for(int x = 0; x < CHAR_SIZE; x++) {
@@ -234,24 +222,20 @@ public:
                 }
                 nextKey->value = curr->value;
                 nextKey->endOfWord = curr->endOfWord;
-                nextKey->word = curr->word.substr(j);
-                //cout << "next: " << nextKey->word << endl;
+                nextKey->word = curr->word.substr(j); //curr word excluding prefix
 
+                //make a new node for the new key
                 Node* newKey = new Node();
-                newKey->value = value;
+                newKey->value = value; //update value
                 newKey->endOfWord = true;
-                //cout << "i: " << i << endl;
-                //cout << "j: " << j << endl;
-                //cout << "prefix: " << prefix << endl;
-                newKey->word = key.substr(i);
-                //cout << "new key word: " << newKey->word << endl;
+                newKey->word = key.substr(i); //key excluding prefix
                 
                 curr->word = prefix;
                 curr->endOfWord = false;
-
+                
+                //connect new nodes
                 curr->edges[newKey->word[0]] = newKey;
                 curr->edges[nextKey->word[0]] = nextKey;
-                //cout << "done splitting: " << key << endl;
                 return;
             }
                
@@ -302,3 +286,35 @@ private:
 
 
 #endif /* RadixTree_h */
+
+
+//HW
+
+//insert(const int& val) {
+//    if(root == nullptr) {
+//        root = new Node(val);
+//    }
+//    Node* curr = root;
+//
+//    for(;;) {
+//        if(val == curr->val) return;
+//        if(val < curr->val) {
+//            if(curr->left != nullptr) curr = curr->left;
+//            else {
+//                Node* next = new Node(val);
+//                next->parent = curr;
+//                curr->left = next;
+//                return;
+//            }
+//        }
+//        else if(val > curr->val) {
+//            if(curr->right != nullptr) curr = curr->right;
+//            else {
+//                Node* next = new Node(val);
+//                next->parent = curr;
+//                curr->right = next;
+//                return;
+//            }
+//        }
+//    }
+//}
