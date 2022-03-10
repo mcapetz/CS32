@@ -13,99 +13,75 @@
 #include <iostream>
 #include "provided.h"
 
-using namespace std;
-
 
 MemberDatabase::MemberDatabase() {}
 
 MemberDatabase::~MemberDatabase() {
-    //cout << "mdb destructor: delPeople size is: " << deletePeople.size() << endl;
-    std::vector<PersonProfile*>::iterator it;
+    std::vector<PersonProfile*>::iterator it; //iterate through vector
     it = deletePeople.begin();
     while(it != deletePeople.end()) {
-        delete *it;
+        delete *it; //delete pointers to avoid memory leak
         it = deletePeople.erase(it);
     }
 }
 
 bool MemberDatabase::LoadDatabase(std::string filename) {
-    cout << "begin loading member database" << endl;
-    //int count = 0;
-    string line;
-    ifstream file(filename);
+    std::string line;
+    std::ifstream file(filename);
     
     while(getline(file, line)) {
-        //cout << "i got here" << endl;
-        string name = line;
+        std::string name = line;
         getline(file, line, '\n');
-        string email = line;
-        if(m_emailToPerson.search(email) != nullptr) return false;
-        int num;
+        std::string email = line;
+        if(m_emailToPerson.search(email) != nullptr) return false; //do not add duplicates
+        int num; //number of attribute val pairs
         getline(file, line, '\n');
         num = stoi(line);
         
-        //cout << "name: " << name << endl;
-        //cout << "email: " << email << endl;
-        //cout << "num: " << num << endl;
-        
         PersonProfile* currP = new PersonProfile(name, email);
         
-        //cout << "loaded: " << email << endl;
-        
-        
-        
-        for(int i = 0; i < num; i++) {
-            string att, val;
+        for(int i = 0; i < num; i++) { //iterate through att val pairs of current person
+            std::string att, val;
             getline(file, line, ',');
             att = line;
             getline(file, line, '\n');
             val = line;
             //cout << att << ", " << val << endl;
-            string pair = att + "," + val;
+            std::string pair = att + "," + val; //convert att and val into one string
             
+            AttValPair currPair(att, val); //create an att val pair (not a pointer)
+            currP->AddAttValPair(currPair); //add att val pair to current person
             
-            AttValPair currPair(att, val);
-            currP->AddAttValPair(currPair);
-            
-            std::vector<std::string>* resVect = m_pairToEmail.search(pair);
+            std::vector<std::string>* resVect = m_pairToEmail.search(pair); //vector that pair maps to in radix tree
             if(resVect == nullptr) {
-                //cout << "pair not in tree" << endl;
                 //source does not exist in tree
-                vector<string> newVect;
+                std::vector<std::string> newVect;
                 newVect.push_back(email);
-                m_pairToEmail.insert(pair, newVect);
+                m_pairToEmail.insert(pair, newVect); //add pair to email mapping to radix tree
             }
             else {
-                //cout << "pair in tree" << endl;
                 //if source already exists in tree
-                //vector<string> vect = *m_pairToEmail.search(pair);
-                resVect->push_back(email);
-                //m_pairToEmail.insert(pair, vect);
+                resVect->push_back(email); //push back email to the vector since it is not empty
             }
             
-            //m_pairToEmail.insert(pair, email);
-            
-            m_emailToPerson.insert(email, currP);
+            m_emailToPerson.insert(email, currP); //add email to person mapping to radix tree
         }
         getline(file, line, '\n');
-        deletePeople.push_back(currP);
+        deletePeople.push_back(currP); //add person pointer to vector to delete later in destructor
 
-        
-        //count++;
-        //if(count % 1000 == 0) cout << count << endl;
     }
     
     return true;
 }
 
 std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& input) const {
-    string pair = input.attribute + "," + input.value;
+    std::string pair = input.attribute + "," + input.value; //convert att val pair into a string
     std::vector<std::string> res;
-    if(m_pairToEmail.search(pair) == nullptr) return res;
+    if(m_pairToEmail.search(pair) == nullptr) return res; //return empty result if not found
     return *m_pairToEmail.search(pair);
 }
 
 const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {
-    if(m_emailToPerson.search(email) == nullptr) return nullptr;
+    if(m_emailToPerson.search(email) == nullptr) return nullptr; //return nullptr if not found
     else return *m_emailToPerson.search(email);
 }

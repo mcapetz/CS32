@@ -134,8 +134,6 @@ void testRadixTree() {
     assert(val == "me");
     val = *(tree.search("ca"));
     assert(val == "lifornia");
-
-
 }
 
 void testRT2() {

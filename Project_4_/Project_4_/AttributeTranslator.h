@@ -24,7 +24,6 @@ public:
     std::vector<AttValPair> FindCompatibleAttPairs(const AttValPair& src) const;
 private:
     RadixTree<std::vector<AttValPair>> m_compTree;
-    //std::vector<std::vector<AttValPair>> deleteMe;
 };
 
 #endif /* AttributeTranslator_hpp */

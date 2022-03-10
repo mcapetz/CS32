@@ -26,7 +26,7 @@ public:
 private:
     RadixTree<std::vector<std::string>> m_pairToEmail;
     RadixTree<PersonProfile*> m_emailToPerson;
-    std::vector<PersonProfile*> deletePeople;
+    std::vector<PersonProfile*> deletePeople; //vector to keep track of new pointers to delete in destructor
 };
 
 #endif /* MemberDatabase_hpp */

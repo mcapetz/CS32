@@ -12,8 +12,6 @@
 #include <string>
 #include <algorithm>
 
-using namespace std;
-
 PersonProfile::PersonProfile(std::string n, std::string e) {
     m_name = n;
     m_email = e;
@@ -45,22 +43,16 @@ void PersonProfile::AddAttValPair(const AttValPair& attval) {
     }
     else {
         //value does not exist in the vect
-//        val_vect->push_back(attval.value);
-//        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
         return;
     }
     
     
-//    if(*val.size() != ) return; //return if val already in the tree
-//    //otherwise insert into radix tree and vector
-//    //m_tree.insert(attval.attribute, attval.value);
-//    m_vect.push_back(new AttValPair(attval.attribute, attval.value));
 }
 int PersonProfile::GetNumAttValPairs() const {
-    return (int)m_vect.size();
+    return (int)m_vect.size(); //size of vector of att val pairs
 }
 bool PersonProfile::GetAttVal(int attribute_num, AttValPair& attval) const {
-    if(attribute_num >= 0 && attribute_num < GetNumAttValPairs()) {
+    if(attribute_num >= 0 && attribute_num < GetNumAttValPairs()) { //iterate through vector of att val pairs
         attval = m_vect[attribute_num];
         return true;
     }

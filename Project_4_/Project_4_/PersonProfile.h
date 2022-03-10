@@ -28,7 +28,7 @@ private:
     std::string m_name;
     std::string m_email;
     RadixTree<std::vector<std::string>> m_tree;
-    std::vector<AttValPair> m_vect;
+    std::vector<AttValPair> m_vect; //store att val pairs in vector for simple iteration
 };
 
 #endif /* PersonProfile_hpp */

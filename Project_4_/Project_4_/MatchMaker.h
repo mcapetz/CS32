@@ -26,9 +26,9 @@ private:
     const MemberDatabase* m_mdb;
     const AttributeTranslator* m_at;
     
-    static inline bool customSort(const EmailCount& e1, const EmailCount& e2) {
-        if(e1.count == e2.count) return e1.email < e2.email;
-        return (e1.count > e2.count);
+    static inline bool customSort(const EmailCount& e1, const EmailCount& e2) { //custom sort to use stl sort to sort matching profiles by email and count of attribute
+        if(e1.count == e2.count) return e1.email < e2.email; //if the count is equal, sort by alphabetical order
+        return (e1.count > e2.count); //sort by count in descending order
     }
 };
 

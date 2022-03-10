@@ -14,18 +14,17 @@
 
 #include <iostream>
 
-using namespace std;
 
 template <typename ValueType>
 class RadixTree {
 public:
     RadixTree() {
         root = new Node();
-        nodesToDelete.push_back(root);
+        nodesToDelete.push_back(root); //add new Node* to vect to delete in destructor
     }
     ~RadixTree() {
-        for(int i = 0; i < nodesToDelete.size(); i++) {
-            delete nodesToDelete[i];
+        for(int i = 0; i < nodesToDelete.size(); i++) { //iterate through vector of pointers
+            delete nodesToDelete[i]; //delete to avoid memory leak
         }
     }
     
@@ -39,7 +38,7 @@ public:
             newKey->value = value;
             newKey->endOfWord = true;
             root->edges[key[0]] = newKey;
-            nodesToDelete.push_back(newKey);
+            nodesToDelete.push_back(newKey); //add new Node* to vect to delete in destructor
             return;
         }
 
@@ -65,7 +64,7 @@ public:
                 }
                 else break;
             }
-            string prefix = curr->word.substr(0,j);
+            std::string prefix = curr->word.substr(0,j);
             
             
             //case 2: all of child is in parent (carpet is already there, inputting car)
@@ -88,7 +87,7 @@ public:
                 curr->endOfWord = true;
                 curr->edges[newKey->word[0]] = newKey;
                 
-                nodesToDelete.push_back(newKey);
+                nodesToDelete.push_back(newKey); //add new Node* to vect to delete in destructor
                 return;
             }
             
@@ -102,7 +101,7 @@ public:
                     newKey->endOfWord = true;
                     curr->edges[key[i]] = newKey;
                     
-                    nodesToDelete.push_back(newKey);
+                    nodesToDelete.push_back(newKey); //add new Node* to vect to delete in destructor
                     return;
                 }
                 else {
@@ -136,8 +135,8 @@ public:
                 curr->edges[newKey->word[0]] = newKey;
                 curr->edges[nextKey->word[0]] = nextKey;
                 
-                nodesToDelete.push_back(newKey);
-                nodesToDelete.push_back(nextKey);
+                nodesToDelete.push_back(newKey); //add new Node* to vect to delete in destructor
+                nodesToDelete.push_back(nextKey); //add new Node* to vect to delete in destructor
                 return;
             }
                
@@ -153,14 +152,14 @@ public:
             if(curr->edges[index] != nullptr) {
                 curr = curr->edges[index]; //set curr to child
                 if(curr->word == key.substr(i, curr->word.size())) { //if word matches, then increment i
-                    i += curr->word.size();
+                    i += curr->word.size(); //increment i
                 }
             }
             else return nullptr;
         }
         
-        if(i == key.size() && curr->endOfWord) return &curr->value;
-        else return nullptr;
+        if(i == key.size() && curr->endOfWord) return &curr->value; //found!
+        else return nullptr; //not found
 
     }
 
@@ -173,7 +172,7 @@ private:
         Node* edges[CHAR_SIZE];
         ValueType value;
 
-        Node() {
+        Node() { //constructor defaults edges to nullptr, endOfWord to false, word to be empty (does not have a default ValueType value)
             word = "";
             endOfWord = false;
             for(int i = 0; i < CHAR_SIZE; i++) {
@@ -189,35 +188,3 @@ private:
 
 
 #endif /* RadixTree_h */
-
-
-//HW
-
-//insert(const int& val) {
-//    if(root == nullptr) {
-//        root = new Node(val);
-//    }
-//    Node* curr = root;
-//
-//    for(;;) {
-//        if(val == curr->val) return;
-//        if(val < curr->val) {
-//            if(curr->left != nullptr) curr = curr->left;
-//            else {
-//                Node* next = new Node(val);
-//                next->parent = curr;
-//                curr->left = next;
-//                return;
-//            }
-//        }
-//        else if(val > curr->val) {
-//            if(curr->right != nullptr) curr = curr->right;
-//            else {
-//                Node* next = new Node(val);
-//                next->parent = curr;
-//                curr->right = next;
-//                return;
-//            }
-//        }
-//    }
-//}
