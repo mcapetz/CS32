@@ -10,6 +10,7 @@
 #define CHAR_SIZE 128
 
 #include <string>
+#include <vector>
 
 #include <iostream>
 
@@ -182,7 +183,7 @@ private:
     };
 
     Node* root;
-    vector<Node*> nodesToDelete;
+    std::vector<Node*> nodesToDelete;
     
 };
 
