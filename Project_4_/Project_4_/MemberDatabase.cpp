@@ -19,7 +19,7 @@ using namespace std;
 MemberDatabase::MemberDatabase() {}
 
 MemberDatabase::~MemberDatabase() {
-    //cout << "mdb destructor: delPeople size is: " << deletePeople.size() << endl;
+    cout << "mdb destructor: delPeople size is: " << deletePeople.size() << endl;
     std::vector<PersonProfile*>::iterator it;
     it = deletePeople.begin();
     while(it != deletePeople.end()) {
@@ -34,11 +34,12 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
     string line;
     ifstream file(filename);
     
-    while(getline(file, line, '\n')) {
+    while(getline(file, line)) {
         //cout << "i got here" << endl;
         string name = line;
         getline(file, line, '\n');
         string email = line;
+        if(m_emailToPerson.search(email) != nullptr) return false;
         int num;
         getline(file, line, '\n');
         num = stoi(line);
@@ -84,10 +85,11 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
             
             //m_pairToEmail.insert(pair, email);
             
-            deletePeople.push_back(currP);
             m_emailToPerson.insert(email, currP);
         }
         getline(file, line, '\n');
+        deletePeople.push_back(currP);
+
         
         //count++;
         //if(count % 1000 == 0) cout << count << endl;

@@ -19,12 +19,7 @@ PersonProfile::PersonProfile(std::string n, std::string e) {
     m_email = e;
 }
 
-PersonProfile::~PersonProfile() {
-//    for(int i = 0; i < m_vect.size(); i++) {
-//        delete m_vect[i];
-//    }
-//    m_vect.clear();
-}
+PersonProfile::~PersonProfile() {}
 
 std::string PersonProfile::GetName() const { return m_name; }
 std::string PersonProfile::GetEmail() const { return m_email; }
@@ -36,7 +31,7 @@ void PersonProfile::AddAttValPair(const AttValPair& attval) {
         std::vector<std::string> new_vect;
         new_vect.push_back(attval.value);
         m_tree.insert(attval.attribute, new_vect);
-        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+        m_vect.push_back(AttValPair(attval.attribute, attval.value));
         return;
     }
     std::vector<std::string>::iterator it;
@@ -45,7 +40,7 @@ void PersonProfile::AddAttValPair(const AttValPair& attval) {
         //value already exists in the vect
         //do not add pair
         val_vect->push_back(attval.value);
-        m_vect.push_back(new AttValPair(attval.attribute, attval.value));
+        m_vect.push_back(AttValPair(attval.attribute, attval.value));
         return;
     }
     else {
@@ -66,7 +61,7 @@ int PersonProfile::GetNumAttValPairs() const {
 }
 bool PersonProfile::GetAttVal(int attribute_num, AttValPair& attval) const {
     if(attribute_num >= 0 && attribute_num < GetNumAttValPairs()) {
-        attval = *m_vect[attribute_num];
+        attval = m_vect[attribute_num];
         return true;
     }
     return false;

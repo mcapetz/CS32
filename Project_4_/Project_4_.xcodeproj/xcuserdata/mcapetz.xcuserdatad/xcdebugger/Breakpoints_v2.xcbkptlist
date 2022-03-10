@@ -136,7 +136,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A71629FA-EE7B-4451-B827-77DFF65560DB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project_4_/MatchMaker.cpp"
@@ -146,22 +146,38 @@
             endingLineNumber = "79"
             landmarkName = "MatchMaker::IdentifyRankedMatches(email, threshold)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "04800F66-92FE-4B35-B5A2-D3A7BF3FA0C1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project_4_/MemberDatabase.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "MemberDatabase::LoadDatabase(filename)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A71629FA-EE7B-4451-B827-77DFF65560DB - 183bd40879eb09bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MatchMaker::IdentifyRankedMatches(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, int) const"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/MatchMaker.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "1856">
+               </Location>
+               <Location
+                  uuid = "A71629FA-EE7B-4451-B827-77DFF65560DB - 183bd40879eb09bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MatchMaker::IdentifyRankedMatches(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, int) const"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/MatchMaker.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "1961">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -184,16 +200,16 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D4C196F9-3D8F-4B6B-B486-8C097B903EBB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project_4_/MemberDatabase.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "MemberDatabase::GetMemberByEmail(email)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -368,6 +384,70 @@
             endingLineNumber = "185"
             landmarkName = "testRT3()"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80475520-0846-4180-822A-B1337E1589D5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/MemberDatabase.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "MemberDatabase::LoadDatabase(filename)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D76ABBF-3DD5-41A3-BA85-3CB0A27425E2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_4_/MemberDatabase.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "MemberDatabase::~MemberDatabase()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6D76ABBF-3DD5-41A3-BA85-3CB0A27425E2 - b302e84156f042a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MemberDatabase::~MemberDatabase()"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/MemberDatabase.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "6D76ABBF-3DD5-41A3-BA85-3CB0A27425E2 - b302e84156f042c7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MemberDatabase::~MemberDatabase()"
+                  moduleName = "Project_4_"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/MemberDatabase.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
