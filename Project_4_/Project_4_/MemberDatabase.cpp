@@ -23,6 +23,7 @@ MemberDatabase::~MemberDatabase() {
     std::vector<PersonProfile*>::iterator it;
     it = deletePeople.begin();
     while(it != deletePeople.end()) {
+        delete *it;
         it = deletePeople.erase(it);
     }
 }
