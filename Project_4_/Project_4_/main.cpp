@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cassert>
 
 #include "RadixTree.h"
 
@@ -186,13 +187,15 @@ void testRT3() {
 
 void testAttTranslator() {
     AttributeTranslator at;
-    string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
+    //string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/translator.txt";
+    string filename = "translator.txt";
     cout << at.Load(filename) << endl;
 }
 
 void testMDB() {
     MemberDatabase mdb;
-    string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/members.txt";
+    //string filename = "/Users/mcapetz/Desktop/projects/CS32/Project_4_/Project_4_/members.txt";
+    string filename = "members.txt";
     cout << mdb.LoadDatabase(filename) << endl;
 }
 
