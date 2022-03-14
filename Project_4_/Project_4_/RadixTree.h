@@ -23,6 +23,7 @@ public:
         nodesToDelete.push_back(root); //add new Node* to vect to delete in destructor
     }
     ~RadixTree() {
+        //std::cout << "del size: " << nodesToDelete.size() << std::endl;
         for(int i = 0; i < nodesToDelete.size(); i++) { //iterate through vector of pointers
             delete nodesToDelete[i]; //delete to avoid memory leak
         }
